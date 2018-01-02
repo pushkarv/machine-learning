@@ -39,19 +39,20 @@ class LearningAgent(Agent):
         # Update epsilon using a decay function of your choice
         # Update additional class parameters as needed
         # If 'testing' is True, set epsilon and alpha to 0
+
+        if (testing == True):
+            epsilon = 0
+            alpha = 0
+
         self.trial += 1
         #self.epsilon -= .05
-        a = 0.4
+        a = 0.5
         self.epsilon = math.exp(-a*self.trial)
         #self.epsilon = a**self.trial
         #self.epsilon = self.trial**-2
 
         #not good
 #        self.epsilon = math.cos(a*self.trial)
-        if (testing == True):
-            epsilon = 0
-            alpha = 0
-
         return None
 
     def build_state(self):
@@ -89,7 +90,7 @@ class LearningAgent(Agent):
         # Calculate the maximum Q-value of all actions for a given state
 
         maxQ = max(self.Q[state].values())
-        print ("maxQ: ".format(maxQ))
+        print ("maxQ: {} ".format(maxQ))
 
         return maxQ
 
@@ -135,7 +136,7 @@ class LearningAgent(Agent):
             action_index = int(len(self.valid_actions)*random.random()*self.epsilon)
             action = self.valid_actions[action_index]
         else:
-            max_qvalue = max(self.Q[state].values())
+            max_qvalue = get_maxQ(state)
             action = random.choice([k for (k,v) in self.Q[state].items() if v == max_qvalue])
             print "Key={}, Value={}".format(action, max_qvalue)
         return action
@@ -184,7 +185,7 @@ def run():
     #   verbose     - set to True to display additional output from the simulation
     #   num_dummies - discrete number of dummy agents in the environment, default is 100
     #   grid_size   - discrete number of intersections (columns, rows), default is (8, 6)
-    env = Environment(verbose=False)
+    env = Environment(verbose=True)
 
     ##############
     # Create the driving agent
@@ -192,7 +193,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning=True, alpha=0.8, epsilon=.7)
+    agent = env.create_agent(LearningAgent, learning=True, alpha=0.7, epsilon=.8)
 
     ##############
     # Follow the driving agent
@@ -214,8 +215,8 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=10, tolerance=.1)
-
+    sim.run(n_test=30, tolerance=.10)
+    print len(agent.Q)
 
 if __name__ == '__main__':
     run()
