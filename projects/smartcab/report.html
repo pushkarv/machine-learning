@@ -16267,43 +16267,31 @@ Additional sampling of the sim_improved-learning.txt file did not reveal any une
 
 
 </code></pre>
-<p>3.Some of the samples from the file are.  These entries demonstrate the optimal policy because they align with the optimal policy coded in the environment.py file, and violations/accidents are nearly at zero.</p>
+<p>3.Some of the samples from the file are.</p>
+<p><strong>NOTE:  The state in my code was defined as follows (different order from described as above):</strong></p>
+<p><code>state = (waypoint, inputs["light"], inputs["oncoming"], inputs["left"], inputs["right"])</code></p>
+<p>These entries demonstrate the optimal policy because they align with the optimal policy coded in the environment.py file.  These policies align with the policies listed in <strong>#1</strong>.</p>
+<p>a. The waypoint is forward, at a red light, oncoming traffic stopped, and left-side traffic intending a left, so the action is to do nothing.  Complies to policy #1(a) above.</p>
 
 <pre><code>('forward', 'red', None, 'left', None)
  -- forward : -9.12
  -- None : 1.14
  -- right : 0.71
- -- left : -9.36
+ -- left : -9.36</code></pre>
+<p>b. The way point is forward, with a green light, the action is the move forward. Complies with policy #1(h) above.</p>
 
-('right', 'red', 'right', 'forward', 'forward')
- -- forward : 0.00
- -- None : 1.54
- -- right : 0.00
- -- left : -39.19
+<pre><code>('forward', 'green', None, None, 'left')
+ -- forward : 1.63
+ -- None : -5.71
+ -- right : 0.52
+ -- left : -0.14</code></pre>
+<p>c. The way point is right, at a red light, with oncoming traffic taking a left, the action is to do nothing.  Complies with policy #1 (f) above.</p>
 
-('left', 'red', 'forward', 'forward', 'left')
- -- forward : -38.72
- -- None : 1.10
- -- right : -20.57
- -- left : -40.40
-
-('forward', 'red', 'right', 'left', None)
- -- forward : -10.43
+<pre><code>('right', 'red', 'left', 'forward', 'left')
+ -- forward : -38.90
  -- None : 0.00
- -- right : 1.44
- -- left : -40.90
-
-('right', 'green', 'left', 'right', None)
- -- forward : 0.00
- -- None : -5.28
- -- right : 2.10
- -- left : -0.40
-
-('right', 'green', 'left', 'right', 'right')
- -- forward : 0.00
- -- None : 0.00
- -- right : 0.84
- -- left : 0.00</code></pre>
+ -- right : -20.29
+ -- left : -39.86</code></pre>
 <p>4.The following entry seems to be unexpected since taking a left, during a red light with an oncoming vehicle that is taking a right is not allowed, based on 1(d) above.  As shown below, given the state, there may be a random selection to either do nothing, take a right or take a left.   Taking a left would be a major violation.
 This policy may not have been learned properly because of the large state space, and appropriate reinforcement for this given state/action(s) may not have been encountered.</p>
 
@@ -16311,6 +16299,13 @@ This policy may not have been learned properly because of the large state space,
  -- forward : -10.75
  -- None : 0.00
  -- right : 0.00
+ -- left : 0.00</code></pre>
+<p>Another example of a sub-optimal policy is as follows.  The waypoint is left, but the action is forward, which is inefficient.</p>
+
+<pre><code>('left', 'green', None, 'forward', 'right')
+ -- forward : 1.22
+ -- None : -4.53
+ -- right : -0.23
  -- left : 0.00</code></pre>
 
 </div>
