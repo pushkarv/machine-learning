@@ -1,4 +1,5 @@
 import random
+import numpy as np
 import math
 from environment import Agent, Environment
 from planner import RoutePlanner
@@ -46,9 +47,12 @@ class LearningAgent(Agent):
 
         self.trial += 1
         #self.epsilon -= .05
-        a = 0.5
-        self.epsilon = math.exp(-a*self.trial)
-        #self.epsilon = a**self.trial
+        a = .99
+        #too fast, does not allow enough learning time
+        #self.epsilon = math.exp(-a*self.trial)
+
+        self.epsilon = a**self.trial
+
         #self.epsilon = self.trial**-2
 
         #not good
@@ -75,7 +79,7 @@ class LearningAgent(Agent):
         # With the hand-engineered features, this learning process gets entirely negated.
 
         # Set 'state' as a tuple of relevant data for the agent
-        state = (waypoint, inputs["light"], inputs["oncoming"], inputs["left"], inputs["right"], deadline)
+        state = (waypoint, inputs["light"], inputs["oncoming"], inputs["left"], inputs["right"])
 
         return state
 
@@ -88,7 +92,6 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Calculate the maximum Q-value of all actions for a given state
-
         maxQ = max(self.Q[state].values())
         print ("maxQ: {} ".format(maxQ))
 
@@ -105,14 +108,14 @@ class LearningAgent(Agent):
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
 
-        if (state not in self.Q):
-            print ("State does not exist in Q-table")
-            self.Q[state] = {None: 0.0, "left": 0.0, "right": 0.0, "forward": 0.0}
-        else:
-            print "State exists in Q-table"
+        if (self.learning == True):
+            if (state not in self.Q):
+                print ("State does not exist in Q-table")
+                self.Q[state] = {None: 0.0, "left": 0.0, "right": 0.0, "forward": 0.0}
+            else:
+                print "State exists in Q-table"
 
         return self.Q[state]
-
 
     def choose_action(self, state):
         """ The choose_action function is called when the agent is asked to choose
@@ -131,14 +134,15 @@ class LearningAgent(Agent):
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
         if (self.learning == False):
-            action = random.choice(self.valid_actions)
+            action = np.random.choice(self.valid_actions)
         elif (self.learning == True):
-            action_index = int(len(self.valid_actions)*random.random()*self.epsilon)
-            action = self.valid_actions[action_index]
-        else:
-            max_qvalue = get_maxQ(state)
-            action = random.choice([k for (k,v) in self.Q[state].items() if v == max_qvalue])
-            print "Key={}, Value={}".format(action, max_qvalue)
+            r = random.random()
+            if (r < self.epsilon):
+                action = random.choice(self.valid_actions)
+            else:
+                max_qvalue = self.get_maxQ(state)
+                action = random.choice([k for (k,v) in self.Q[state].items() if v == max_qvalue])
+                print "Key={}, Value={}".format(action, max_qvalue)
         return action
 
 
@@ -193,7 +197,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning=True, alpha=0.7, epsilon=.8)
+    agent = env.create_agent(LearningAgent, learning=True, alpha=0.99, epsilon=0.99)
 
     ##############
     # Follow the driving agent
@@ -215,7 +219,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=30, tolerance=.10)
+    sim.run(n_test=15, tolerance=.0001)
     print len(agent.Q)
 
 if __name__ == '__main__':
