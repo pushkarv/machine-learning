@@ -1,7 +1,7 @@
 # Machine Learning Engineer Nanodegree
 ## Capstone Proposal
 Pushkar Varma  
-January 6, 2018
+February 4, 2018
 
 ## Proposal
 
