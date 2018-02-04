@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 844 175" width="844pt" height="175pt" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 844 174" width="844pt" height="174pt" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata> Produced by OmniGraffle 7.2.2 
-    <dc:date>2018-02-04 22:18:40 +0000</dc:date>
+    <dc:date>2018-02-04 22:23:52 +0000</dc:date>
   </metadata>
   <defs>
     <linearGradient x1="0" x2="1" id="Gradient" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="white"/>
       <stop offset="1" stop-color="white"/>
     </linearGradient>
-    <linearGradient id="Obj_Gradient" xl:href="#Gradient" gradientTransform="translate(325 28.5) rotate(90) scale(114.5)"/>
-    <linearGradient id="Obj_Gradient_2" xl:href="#Gradient" gradientTransform="translate(318 22.5) rotate(90) scale(114.5)"/>
+    <linearGradient id="Obj_Gradient" xl:href="#Gradient" gradientTransform="translate(391.5 28.5) rotate(90) scale(114.5)"/>
+    <linearGradient id="Obj_Gradient_2" xl:href="#Gradient" gradientTransform="translate(384.5 22.5) rotate(90) scale(114.5)"/>
     <font-face font-family="Helvetica Neue" font-size="13" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="500">
       <font-face-src>
         <font-face-name name="HelveticaNeue"/>
@@ -27,29 +27,29 @@
     <rect fill="white" width="926" height="662"/>
     <g>
       <title>Layer 1</title>
-      <rect x="115.5" y="28.5" width="419" height="114.5" fill="url(#Obj_Gradient)"/>
-      <rect x="115.5" y="28.5" width="419" height="114.5" stroke="#214574" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <rect x="108.5" y="22.5" width="419" height="114.5" fill="url(#Obj_Gradient_2)"/>
-      <rect x="108.5" y="22.5" width="419" height="114.5" stroke="#214574" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="248.5" y="28.5" width="286" height="114.5" fill="url(#Obj_Gradient)"/>
+      <rect x="248.5" y="28.5" width="286" height="114.5" stroke="#214574" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <rect x="241.5" y="22.5" width="286" height="114.5" fill="url(#Obj_Gradient_2)"/>
+      <rect x="241.5" y="22.5" width="286" height="114.5" stroke="#214574" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       <path d="M 35 39.5 L 88.5 39.5 C 92.91828 39.5 96.5 43.08172 96.5 47.5 L 96.5 101.5 C 96.5 105.91828 92.91828 109.5 88.5 109.5 L 35 109.5 C 30.581722 109.5 27 105.91828 27 101.5 L 27 47.5 C 27 43.08172 30.581722 39.5 35 39.5 Z" fill="white"/>
       <path d="M 35 39.5 L 88.5 39.5 C 92.91828 39.5 96.5 43.08172 96.5 47.5 L 96.5 101.5 C 96.5 105.91828 92.91828 109.5 88.5 109.5 L 35 109.5 C 30.581722 109.5 27 105.91828 27 101.5 L 27 47.5 C 27 43.08172 30.581722 39.5 35 39.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       <text transform="translate(32 59.136)" fill="black">
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" fill="black" x="14.9365" y="12" textLength="33.241">Input </tspan>
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" fill="black" x="11.81" y="27.364" textLength="35.88">Image</tspan>
       </text>
-      <path d="M 136.5 39.5 L 229.5 39.5 C 233.91828 39.5 237.5 43.08172 237.5 47.5 L 237.5 101.5 C 237.5 105.91828 233.91828 109.5 229.5 109.5 L 136.5 109.5 C 132.08172 109.5 128.5 105.91828 128.5 101.5 L 128.5 47.5 C 128.5 43.08172 132.08172 39.5 136.5 39.5 Z" fill="white"/>
-      <path d="M 136.5 39.5 L 229.5 39.5 C 233.91828 39.5 237.5 43.08172 237.5 47.5 L 237.5 101.5 C 237.5 105.91828 233.91828 109.5 229.5 109.5 L 136.5 109.5 C 132.08172 109.5 128.5 105.91828 128.5 101.5 L 128.5 47.5 C 128.5 43.08172 132.08172 39.5 136.5 39.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <text transform="translate(133.5 59.136)" fill="black">
+      <path d="M 131.5 39.5 L 224.5 39.5 C 228.91828 39.5 232.5 43.08172 232.5 47.5 L 232.5 101.5 C 232.5 105.91828 228.91828 109.5 224.5 109.5 L 131.5 109.5 C 127.08172 109.5 123.5 105.91828 123.5 101.5 L 123.5 47.5 C 123.5 43.08172 127.08172 39.5 131.5 39.5 Z" fill="white"/>
+      <path d="M 131.5 39.5 L 224.5 39.5 C 228.91828 39.5 232.5 43.08172 232.5 47.5 L 232.5 101.5 C 232.5 105.91828 228.91828 109.5 224.5 109.5 L 131.5 109.5 C 127.08172 109.5 123.5 105.91828 123.5 101.5 L 123.5 47.5 C 123.5 43.08172 127.08172 39.5 131.5 39.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(128.5 59.136)" fill="black">
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="2.791" y="12" textLength="93.418">Rescaled Image</tspan>
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="14.101" y="27.364" textLength="70.798">(224x224x3)</tspan>
       </text>
-      <line x1="96.5" y1="74.5" x2="121.6" y2="74.5" marker-end="url(#SharpArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <line x1="96.5" y1="74.5" x2="116.6" y2="74.5" marker-end="url(#SharpArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       <path d="M 277.5 39.5 L 346.5 39.5 C 350.91828 39.5 354.5 43.08172 354.5 47.5 L 354.5 101.5 C 354.5 105.91828 350.91828 109.5 346.5 109.5 L 277.5 109.5 C 273.08172 109.5 269.5 105.91828 269.5 101.5 L 269.5 47.5 C 269.5 43.08172 273.08172 39.5 277.5 39.5 Z" fill="white"/>
       <path d="M 277.5 39.5 L 346.5 39.5 C 350.91828 39.5 354.5 43.08172 354.5 47.5 L 354.5 101.5 C 354.5 105.91828 350.91828 109.5 346.5 109.5 L 277.5 109.5 C 273.08172 109.5 269.5 105.91828 269.5 101.5 L 269.5 47.5 C 269.5 43.08172 273.08172 39.5 277.5 39.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       <text transform="translate(274.5 66.818)" fill="black">
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="2.5885" y="12" textLength="69.823">Convolution</tspan>
       </text>
-      <line x1="237.5" y1="74.5" x2="262.6" y2="74.5" marker-end="url(#SharpArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <line x1="232.5" y1="74.5" x2="262.6" y2="74.5" marker-end="url(#SharpArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       <path d="M 386.5 39.5 L 431.5 39.5 C 435.9183 39.5 439.5 43.08172 439.5 47.5 L 439.5 101.5 C 439.5 105.91828 435.9183 109.5 431.5 109.5 L 386.5 109.5 C 382.0817 109.5 378.5 105.91828 378.5 101.5 L 378.5 47.5 C 378.5 43.08172 382.0817 39.5 386.5 39.5 Z" fill="white"/>
       <path d="M 386.5 39.5 L 431.5 39.5 C 435.9183 39.5 439.5 43.08172 439.5 47.5 L 439.5 101.5 C 439.5 105.91828 435.9183 109.5 431.5 109.5 L 386.5 109.5 C 382.0817 109.5 378.5 105.91828 378.5 101.5 L 378.5 47.5 C 378.5 43.08172 382.0817 39.5 386.5 39.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       <text transform="translate(383.5 66.818)" fill="black">
@@ -78,7 +78,7 @@
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="3.4335" y="12" textLength="48.633">Softmax</tspan>
       </text>
       <line x1="615" y1="74.5" x2="637.1" y2="74.5" marker-end="url(#SharpArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <text transform="translate(144.5 153.818)" fill="black">
+      <text transform="translate(218 153.318)" fill="black">
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x=".2685" y="12" textLength="346.463">Multiple layers will be tried and selected based on accuracy</tspan>
       </text>
       <path d="M 757.5 39.5 L 835 39.5 C 839.4183 39.5 843 43.08172 843 47.5 L 843 101.5 C 843 105.91828 839.4183 109.5 835 109.5 L 757.5 109.5 C 753.0817 109.5 749.5 105.91828 749.5 101.5 L 749.5 47.5 C 749.5 43.08172 753.0817 39.5 757.5 39.5 Z" fill="white"/>
