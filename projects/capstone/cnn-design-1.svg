@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 862 324" width="862pt" height="27pc" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 890 324" width="890pt" height="27pc" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <metadata> Produced by OmniGraffle 7.2.2 
-    <dc:date>2018-02-04 21:22:55 +0000</dc:date>
+    <dc:date>2018-02-04 22:17:23 +0000</dc:date>
   </metadata>
   <defs>
     <linearGradient x1="0" x2="1" id="Gradient" gradientUnits="userSpaceOnUse">
@@ -81,11 +81,14 @@
       <text transform="translate(191 302.818)" fill="black">
         <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x=".2685" y="12" textLength="346.463">Multiple layers will be tried and selected based on accuracy</tspan>
       </text>
-      <path d="M 803.5 188.5 L 853 188.5 C 857.4183 188.5 861 192.08172 861 196.5 L 861 250.5 C 861 254.91828 857.4183 258.5 853 258.5 L 803.5 258.5 C 799.0817 258.5 795.5 254.91828 795.5 250.5 L 795.5 196.5 C 795.5 192.08172 799.0817 188.5 803.5 188.5 Z" fill="white"/>
-      <path d="M 803.5 188.5 L 853 188.5 C 857.4183 188.5 861 192.08172 861 196.5 L 861 250.5 C 861 254.91828 857.4183 258.5 853 258.5 L 803.5 258.5 C 799.0817 258.5 795.5 254.91828 795.5 250.5 L 795.5 196.5 C 795.5 192.08172 799.0817 188.5 803.5 188.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      <text transform="translate(800.5 215.818)" fill="black">
-        <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="3.4335" y="12" textLength="48.633">Softmax</tspan>
+      <path d="M 804 188.5 L 881.5 188.5 C 885.9183 188.5 889.5 192.08172 889.5 196.5 L 889.5 250.5 C 889.5 254.91828 885.9183 258.5 881.5 258.5 L 804 258.5 C 799.5817 258.5 796 254.91828 796 250.5 L 796 196.5 C 796 192.08172 799.5817 188.5 804 188.5 Z" fill="white"/>
+      <path d="M 804 188.5 L 881.5 188.5 C 885.9183 188.5 889.5 192.08172 889.5 196.5 L 889.5 250.5 C 889.5 254.91828 885.9183 258.5 881.5 258.5 L 804 258.5 C 799.5817 258.5 796 254.91828 796 250.5 L 796 196.5 C 796 192.08172 799.5817 188.5 804 188.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(801 208.136)" fill="black">
+        <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="2.997" y="12" textLength="41.873">Classifi</tspan>
+        <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="44.87" y="12" textLength="39.247">cation </tspan>
+        <tspan font-family="Helvetica Neue" font-size="13" font-weight="500" x="21.6325" y="27.364" textLength="40.235">Output</tspan>
       </text>
+      <line x1="756" y1="223.5" x2="789.1" y2="223.5" marker-end="url(#SharpArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
     </g>
   </g>
 </svg>
