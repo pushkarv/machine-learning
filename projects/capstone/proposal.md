@@ -64,6 +64,7 @@ In this final section, summarize a theoretical workflow for approaching a soluti
 - Are all the resources used for this project correctly cited and referenced?
 
 **Reference**
+
 [1] https://www.kaggle.com/c/state-farm-distracted-driver-detection
 
 [2] https://www.cdc.gov/motorvehiclesafety/distracted_driving/index.html
