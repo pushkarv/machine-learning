@@ -20,7 +20,7 @@ Detecting various distracted behaviors can help improve driver behavior and prev
 _(approx. 1 paragraph)_
 
 The problem is to detect distracted driving behaviors in camera images and classify driver behavior as being in one of a pre-defined set of behavior classes, such as normal driving, texting, and drinking, for a total of 10 different classes.
-The camera images can be processed using deep learning, in particular Convolutional Neural Networks (CNN), and classification accuracy can be measured to gauge effectiveness of the model.
+The camera images can be processed using deep learning, in particular Convolutional Neural Networks (CNN), and classification accuracy can be measured to gauge effectiveness of the model.  Based on the effectiveness of the model, in reality, the model can be deployed in camera mounted devices within cars to warn users when distracted driving behavior is detected.
 
 ### Datasets and Inputs
 _(approx. 2-3 paragraphs)_
@@ -31,10 +31,12 @@ Each image size is 640x480 and is a color JPG file.
 
 This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided for evaluation purposes.
 
-The images will be pre-processed for a smaller size, with the same aspect ratio, in order to reduce processing time.  Additionally, the images will be rescaled, and will be transformed to a grey scale for model training and prediction.
 
 ### Solution Statement
 _(approx. 1 paragraph)_
+
+The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Deep Learning techniques for training and classifying images, and based on the design, will apply techniques to reduce over-fitting and   
+In the pre-processing stage, the images will be pre-processed to 224x224x3 , with the same aspect ratio, in order to reduce processing time.  Additionally, the images will be rescaled, and will be transformed to a grey scale for model training and prediction.
 
 
 In this section, clearly describe a solution to the problem. The solution should be applicable to the project domain and appropriate for the dataset(s) or input(s) given. Additionally, describe the solution thoroughly such that it is clear that the solution is quantifiable (the solution can be expressed in mathematical or logical terms) , measurable (the solution can be measured by some metric and clearly observed), and replicable (the solution can be reproduced and occurs more than once).
@@ -71,3 +73,6 @@ In this final section, summarize a theoretical workflow for approaching a soluti
 [4] https://www.nhtsa.gov/sites/nhtsa.dot.gov/files/documents/driver_electronic_device_use_in_2015_0.pdf
 [5] Realtime Distracted Driver Posture Classification - https://arxiv.org/pdf/1706.09498.pdf
 [6] https://www.kaggle.com/c/state-farm-distracted-driver-detection/download/imgs.zip
+
+---
+[7] Benchmark of Deep Learning Models on Large Healthcare MIMIC Datasets https://arxiv.org/pdf/1710.08531.pdf
