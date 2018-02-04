@@ -65,10 +65,17 @@ In this final section, summarize a theoretical workflow for approaching a soluti
 
 **Reference**
 [1] https://www.kaggle.com/c/state-farm-distracted-driver-detection
+
 [2] https://www.cdc.gov/motorvehiclesafety/distracted_driving/index.html
+
 [3] https://www.nhtsa.gov/risky-driving/distracted-driving
+
 [4] https://www.nhtsa.gov/sites/nhtsa.dot.gov/files/documents/driver_electronic_device_use_in_2015_0.pdf
+
 [5] Realtime Distracted Driver Posture Classification - https://arxiv.org/pdf/1706.09498.pdf
+
 [6] https://www.kaggle.com/c/state-farm-distracted-driver-detection/download/imgs.zip
+
 [7] Benchmark of Deep Learning Models on Large Healthcare MIMIC Datasets, https://arxiv.org/pdf/1710.08531.pdf
+
 [8] Metrics To Evaluate Machine Learning Algorithms in Python, https://machinelearningmastery.com/metrics-evaluate-machine-learning-algorithms-python/
