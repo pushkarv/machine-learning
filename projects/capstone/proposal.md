@@ -49,6 +49,8 @@ In this section, provide the details for a benchmark model or result that relate
 ### Evaluation Metrics
 _(approx. 1-2 paragraphs)_
 
+Classification accuracy
+
 In this section, propose at least one evaluation metric that can be used to quantify the performance of both the benchmark model and the solution model. The evaluation metric(s) you propose should be appropriate given the context of the data, the problem statement, and the intended solution. Describe how the evaluation metric(s) are derived and provide an example of their mathematical representations (if applicable). Complex evaluation metrics should be clearly defined and quantifiable (can be expressed in mathematical or logical terms).
 
 ### Project Design
@@ -75,4 +77,5 @@ In this final section, summarize a theoretical workflow for approaching a soluti
 [6] https://www.kaggle.com/c/state-farm-distracted-driver-detection/download/imgs.zip
 
 ---
-[7] Benchmark of Deep Learning Models on Large Healthcare MIMIC Datasets https://arxiv.org/pdf/1710.08531.pdf
+[7] Benchmark of Deep Learning Models on Large Healthcare MIMIC Datasets, https://arxiv.org/pdf/1710.08531.pdf
+[8] Metrics To Evaluate Machine Learning Algorithms in Python, https://machinelearningmastery.com/metrics-evaluate-machine-learning-algorithms-python/
