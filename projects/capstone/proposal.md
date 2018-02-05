@@ -32,7 +32,6 @@ This dataset is being used since it is a public dataset provided by StateFarm an
 The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Convolutional Neural Networks (CNNs) since the input data is a set of images, i.e. 2-D tensors, and CNNs are best for such input.  In the pre-processing stage, the images will be pre-processed to 224x224x3 , with the same aspect ratio, in order to reduce processing time.  The images will be rescaled, and will be transformed to a grey scale for model training and prediction.  Additionally, the CNN may use pooling to allow for position invariance, softmax fox classifying based on likelihood since the output will  based on a set of mutually exclusive classes, and possibly use regularization methods such as "dropout" to gain processing efficiency and reduce overfitting.   The output will be chosen based on maximum likelihood of a class and compared with target label, and classification accuracy percentage will be calculated.
 
 ### Benchmark Model
-_(approximately 1-2 paragraphs)_
 
 The benchmark model that will be used are the results obtained in the whitepaper, [5], on the same Statefarm dataset.
 The whitepaper entitled, "Realtime Distracted Driver Posture Classification", uses the same Statefarm dataset trained with genetically weighted ensemble of CNNs to obtain a classification accuracy of 95.98%.
@@ -40,12 +39,10 @@ The whitepaper entitled, "Realtime Distracted Driver Posture Classification", us
 CNNs will also be used here with a different design to obtain a classification accuracy and compared to the one in the whitepaper to determine whether the CNN design is good or needs to be improved.  Further research will be done to determine whether a more complex CNN is desirable or an ensemble is more appropriate.
 
 ### Evaluation Metrics
-_(approx. 1-2 paragraphs)_
 
 Classification accuracy will be used as a primary metric to evaluate the performance of the trained model.   The accuracy will be simply based on the ratio of the number of images classified accurately to the total number of images.  Each image will be classified accurately if the class identified by the model is the same as the label for the image.  This percentage will be used to compare to the benchmark described above.
 
 ### Project Design
-_(approx. 1 page)_
 
 One possible design is the use of a Convolution Neural Network (CNN) as shown in the diagram below.  The input image can be rescaled to a smaller size to reduce computation cost, dropout layers can be used to compensate for overfitting, pooling can be used to allow for translation invariance in the images, and a softmax function can be used to provide likelihoods for the output classes.  The set of layers that provide convolution, dropout and pooling can be repeated multiple times to adjust for accuracy;  the number of instances of this set of layers will be researched further to determine what provides greater classification accuracy. 
 
