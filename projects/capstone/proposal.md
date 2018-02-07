@@ -22,8 +22,23 @@ The camera images can be processed using deep learning, in particular Convolutio
 ### Datasets and Inputs
 
 The input dataset will be taken from the Kaggle competition for distracted driving, as provided in reference [6].
-The dataset contains 22424 training images and 79726 testing images, created by StateFarm with various distracted driver positions.  The training images are already stored in folders representing a specific class.
-Each image size is 640x480 and is a color JPG file.
+The dataset contains 22424 training images and 79726 testing images, created by StateFarm with various distracted driver positions.  The training images are already stored in folders representing a specific class.  Each image size is 640x480 and is a color JPG file.  There are a total of 10 classes for which training images are provided and a large set of unlabeled test images is also provided.
+The 10 classes are as follows and number of training images provided for each class:
+
+      c0: safe driving  (2489 images)
+      c1: texting - right  (2267 images)
+      c2: talking on the phone - right (2317 images)
+      c3: texting - left (2346 images)
+      c4: talking on the phone - left (2326 images)
+      c5: operating the radio (2312 images)
+      c6: drinking (2325 images)
+      c7: reaching behind (2002 images)
+      c8: hair and makeup (1911 images)
+      c9: talking to passenger (2129 images)
+
+Overall the training dataset seems balanced, other than the `c7 & c8` classes that seem to have the least number of images.  This may lead to bit more bias towards class `c0` having the most number of samples, hence classification accuracy for `c0` may be higher, and similarly for some of the other classes such as `c2-c6`.  The diagram shows a visual of the distribution of the count by class.
+
+![Count by Class](./data-count-by-class.png)
 
 This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided for evaluation purposes.
 
@@ -44,7 +59,7 @@ Classification accuracy will be used as a primary metric to evaluate the perform
 
 ### Project Design
 
-One possible design is the use of a Convolution Neural Network (CNN) as shown in the diagram below.  The input image can be rescaled to a smaller size to reduce computation cost, dropout layers can be used to compensate for overfitting, pooling can be used to allow for translation invariance in the images, and a softmax function can be used to provide likelihoods for the output classes.  The set of layers that provide convolution, dropout and pooling can be repeated multiple times to adjust for accuracy;  the number of instances of this set of layers will be researched further to determine what provides greater classification accuracy. 
+One possible design is the use of a Convolution Neural Network (CNN) as shown in the diagram below.  The input image can be rescaled to a smaller size to reduce computation cost, dropout layers can be used to compensate for overfitting, pooling can be used to allow for translation invariance in the images, and a softmax function can be used to provide likelihoods for the output classes.  The set of layers that provide convolution, dropout and pooling can be repeated multiple times to adjust for accuracy;  the number of instances of this set of layers will be researched further to determine what provides greater classification accuracy.
 
 ![Project Design](./cnn-design-1.svg)
 
