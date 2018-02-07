@@ -38,6 +38,8 @@ The 10 classes are as follows and number of training images provided for each cl
 
 Overall the training dataset seems balanced, other than the `c7 & c8` classes that seem to have the least number of images.  This may lead to bit more bias towards class `c0` having the most number of samples, hence classification accuracy for `c0` may be higher, and similarly for some of the other classes such as `c2-c6`.  The diagram shows a visual of the distribution of the count by class.
 
+In order to alleviate in imbalances, the training dataset will be trimmed to ensure equal number of images exist for all classes.
+
 ![Count by Class](./data-count-by-class.png)
 
 This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided for evaluation purposes.
@@ -48,14 +50,15 @@ The solution will consist of a machine learning pipeline with pre-processing, tr
 
 ### Benchmark Model
 
-The benchmark model that will be used are the results obtained in the whitepaper, [5], on the same Statefarm dataset.
+There are a couple of benchmarks that can be used to evaluate the performance of learning model.  The first benchmark that can be used is a basic CNN with a single layer without any additional components such as pooling, dropouts or softmax activation functions.   This will set a baseline for how a simple model will perform.  A secondary benchmark model that can be used are the results obtained in the whitepaper, [5], on the same Statefarm dataset.
+
 The whitepaper entitled, "Realtime Distracted Driver Posture Classification", uses the same Statefarm dataset trained with genetically weighted ensemble of CNNs to obtain a classification accuracy of 95.98%.
 
 CNNs will also be used here with a different design to obtain a classification accuracy and compared to the one in the whitepaper to determine whether the CNN design is good or needs to be improved.  Further research will be done to determine whether a more complex CNN is desirable or an ensemble is more appropriate.
 
 ### Evaluation Metrics
 
-Classification accuracy will be used as a primary metric to evaluate the performance of the trained model.   The accuracy will be simply based on the ratio of the number of images classified accurately to the total number of images.  Each image will be classified accurately if the class identified by the model is the same as the label for the image.  This percentage will be used to compare to the benchmark described above.
+Classification accuracy will be used as a primary metric to evaluate the performance of the trained model.   The accuracy will be simply based on the ratio of the number of images classified accurately to the total number of images.  Each image will be classified accurately if the class identified by the model is the same as the label for the image.  This percentage will be used to compare to the benchmark described above.  Since the training dataset will be defined to be balanced, there is no expected skewness, hence no additional adjustments necessary for evaluating performance.
 
 ### Project Design
 
