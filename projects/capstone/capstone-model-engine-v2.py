@@ -7,9 +7,26 @@
 
 # In[1]:
 
+from keras.callbacks import ModelCheckpoint
+from keras.utils import np_utils
+from keras.models import load_model
+import datetime, random, pickle
+from sklearn.datasets import load_files
+from keras.utils import np_utils
+import numpy as np
+from glob import glob
+import os
+from sklearn.model_selection import train_test_split
+
+import tensorflow as tf
+
+
 print("Starting Model Learning using multiple models to determine best model")
 
-NUM_EPOCHS = 250
+file_root='C:/Users/pushkar/ML/machine-learning/projects/capstone/saved_models/'
+prefix_str = str(datetime.date.today()) + str(random.randint(1,100))
+
+NUM_EPOCHS = 1000
 
 print("Number of Epochs: ", NUM_EPOCHS)
 
@@ -35,14 +52,6 @@ def getClass(value):
 # In[2]:
 
 
-from sklearn.datasets import load_files
-from keras.utils import np_utils
-import numpy as np
-from glob import glob
-import os
-from sklearn.model_selection import train_test_split
-
-import tensorflow as tf
 hello = tf.constant('Hello, TensorFlow!')
 sess = tf.Session()
 print(sess.run(hello))
@@ -165,14 +174,78 @@ def paths_to_tensor(img_paths):
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
+train_tensor_file = file_root + 'train_tensors.hdf5'
+test_tensor_file = file_root + 'test_tensors.hdf5'
+
 train_tensors = paths_to_tensor(train_files).astype('float32')/255
 test_tensors = paths_to_tensor(test_files).astype('float32')/255
+
+#if (os.path.exists(train_tensor_file)):
+#	with open(train_tensor_file, 'rb') as file_pi:
+#		train_tensors = pickle.load(file_pi)
+#else:
+#	train_tensors = paths_to_tensor(train_files).astype('float32')/255
+#	with open(train_tensor_file, 'wb') as file_pi:
+#		pickle.dump(train_tensors, file_pi)
+
+i#f (os.path.exists(test_tensor_file)):
+	#with open(test_tensor_file, 'rb') as file_pi:
+	#	test_tensors = pickle.load(file_pi)
+#else:
+#	test_tensors = paths_to_tensor(test_files).astype('float32')/255
+#	with open(test_tensor_file, 'wb') as file_pi:
+#		pickle.dump(test_tensors, file_pi)
+
 #predict_tensors = paths_to_tensor(predict_files).astype('float32')/255
 
 
 # ## Baseline Model Architecture
 
 # In[56]:
+
+import matplotlib.pyplot as plt
+import numpy as py
+
+def predict_distraction(model):
+    # get index of predicted distraction for each image in test set
+    distraction_predictions = [np.argmax(model.predict(np.expand_dims(tensor, axis=0))) for tensor in test_tensors]
+
+    # report test accuracy
+    test_accuracy = 100*np.sum(np.array(distraction_predictions)==np.argmax(test_targets, axis=0))/len(distraction_predictions)
+    return test_accuracy
+
+
+def plot_learning_history(m):
+    history = m['history']
+    # history for accuracy
+
+    fig, ax = plt.subplots()
+    ax.plot(history.history['acc'])
+    ax.plot(history.history['val_acc'])
+    plt.title(m['model_name'] + ' model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    #plt.show()
+    prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1,100))
+    fig.savefig(file_root + prefix_str + '_model_accuracy.png')
+    plt.close(fig)
+
+    #  history for loss
+    fig, ax = plt.subplots()
+    ax.plot(history.history['loss'])
+    ax.plot(history.history['val_loss'])
+    plt.title(m['model_name'] + ' model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    #plt.show()
+    fig.savefig(file_root + prefix_str + '_model_loss.png', format="png")
+    plt.close(fig)
+
+    print("Model: " + m['model_name'])
+    test_accuracy = predict_distraction(m['model'])
+    print('Test accuracy: %.4f%%' % test_accuracy)
 
 
 from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, BatchNormalization, ActivityRegularization
@@ -300,9 +373,88 @@ def create_model6():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-models = [create_base_model(), create_model1(), create_model2(), create_model3(),
-         create_model4(), create_model5(), create_model6() ]
+def create_model7():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dropout(.1))
+    model.add(Dense(units=10, activation='softmax', activity_regularizer=regularizers.l1(0.01)))
+    model.add(Dropout(.2))
+    model.add(Dense(units=10, activation='softmax', activity_regularizer=regularizers.l1(0.01)))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 2 softmax layers + Dropouts + activity_regularizers in dense layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
+def create_model8():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dropout(.1))
+    model.add(Dense(units=10, activation='softmax', kernel_regularizer=regularizers.l1(0.01)))
+    model.add(Dropout(.2))
+    model.add(Dense(units=10, activation='softmax', kernel_regularizer=regularizers.l1(0.01)))
+    model.add(Dropout(.3))
+    model.add(Dense(units=10, activation='softmax', kernel_regularizer=regularizers.l1(0.01)))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers w/ for each Conv2D + 3 softmax layers + Dropouts + kernel_regularizers in dense layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+def create_model9():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(Dropout(.1))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(Dropout(.15))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(Dropout(.20))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dropout(.1))
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dropout(.2))
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dropout(.3))
+    model.add(Dense(units=10, activation='softmax'))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers w/ Batch Normalization for each Conv2D + 3 softmax layers + Dropouts")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+def create_model10():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dense(units=10, activation='softmax'))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+
+#models = [create_base_model(), create_model1(), create_model2(), create_model3(),
+#         create_model4(), create_model5(), create_model6() ]
+
+models = [create_base_model(), create_model10(), create_model1(), create_model2(), create_model8(), create_model9()]
+#, create_model9(), create_model7(), create_model8()]
 
 for m in models:
     print (m)
@@ -317,9 +469,6 @@ for m in models:
 # In[61]:
 
 
-from keras.callbacks import ModelCheckpoint
-from keras.utils import np_utils
-import datetime, random, pickle
 
 print("Train Targets", train_targets)
 print ("Test Targets", test_targets)
@@ -331,8 +480,6 @@ print ("Test Targets One-hot encoded", test_targets_onehot)
 print(train_targets_onehot.shape)
 print(test_targets_onehot.shape)
 
-file_root='C:/Users/pushkar/ML/machine-learning/projects/capstone/saved_models/'
-prefix_str = str(datetime.date.today()) + str(random.randint(1,100))
 
 print ("Number of Epochs: ", NUM_EPOCHS)
 
@@ -340,6 +487,7 @@ def train_model(_epochs, _model):
     history = _model.fit(train_tensors, train_targets_onehot, validation_split=.20,
           epochs=_epochs, batch_size=32, callbacks=[checkpointer], verbose=2)
     return history
+
 
 for m in models:
     print ("Training Model: ", m['model_name'])
@@ -349,64 +497,6 @@ for m in models:
     m['history'] = train_model(NUM_EPOCHS,m['model'])
     with open(file_root + prefix_str + '_trainHistoryDict', 'wb') as file_pi:
         pickle.dump(m['history'].history, file_pi)
+    plot_learning_history(m)
 
 
-
-
-# In[69]:
-
-
-import matplotlib.pyplot as plt
-import numpy as py
-
-def predict_distraction(model):
-    # get index of predicted distraction for each image in test set
-    distraction_predictions = [np.argmax(model.predict(np.expand_dims(tensor, axis=0))) for tensor in test_tensors]
-
-    # report test accuracy
-    test_accuracy = 100*np.sum(np.array(distraction_predictions)==np.argmax(test_targets, axis=0))/len(distraction_predictions)
-    return test_accuracy
-
-
-for m in models:
-    history = m['history']
-    # history for accuracy
-
-    fig, ax = plt.subplots()
-    ax.plot(history.history['acc'])
-    ax.plot(history.history['val_acc'])
-    plt.title(m['model_name'] + ' model accuracy')
-    plt.ylabel('accuracy')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    #plt.show()
-    prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1,100))
-    fig.savefig(file_root + prefix_str + '_model_accuracy.png')
-    plt.close(fig)
-
-    #  history for loss
-    fig, ax = plt.subplots()
-    ax.plot(history.history['loss'])
-    ax.plot(history.history['val_loss'])
-    plt.title(m['model_name'] + ' model loss')
-    plt.ylabel('loss')
-    plt.xlabel('epoch')
-    plt.legend(['train', 'test'], loc='upper left')
-    #plt.show()
-    fig.savefig(file_root + prefix_str + '_model_loss.png', format="png")
-    plt.close(fig)
-
-    print("Model: " + m['model_name'])
-    test_accuracy = predict_distraction(m['model'])
-    print('Test accuracy: %.4f%%' % test_accuracy)
-
-
-#    p = m.predict(test_tensors)
-#print (p)
-#z=np.argmax(p,axis=1)
-#print("z = ", z)
-# for i in range(1,15):
-#     img = np.squeeze(np.array(test_tensors[i]))
-#     displayImage(img)
-#     print("Predicted class", getClass(z[i]))
-#     print ("Actual Class", getClass(test_targets[i]))
