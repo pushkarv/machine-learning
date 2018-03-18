@@ -17,6 +17,19 @@ import numpy as np
 from glob import glob
 import os
 from sklearn.model_selection import train_test_split
+from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, BatchNormalization, ActivityRegularization
+from keras.layers import Dropout, Flatten, Dense
+from keras.models import Sequential
+from keras.utils import plot_model
+from keras import regularizers
+import sys
+import cv2
+import matplotlib.pyplot as plt
+from keras.preprocessing import image
+from tqdm import tqdm
+from PIL import ImageFile
+import matplotlib.pyplot as plt
+import numpy as py
 
 import tensorflow as tf
 
@@ -112,8 +125,6 @@ print(len(test_files))
 # In[3]:
 
 
-import cv2
-import matplotlib.pyplot as plt
 #get_ipython().magic('matplotlib inline')
 
 def displayImage(sample_image):
@@ -143,8 +154,6 @@ for i in range(1,5):
 # Tensor will be (1,224,224,3)
 
 #Adopted from the Deep Learning Project
-from keras.preprocessing import image
-from tqdm import tqdm
 
 print ("Creating image tensors")
 
@@ -171,7 +180,6 @@ def paths_to_tensor(img_paths):
 
 #Rescale the images
 
-from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 train_tensor_file = file_root + 'train_tensors.hdf5'
@@ -203,8 +211,6 @@ i#f (os.path.exists(test_tensor_file)):
 
 # In[56]:
 
-import matplotlib.pyplot as plt
-import numpy as py
 
 def predict_distraction(model):
     # get index of predicted distraction for each image in test set
@@ -248,12 +254,6 @@ def plot_learning_history(m):
     print('Test accuracy: %.4f%%' % test_accuracy)
 
 
-from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, BatchNormalization, ActivityRegularization
-from keras.layers import Dropout, Flatten, Dense
-from keras.models import Sequential
-from keras.utils import plot_model
-from keras import regularizers
-import sys
 
 print ("Creating Models")
 
