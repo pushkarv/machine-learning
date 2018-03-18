@@ -23,7 +23,7 @@ import tensorflow as tf
 
 print("Starting Model Learning using multiple models to determine best model")
 
-file_root='~/saved_models/'
+file_root='/home/ubuntu/saved_models/'
 prefix_str = str(datetime.date.today()) + str(random.randint(1,100))
 
 NUM_EPOCHS = 1000
