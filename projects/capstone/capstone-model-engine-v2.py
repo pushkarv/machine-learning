@@ -449,11 +449,26 @@ def create_model10():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
+def create_model11():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dense(units=10, activation='softmax'))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 2 dense sofmax layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
 
 #models = [create_base_model(), create_model1(), create_model2(), create_model3(),
 #         create_model4(), create_model5(), create_model6() ]
 
-models = [create_base_model(), create_model10(), create_model1(), create_model2(), create_model8(), create_model9()]
+models = [create_model8(), create_model9(), create_model11(), create_model2()]
+
 #, create_model9(), create_model7(), create_model8()]
 
 for m in models:
