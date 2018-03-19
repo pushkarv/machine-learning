@@ -39,7 +39,7 @@ print("Starting Model Learning using multiple models to determine best model")
 file_root='/home/ubuntu/saved_models/'
 prefix_str = str(datetime.date.today()) + str(random.randint(1,100))
 
-NUM_EPOCHS = 1000
+NUM_EPOCHS = 2000
 
 print("Number of Epochs: ", NUM_EPOCHS)
 
@@ -495,11 +495,7 @@ def create_model13():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-#models = [create_base_model(), create_model1(), create_model2(), create_model3(),
-#         create_model4(), create_model5(), create_model6() ]
-
-models = [create_base_model(), create_model10(), create_model1(), create_model2(), create_model8(), create_model9()]
-#, create_model9(), create_model7(), create_model8()]
+models = [create_base_model(), create_model11(), create_model12(), create_model13()]
 
 for m in models:
     print (m)
