@@ -563,7 +563,7 @@ def create_model17():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-models = [create_model14(), create_model15(), create_model16(), create_model17()]
+models = [create_model15(), create_model16(), create_model17()]
 
 for m in models:
     print (m)

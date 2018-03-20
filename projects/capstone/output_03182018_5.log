@@ -1,0 +1,271 @@
+Starting Model Learning using multiple models to determine best model
+('Number of Epochs: ', 1000)
+Hello, TensorFlow!
+Loading Images...
+('Number of Categories: ', 10)
+('Categories: ', ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9'])
+Number of images by category: 
+c0:2489
+c1:2267
+c2:2317
+c3:2346
+c4:2326
+c5:2312
+c6:2325
+c7:2002
+c8:1911
+c9:2129
+((17939,), (4485,), (17939,), (4485,))
+4485
+3
+texting - left
+3
+texting - left
+2
+talking on the phone - right
+5
+operating the radio
+Creating image tensors
+['images/train/c2/img_35223.jpg' 'images/train/c3/img_589.jpg'
+ 'images/train/c3/img_27064.jpg' ... 'images/train/c7/img_30031.jpg'
+ 'images/train/c1/img_38254.jpg' 'images/train/c9/img_79782.jpg']
+['images/train/c9/img_63600.jpg' 'images/train/c8/img_81710.jpg'
+ 'images/train/c6/img_59165.jpg' ... 'images/train/c8/img_5913.jpg'
+ 'images/train/c2/img_54317.jpg' 'images/train/c0/img_88075.jpg']
+Creating Models
+Base Model
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_1 (Conv2D)            (None, 221, 221, 10)      490       
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 55, 55, 10)        0         
+_________________________________________________________________
+global_average_pooling2d_1 ( (None, 10)                0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                110       
+=================================================================
+Total params: 600
+Trainable params: 600
+Non-trainable params: 0
+_________________________________________________________________
+create_model10 - Multiple conv2d layers + 3 dense sofmax layers
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_2 (Conv2D)            (None, 221, 221, 10)      490       
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 55, 55, 10)        0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 52, 52, 10)        1610      
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 13, 13, 10)        0         
+_________________________________________________________________
+conv2d_4 (Conv2D)            (None, 10, 10, 10)        1610      
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 2, 2, 10)          0         
+_________________________________________________________________
+global_average_pooling2d_2 ( (None, 10)                0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 10)                110       
+_________________________________________________________________
+dense_3 (Dense)              (None, 10)                110       
+_________________________________________________________________
+dense_4 (Dense)              (None, 10)                110       
+=================================================================
+Total params: 4,040
+Trainable params: 4,040
+Non-trainable params: 0
+_________________________________________________________________
+Model1 with Batch Normalization
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_5 (Conv2D)            (None, 221, 221, 10)      490       
+_________________________________________________________________
+batch_normalization_1 (Batch (None, 221, 221, 10)      40        
+_________________________________________________________________
+max_pooling2d_5 (MaxPooling2 (None, 55, 55, 10)        0         
+_________________________________________________________________
+global_average_pooling2d_3 ( (None, 10)                0         
+_________________________________________________________________
+dense_5 (Dense)              (None, 10)                110       
+=================================================================
+Total params: 640
+Trainable params: 620
+Non-trainable params: 20
+_________________________________________________________________
+Model2 - Multiple conv2d layers
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_6 (Conv2D)            (None, 221, 221, 10)      490       
+_________________________________________________________________
+max_pooling2d_6 (MaxPooling2 (None, 55, 55, 10)        0         
+_________________________________________________________________
+conv2d_7 (Conv2D)            (None, 52, 52, 10)        1610      
+_________________________________________________________________
+max_pooling2d_7 (MaxPooling2 (None, 13, 13, 10)        0         
+_________________________________________________________________
+global_average_pooling2d_4 ( (None, 10)                0         
+_________________________________________________________________
+dense_6 (Dense)              (None, 10)                110       
+=================================================================
+Total params: 2,210
+Trainable params: 2,210
+Non-trainable params: 0
+_________________________________________________________________
+create_model8 - Multiple conv2d layers w/ for each Conv2D + 3 softmax layers + Dropouts + kernel_regularizers in dense layers
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_8 (Conv2D)            (None, 221, 221, 10)      490       
+_________________________________________________________________
+max_pooling2d_8 (MaxPooling2 (None, 55, 55, 10)        0         
+_________________________________________________________________
+conv2d_9 (Conv2D)            (None, 52, 52, 10)        1610      
+_________________________________________________________________
+max_pooling2d_9 (MaxPooling2 (None, 13, 13, 10)        0         
+_________________________________________________________________
+conv2d_10 (Conv2D)           (None, 10, 10, 10)        1610      
+_________________________________________________________________
+max_pooling2d_10 (MaxPooling (None, 2, 2, 10)          0         
+_________________________________________________________________
+global_average_pooling2d_5 ( (None, 10)                0         
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 10)                0         
+_________________________________________________________________
+dense_7 (Dense)              (None, 10)                110       
+_________________________________________________________________
+dropout_2 (Dropout)          (None, 10)                0         
+_________________________________________________________________
+dense_8 (Dense)              (None, 10)                110       
+_________________________________________________________________
+dropout_3 (Dropout)          (None, 10)                0         
+_________________________________________________________________
+dense_9 (Dense)              (None, 10)                110       
+=================================================================
+Total params: 4,040
+Trainable params: 4,040
+Non-trainable params: 0
+_________________________________________________________________
+create_model9 - Multiple conv2d layers w/ Batch Normalization for each Conv2D + 3 softmax layers + Dropouts
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_11 (Conv2D)           (None, 221, 221, 10)      490       
+_________________________________________________________________
+dropout_4 (Dropout)          (None, 221, 221, 10)      0         
+_________________________________________________________________
+max_pooling2d_11 (MaxPooling (None, 55, 55, 10)        0         
+_________________________________________________________________
+conv2d_12 (Conv2D)           (None, 52, 52, 10)        1610      
+_________________________________________________________________
+dropout_5 (Dropout)          (None, 52, 52, 10)        0         
+_________________________________________________________________
+max_pooling2d_12 (MaxPooling (None, 13, 13, 10)        0         
+_________________________________________________________________
+conv2d_13 (Conv2D)           (None, 10, 10, 10)        1610      
+_________________________________________________________________
+dropout_6 (Dropout)          (None, 10, 10, 10)        0         
+_________________________________________________________________
+max_pooling2d_13 (MaxPooling (None, 2, 2, 10)          0         
+_________________________________________________________________
+global_average_pooling2d_6 ( (None, 10)                0         
+_________________________________________________________________
+dropout_7 (Dropout)          (None, 10)                0         
+_________________________________________________________________
+dense_10 (Dense)             (None, 10)                110       
+_________________________________________________________________
+dropout_8 (Dropout)          (None, 10)                0         
+_________________________________________________________________
+dense_11 (Dense)             (None, 10)                110       
+_________________________________________________________________
+dropout_9 (Dropout)          (None, 10)                0         
+_________________________________________________________________
+dense_12 (Dense)             (None, 10)                110       
+=================================================================
+Total params: 4,040
+Trainable params: 4,040
+Non-trainable params: 0
+_________________________________________________________________
+{'model': <keras.models.Sequential object at 0x7f9745d70450>, 'model_name': 'create_base_model'}
+{'model': <keras.models.Sequential object at 0x7f974424c4d0>, 'model_name': 'create_model10'}
+{'model': <keras.models.Sequential object at 0x7f9745c3b910>, 'model_name': 'create_model1'}
+{'model': <keras.models.Sequential object at 0x7f974430bbd0>, 'model_name': 'create_model2'}
+{'model': <keras.models.Sequential object at 0x7f9744204250>, 'model_name': 'create_model8'}
+{'model': <keras.models.Sequential object at 0x7f97440c8ad0>, 'model_name': 'create_model9'}
+('Train Targets', array([2, 3, 3, ..., 7, 1, 9]))
+('Test Targets', array([9, 8, 6, ..., 8, 2, 0]))
+('Train Targets One-hot encoded', array([[0., 0., 1., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 1., 0., 0.],
+       [0., 1., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 1.]]))
+('Test Targets One-hot encoded', array([[0., 0., 0., ..., 0., 0., 1.],
+       [0., 0., 0., ..., 0., 1., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 1., 0.],
+       [0., 0., 1., ..., 0., 0., 0.],
+       [1., 0., 0., ..., 0., 0., 0.]]))
+(17939, 10)
+(4485, 10)
+('Number of Epochs: ', 1000)
+('Training Model: ', 'create_base_model')
+Train on 14351 samples, validate on 3588 samples
+Epoch 1/1000
+ - 20s - loss: 2.3032 - acc: 0.1089 - val_loss: 2.2997 - val_acc: 0.1115
+
+Epoch 00001: val_loss improved from inf to 2.29971, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 2/1000
+ - 19s - loss: 2.3006 - acc: 0.1107 - val_loss: 2.2990 - val_acc: 0.1020
+
+Epoch 00002: val_loss improved from 2.29971 to 2.29901, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 3/1000
+ - 19s - loss: 2.2998 - acc: 0.1142 - val_loss: 2.3026 - val_acc: 0.1001
+
+Epoch 00003: val_loss did not improve
+Epoch 4/1000
+ - 19s - loss: 2.2992 - acc: 0.1132 - val_loss: 2.2979 - val_acc: 0.1310
+
+Epoch 00004: val_loss improved from 2.29901 to 2.29788, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 5/1000
+ - 19s - loss: 2.2981 - acc: 0.1124 - val_loss: 2.2956 - val_acc: 0.1056
+
+Epoch 00005: val_loss improved from 2.29788 to 2.29560, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 6/1000
+ - 19s - loss: 2.2968 - acc: 0.1185 - val_loss: 2.2967 - val_acc: 0.1084
+
+Epoch 00006: val_loss did not improve
+Epoch 7/1000
+ - 19s - loss: 2.2954 - acc: 0.1226 - val_loss: 2.2948 - val_acc: 0.1341
+
+Epoch 00007: val_loss improved from 2.29560 to 2.29478, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 8/1000
+ - 19s - loss: 2.2950 - acc: 0.1239 - val_loss: 2.2927 - val_acc: 0.1051
+
+Epoch 00008: val_loss improved from 2.29478 to 2.29273, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 9/1000
+ - 19s - loss: 2.2931 - acc: 0.1238 - val_loss: 2.2977 - val_acc: 0.1168
+
+Epoch 00009: val_loss did not improve
+Epoch 10/1000
+ - 19s - loss: 2.2920 - acc: 0.1263 - val_loss: 2.2951 - val_acc: 0.1274
+
+Epoch 00010: val_loss did not improve
+Epoch 11/1000
+ - 19s - loss: 2.2905 - acc: 0.1305 - val_loss: 2.2927 - val_acc: 0.1054
+
+Epoch 00011: val_loss improved from 2.29273 to 2.29269, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 12/1000
+ - 19s - loss: 2.2888 - acc: 0.1296 - val_loss: 2.2995 - val_acc: 0.1324
+
+Epoch 00012: val_loss did not improve
+Epoch 13/1000
+ - 19s - loss: 2.2881 - acc: 0.1344 - val_loss: 2.2863 - val_acc: 0.1165
+
+Epoch 00013: val_loss improved from 2.29269 to 2.28634, saving model to /home/ubuntu/saved_models/create_base_model2018-03-1851_model.best.from_scratch.hdf5
+Epoch 14/1000
