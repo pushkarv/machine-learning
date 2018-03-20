@@ -504,9 +504,9 @@ def create_model14():
     model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
     model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
     model.add(GlobalAveragePooling2D())
-    model.add(Dense(units=10, activation='softmax'.activity_regularizer=regularizers.l1(0.01)))
     model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.01)))
-    model.add(Dense(units=10, activation='softmax'activity_regularizer=regularizers.l1(0.01)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.01)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.01)))
     print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
     model.summary()
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
@@ -546,7 +546,24 @@ def create_model16():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-models = [create_model14(), create_model15(), create_model16()]
+def create_model17():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dense(units=10, activation='softmax'))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.01)))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+models = [create_model14(), create_model15(), create_model16(), create_model17()]
 
 for m in models:
     print (m)
