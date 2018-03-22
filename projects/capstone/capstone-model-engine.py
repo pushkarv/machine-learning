@@ -3,10 +3,8 @@
 
 # # Distracted Driving Detection
 
-# ## Load the Data
-
-# In[1]:
 import config
+import tensorflow as tf
 
 from keras.callbacks import ModelCheckpoint
 from keras.utils import np_utils
@@ -18,15 +16,26 @@ import numpy as np
 from glob import glob
 import os
 from sklearn.model_selection import train_test_split
-
-import tensorflow as tf
+from keras import optimizers
+from keras.preprocessing import image
+from tqdm import tqdm
+from PIL import ImageFile
+import cv2
+import matplotlib.pyplot as plt
+from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, BatchNormalization, ActivityRegularization
+from keras.layers import Dropout, Flatten, Dense
+from keras.models import Sequential
+from keras.utils import plot_model
+from keras import regularizers
+import sys
 
 
 print("Starting Model Learning using multiple models to determine best model")
 
 prefix_str = str(datetime.date.today()) + str(random.randint(1,100))
 
-NUM_EPOCHS = 200
+NUM_EPOCHS = 150
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 print("Number of Epochs: ", NUM_EPOCHS)
 
@@ -66,16 +75,16 @@ def loadImages(path):
         target_names = data['target_names']
         return files, targets, target_names
 
+		# ## Load the Data
+
 path = "images/train"
 files,targets,target_names = loadImages(path)
-predict_files = np.array(glob("images/test/*"))[1:10]
+#predict_files = np.array(glob("images/test/*"))[1:10]
 print('Number of Categories: ', len(target_names))
 print('Categories: ', target_names)
 print('Number of images by category: ')
 for c in target_names:
     print(c + ':' + str(len( os.listdir(path+'/'+c))))
-    # train_data = np.vstack((files, targets)).T
-    # print(train_data.shape)
 
 #Split the original training sets into training & validation sets
 train_files, test_files, train_targets, test_targets = train_test_split(files, targets, test_size=0.20, random_state=40)
@@ -89,8 +98,6 @@ print(len(test_files))
 # In[3]:
 
 
-import cv2
-import matplotlib.pyplot as plt
 #get_ipython().magic('matplotlib inline')
 
 def displayImage(sample_image):
@@ -107,21 +114,11 @@ for i in range(1,5):
     print(getClass(train_targets[i]))
     displayImage(sample_image)
 
-
-
-# In[4]:
-
-
-
-#(nb_samples,rows,columns,channels)
-#nb_samples - total number of images
 # Resize image to 224x224
 # Convert image to an array -> resized to a 4D tensor used by Keras CNN
 # Tensor will be (1,224,224,3)
 
 #Adopted from the Deep Learning Project
-from keras.preprocessing import image
-from tqdm import tqdm
 
 print ("Creating image tensors")
 
@@ -148,27 +145,9 @@ def paths_to_tensor(img_paths):
 
 #Rescale the images
 
-from PIL import ImageFile
-ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 train_tensors = paths_to_tensor(train_files).astype('float32')/255
 test_tensors = paths_to_tensor(test_files).astype('float32')/255
-
-#if (os.path.exists(train_tensor_file)):
-#	with open(train_tensor_file, 'rb') as file_pi:
-#		train_tensors = pickle.load(file_pi)
-#else:
-#	train_tensors = paths_to_tensor(train_files).astype('float32')/255
-#	with open(train_tensor_file, 'wb') as file_pi:
-#		pickle.dump(train_tensors, file_pi)
-
-i#f (os.path.exists(test_tensor_file)):
-	#with open(test_tensor_file, 'rb') as file_pi:
-	#	test_tensors = pickle.load(file_pi)
-#else:
-#	test_tensors = paths_to_tensor(test_files).astype('float32')/255
-#	with open(test_tensor_file, 'wb') as file_pi:
-#		pickle.dump(test_tensors, file_pi)
 
 #predict_tensors = paths_to_tensor(predict_files).astype('float32')/255
 
@@ -177,8 +156,6 @@ i#f (os.path.exists(test_tensor_file)):
 
 # In[56]:
 
-import matplotlib.pyplot as plt
-import numpy as py
 
 def predict_distraction(model):
     # get index of predicted distraction for each image in test set
@@ -222,12 +199,6 @@ def plot_learning_history(m):
     print('Test accuracy: %.4f%%' % test_accuracy)
 
 
-from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D, BatchNormalization, ActivityRegularization
-from keras.layers import Dropout, Flatten, Dense
-from keras.models import Sequential
-from keras.utils import plot_model
-from keras import regularizers
-import sys
 
 print ("Creating Models")
 
@@ -587,8 +558,61 @@ def create_model19():
     model.summary()
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
-	
-models = [create_model19()]
+
+def create_model20():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dropout(.2))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    model.add(Dropout(.2))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+def create_model21():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(GlobalAveragePooling2D())
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
+    model.summary()
+    sgd = optimizers.SGD(lr=0.10, decay=.01, momentum=0.9, nesterov=False)
+    model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+
+def create_model22():
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.30)))
+    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name}
+
+models = [create_model22()]
 
 
 for m in models:
@@ -619,7 +643,7 @@ print(test_targets_onehot.shape)
 print ("Number of Epochs: ", NUM_EPOCHS)
 
 def train_model(_epochs, _model):
-    history = _model.fit(train_tensors, train_targets_onehot, validation_split=.20,
+    history = _model.fit(train_tensors, train_targets_onehot, validation_split=.25,
           epochs=_epochs, batch_size=32, callbacks=[checkpointer], verbose=2)
     return history
 
