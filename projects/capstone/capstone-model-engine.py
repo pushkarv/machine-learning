@@ -160,9 +160,10 @@ test_tensors = paths_to_tensor(test_files).astype('float32')/255
 def predict_distraction(model):
     # get index of predicted distraction for each image in test set
     distraction_predictions = [np.argmax(model.predict(np.expand_dims(tensor, axis=0))) for tensor in test_tensors]
-
+    print (distraction_predictions)
     # report test accuracy
     test_accuracy = 100*np.sum(np.array(distraction_predictions)==np.argmax(test_targets, axis=0))/len(distraction_predictions)
+    print(test_targets)
     return test_accuracy
 
 
@@ -466,7 +467,7 @@ def create_model15():
     model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
     model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
     model.add(GlobalAveragePooling2D())
-    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(0.01)))
+    model.add(Dense(units=10, activation='softmax',activity_regularizer=regularizers.l1(.50)))
     model.add(Dense(units=10, activation='softmax'))
     model.add(Dense(units=10, activation='softmax'))
     print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
@@ -612,8 +613,53 @@ def create_model22():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-models = [create_model22()]
+## Better models 
+def create_model23(dropout):
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Flatten())
+    model.add(Dense(units=10, activation='relu'))
+    model.add(Dropout(dropout))
+    model.add(Dense(units=10, activation='softmax'))
+    print(sys._getframe().f_code.co_name + " - 3 conv2d layers + 2 dense  layers, relu + softmax and dropout = " + str(dropout))
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name + 'dropout_' + str(dropout) }
 
+def create_model24(regularizer_value):
+    model = Sequential()
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Conv2D(filters=10, kernel_size=(4,4), input_shape=(224,224,3)))
+    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
+    model.add(Flatten())
+    model.add(Dense(units=10, activation='relu', activity_regularizer=regularizers.l1(regularizer_value)))
+    model.add(Dropout(.20))
+    model.add(Dense(units=10, activation='softmax'))
+    print(sys._getframe().f_code.co_name + " - 3 conv2d layers + 2 dense  layers, relu + softmax and regularizer = " + str(regularizer_value))
+    model.summary()
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+    return {"model": model, "model_name": sys._getframe().f_code.co_name + 'regularizer_' +  str(regularizer_value) }
+
+dropout_values = [.05, .10, .15, .20, .25, .30, .35, .40]
+regularizer_values = [.05, .10, .15, .20, .25,.30, .40, .50, .60]
+
+models = []
+
+for d in dropout_values:
+	models = models.extend([create_model23(d)])
+	
+for r in regularizer_values:
+	models = models.extend([create_model24(r)])
+
+print ("Training " + len(models) + " models")
 
 for m in models:
     print (m)

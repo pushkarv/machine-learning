@@ -17,3 +17,5 @@ https://kth.diva-portal.org/smash/get/diva2:955562/FULLTEXT01.pdf
 http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf
 https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/
 https://jamesmccaffrey.wordpress.com/2013/11/05/why-you-should-use-cross-entropy-error-instead-of-classification-error-or-mean-squared-error-for-neural-network-classifier-training/
+
+http://www.iaeng.org/publication/WCECS2017/WCECS2017_pp140-144.pdf
