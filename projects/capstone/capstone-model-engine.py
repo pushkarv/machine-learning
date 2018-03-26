@@ -548,7 +548,7 @@ def create_model25(regularizer_value):
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
     model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
     model.add(Flatten())
-    model.add(Dense(units=10, activation='softmax', activity_regularizer=regularizers.l1(regularizer_value)))
+    model.add(Dense(units=10, activation='relu', activity_regularizer=regularizers.l1(regularizer_value)))
     model.add(Dense(units=10, activation='softmax'))
     print(
             sys._getframe().f_code.co_name + " - 3 conv2d layers + 2 dense  layers, relu + softmax and regularizer = " + str(
