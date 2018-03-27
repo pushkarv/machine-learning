@@ -35,8 +35,21 @@ The following tools / libraries should be installed in order to run the `capston
 
 The following is **only required** if NVIDIA GPU needs to be used for faster computations, otherwise, install the appropriate drivers/libraries for the specific GPU being used.
 
+- NVIDIA cuDNN 7.0 - Deep Neural Network Library - http://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html
+
 - NVIDIA CUDA 9.0 - https://developer.nvidia.com/cuda-90-download-archive
+
 - NVIDIA Drivers - http://www.nvidia.com/Download/index.aspx
 
-References to supporting materials
+  ​
+
+## References to supporting materials
+
+The images used were from the distracted driver Kaggle competition sponsored by State Farm.  The project page is available at https://www.kaggle.com/c/state-farm-distracted-driver-detection.
+
+The images are available at https://www.kaggle.com/c/5048/download/imgs.zip
+
+The images are provided in the `train` folder that contains images for each class in the appropriate subfolder, and the `test` folder that contains a large set of unlabeled images that can be used for testing out the models.  Only a sample of images were used from the `test` folder to manual identify the image class and compare with the model predictions.
+
+
 
