@@ -27,12 +27,14 @@ from keras.models import Sequential
 from keras.utils import plot_model
 from keras import regularizers
 import sys
+from IPython.display import SVG
+from keras.utils.vis_utils import model_to_dot
 
 print("Starting Model Learning using multiple models to determine best model")
 
 prefix_str = str(datetime.date.today()) + str(random.randint(1, 100))
 
-NUM_EPOCHS = 100
+NUM_EPOCHS = 200
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 print("Number of Epochs: ", NUM_EPOCHS)
@@ -579,23 +581,21 @@ def create_model26(dropout):
 dropout_values = [.05, .10, .15, .20, .25, .30, .35, .40]
 regularizer_values = [.05, .10, .15, .20, .25, .30, .40, .50, .60]
 
+#plot_model(model, to_file='model.png')
+
 models = []
 
-for r in regularizer_values:
-    models.extend([create_model25(r)])
+# for r in regularizer_values:
+#     models.extend([create_model25(r)])
 
 for d in dropout_values:
-    models.extend([create_model26(d)])
+    models.extend([create_model23(d)])
 
 
 print ("Training " + str(len(models)) + " models")
 
 for m in models:
     print (m)
-# from IPython.display import SVG
-# from keras.utils.vis_utils import model_to_dot
-# plot_model(model, to_file='model.png')
-# SVG(model_to_dot(model).create(prog='dot', format='svg'))
 
 
 # ## Load the Data
