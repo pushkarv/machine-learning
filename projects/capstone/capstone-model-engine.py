@@ -30,10 +30,7 @@ import sys
 from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
 
-print("Starting Model Learning using multiple models to determine best model")
-
 prefix_str = str(datetime.date.today()) + str(random.randint(1, 100))
-
 NUM_EPOCHS = 200
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -57,12 +54,6 @@ catLabels = {
 def getClass(value):
     index = 'c' + str(value)
     return catLabels[index]
-
-hello = tf.constant('Hello, TensorFlow!')
-sess = tf.Session()
-print(sess.run(hello))
-
-print ("Creating Models")
 
 
 def create_base_model():
@@ -578,31 +569,6 @@ def create_model26(dropout):
     return {"model": model, "model_name": sys._getframe().f_code.co_name + 'dropout_' + str(dropout)}
 
 
-dropout_values = [.05, .10, .15, .20, .25, .30, .35, .40]
-regularizer_values = [.05, .10, .15, .20, .25, .30, .40, .50, .60]
-
-#plot_model(model, to_file='model.png')
-
-models = []
-
-# for r in regularizer_values:
-#     models.extend([create_model25(r)])
-
-for d in dropout_values:
-    models.extend([create_model23(d)])
-
-
-print ("Training " + str(len(models)) + " models")
-
-for m in models:
-    print (m)
-
-
-# ## Load the Data
-
-print ("Loading Images...")
-
-
 def loadImages(path):
     data = load_files(path)
     files = data['filenames']
@@ -611,52 +577,11 @@ def loadImages(path):
     return files, targets, target_names
 
 
-path = "images/train"
-files, targets, target_names = loadImages(path)
-# predict_files = np.array(glob("images/test/*"))[1:10]
-print('Number of Categories: ', len(target_names))
-print('Categories: ', target_names)
-print('Number of images by category: ')
-for c in target_names:
-    print(c + ':' + str(len(os.listdir(path + '/' + c))))
-
-# Split the original training sets into training & testing sets
-train_files, test_files, train_targets, test_targets = train_test_split(files, targets, test_size=0.20, random_state=40)
-
-print(train_files.shape, test_files.shape, train_targets.shape, test_targets.shape)
-print(len(test_files))
-
-
-# # Data Analysis
-
-# In[3]:
-
-
-# get_ipython().magic('matplotlib inline')
-
-def displayImage(sample_image):
-    gray = cv2.cvtColor(sample_image, cv2.COLOR_BGR2GRAY)
-
-    # convert BGR image to RGB for plotting
-    cv_rgb = cv2.cvtColor(sample_image, cv2.COLOR_BGR2RGB)
-    # plt.imshow(cv_rgb)
-    # plt.show()
-
-
-for i in range(1, 5):
-    sample_image = cv2.imread(train_files[i])
-    print(train_targets[i])
-    print(getClass(train_targets[i]))
-    displayImage(sample_image)
-
 # Resize image to 224x224
 # Convert image to an array -> resized to a 4D tensor used by Keras CNN
 # Tensor will be (1,224,224,3)
 
 # Adopted from the Deep Learning Project
-
-print ("Creating image tensors")
-
 
 def path_to_tensor(img_path):
     # loads RGB image as PIL.Image.Image type
@@ -674,36 +599,9 @@ def paths_to_tensor(img_paths):
 
 
 #
-# ## Pre-Process the Data
+# Pre-Process the Data
 #
-
-# In[5]:
-
-
 # Rescale the images
-
-
-train_tensors = paths_to_tensor(train_files).astype('float32') / 255
-test_tensors = paths_to_tensor(test_files).astype('float32') / 255
-
-print("Size of train tensors: " + str(train_tensors.shape))
-print("Size of test tensors: " + str(test_tensors.shape))
-print("Size of test targets: " + str(test_targets.shape))
-
-# predict_tensors = paths_to_tensor(predict_files).astype('float32')/255
-
-print("Train Targets", train_targets)
-print ("Test Targets", test_targets)
-train_targets_onehot = np_utils.to_categorical(np.array(train_targets), 10)
-test_targets_onehot = np_utils.to_categorical(np.array(test_targets), 10)
-print ("Train Targets One-hot encoded", train_targets_onehot)
-print ("Test Targets One-hot encoded", test_targets_onehot)
-
-print(train_targets_onehot.shape)
-print(test_targets_onehot.shape)
-
-print ("Number of Epochs: ", NUM_EPOCHS)
-
 
 # ## Baseline Model Architecture
 
@@ -744,9 +642,7 @@ def plot_learning_history(m):
 
     print("Model: " + m['model_name'])
     predict_distraction(m['model'])
-
-
-
+    return
 
 def train_model(_epochs, _model):
     history = _model.fit(train_tensors, train_targets_onehot, validation_split=.25,
@@ -754,13 +650,104 @@ def train_model(_epochs, _model):
     return history
 
 
-for m in models:
-    print ("Training Model: ", m['model_name'])
-    prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1, 100))
-    # checkpointer = ModelCheckpoint(filepath=config.file_root + prefix_str + '_model.best.from_scratch.hdf5',
-    #                          verbose=1, save_best_only=True)
-    m['history'] = train_model(NUM_EPOCHS, m['model'])
-    m['model'].save(config.file_root + prefix_str + '_complete_model.hdf5')
-    with open(config.file_root + prefix_str + '_trainHistoryDict', 'wb') as file_pi:
-        pickle.dump(m['history'].history, file_pi)
-    plot_learning_history(m)
+def plot_histogram(image):
+    hist,bins = np.histogram(image.flatten(),256,[0,256])
+
+    cdf = hist.cumsum()
+    cdf_normalized = cdf * hist.max()/ cdf.max()
+
+    plt.plot(cdf_normalized, color = 'b')
+    plt.hist(image.flatten(),256,[0,256], color = 'r')
+    plt.xlim([0,256])
+    plt.legend(('cdf','histogram'), loc = 'upper left')
+    plt.show()
+    return
+
+def equalize_histogram(img, grid_size):
+    clahe = cv2.createCLAHE(tileGridSize=(grid_size,grid_size))
+    equalized_img = clahe.apply(img)
+    return equalized_img
+
+
+def main():
+    #Initialize Tensorflow to make sure Tensorflow is installed properly
+    #If GPU libraries are available, GPU will be used by default in Tensorflow
+    hello = tf.constant('Hello, TensorFlow works!')
+    sess = tf.Session()
+    print(sess.run(hello))
+
+    # ## Load the Data
+
+    print ("Loading Images...")
+    path = "images/train"
+    files, targets, target_names = loadImages(path)
+    # predict_files = np.array(glob("images/test/*"))[1:10]
+    print('Number of Categories: ', len(target_names))
+    print('Categories: ', target_names)
+    print('Number of images by category: ')
+    for c in target_names:
+        print(c + ':' + str(len(os.listdir(path + '/' + c))))
+
+    # Split the original training sets into training & testing sets
+    train_files, test_files, train_targets, test_targets = train_test_split(files, targets, test_size=0.20, random_state=40)
+
+    print(train_files.shape, test_files.shape, train_targets.shape, test_targets.shape)
+    print(len(test_files))
+
+    print ("Creating image tensors")
+
+    train_tensors = paths_to_tensor(train_files).astype('float32') / 255
+    test_tensors = paths_to_tensor(test_files).astype('float32') / 255
+
+    print("Size of train tensors: " + str(train_tensors.shape))
+    print("Size of test tensors: " + str(test_tensors.shape))
+    print("Size of test targets: " + str(test_targets.shape))
+
+    # predict_tensors = paths_to_tensor(predict_files).astype('float32')/255
+
+    print("Train Targets", train_targets)
+    print ("Test Targets", test_targets)
+    train_targets_onehot = np_utils.to_categorical(np.array(train_targets), 10)
+    test_targets_onehot = np_utils.to_categorical(np.array(test_targets), 10)
+    print ("Train Targets One-hot encoded", train_targets_onehot)
+    print ("Test Targets One-hot encoded", test_targets_onehot)
+
+    print(train_targets_onehot.shape)
+    print(test_targets_onehot.shape)
+
+    print ("Selecting models for training")
+
+    dropout_values = [.05, .10, .15, .20, .25, .30, .35, .40]
+    regularizer_values = [.05, .10, .15, .20, .25, .30, .40, .50, .60]
+
+
+    models = []
+
+    # for r in regularizer_values:
+    #     models.extend([create_model25(r)])
+
+    for d in dropout_values:
+        models.extend([create_model23(d)])
+
+    print ("Number of Epochs: ", NUM_EPOCHS)
+    print ("Training " + str(len(models)) + " models")
+
+    for m in models:
+        print (m)
+
+    for m in models:
+        print ("Training Model: ", m['model_name'])
+        prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1, 100))
+        # checkpointer = ModelCheckpoint(filepath=config.file_root + prefix_str + '_model.best.from_scratch.hdf5',
+        #                          verbose=1, save_best_only=True)
+        m['history'] = train_model(NUM_EPOCHS, m['model'])
+        m['model'].save(config.file_root + prefix_str + '_complete_model.hdf5')
+        with open(config.file_root + prefix_str + '_trainHistoryDict', 'wb') as file_pi:
+            pickle.dump(m['history'].history, file_pi)
+        plot_learning_history(m)
+
+    return
+
+if __name__ == "__main__":
+    main()
+

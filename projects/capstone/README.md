@@ -25,11 +25,11 @@ The following tools / libraries should be installed in order to run the `capston
 - `numpy` - Python Numerical analysis package - https://matplotlib.org/users/installing.html#installing-an-official-release
 - `scipy` - Python packages - https://www.scipy.org/install.html
 - `panda` - Python data analysis library - http://pandas.pydata.org/
-- `matplotlib` - Python 2D plotting library
+- `matplotlib` - Python 2D plotting library - https://matplotlib.org/users/installing.html#installing-an-official-release
 - `opencv` - Computer vision library - https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_setup/py_table_of_contents_setup/py_table_of_contents_setup.html
 - `Pillow` - Python Imaging library - https://pillow.readthedocs.io/en/3.1.x/installation.html
 - `scikit-learn` - Python based machine learning libraries - http://scikit-learn.org/stable/install.html
-- `tqdm` - progress meters 
+- `tqdm` - progress meters - https://pypi.python.org/pypi/tqdm
 - `ipython` - Used to create images of the models - https://ipython.org/ipython-doc/2/install/install.html
 - `Jupyter` - Python notebooks  - https://jupyter.readthedocs.io/en/latest/install.html
 
