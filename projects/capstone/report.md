@@ -41,7 +41,7 @@ The camera images will be loaded and processed using deep learning, in particula
 
 The classification will be performed using CNNs, with regularization techniques such as Dropout or L1 regularization to prevent overfitting, using various hyperparameter values to determine which decay values work best.  The original set of images will be divided into a training set, validation set and testing set to prevent bias and effectively measure model performance.  
 
-A baseline model will be used to assess the performance of a basic model for distraction classification, and then several other model designs will be used to improve on classification accuracy and compare that with the baseline model.
+A baseline model will be used to assess the performance of a basic model for distraction classification, and then several other model designs will be used to improve on classification accuracy and compare that with the baseline model. Training is done on both raw images and grayscaled/histogram equalized images to determine which results in better model performance.
 
 The final trained model will be used to classify any given input image from the test set or the unlabeled image set in order to determine whether a image contains a distracted driver, `c0`, or a specific class of distraction, `c1` to `c9`.
 
@@ -70,22 +70,23 @@ The following tables shows samples of an image in each class, `c0` to `c9` , and
 
 |           c0![mg_3](.\sample_images\c0\img_34.jpg)           |            c1![mg_](.\sample_images\c1\img_6.jpg)            |          c2![mg_18](.\sample_images\c2\img_186.jpg)          |            c3![mg_](.\sample_images\c3\img_5.jpg)            | c4![mg_1](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c4\img_14.jpg) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| **c5**![mg_5](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c5\img_56.jpg) | **c6**![mg_](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c6\img_0.jpg) | **c7**![mg_8](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c7\img_81.jpg) | **c8**![mg_2](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c8\img_26.jpg) | **c9**![mg_1](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c9\img_19.jpg) |
+| **c5**![mg_5](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c5\img_56.jpg) | **c6**![mg_](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c6\img_0.jpg) | **c7**![mg_8](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c7\img_81.jpg) | **c8**![mg_2](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c8\img_26.jpg) |         **c9**![mg_1](.\sample_images\c9\img_19.jpg)         |
 
 ***Figure 3 - Sample images from each class***
 
 ### Exploratory Visualization
-In this section, you will need to provide some form of visualization that summarizes or extracts a relevant characteristic or feature about the data. The visualization should adequately support the data being used. Discuss why this visualization was chosen and how it is relevant. Questions to ask yourself when writing this section:
-- _Have you visualized a relevant characteristic or feature about the dataset or input data?_
-- _Is the visualization thoroughly analyzed and discussed?_
-- _If a plot is provided, are the axes, title, and datum clearly defined?_
+The image set provided contains colored images of various driver postures that are in 10 different classes.  An initial look at the grayscale image and its histogram shows there are many pixels with low intensity below 120, and a smaller number of pixels with high intensity above 230.  A sample and its histogram is shown below.   The sample image's histogram is equalized and both the processed image and its new histogram is shown as well.  
 
-| Image                                                        | Histogram                                                    |
+| Image                                                        | Processing Results                                           |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![riginal-imag](.\pre-processing\original-image.png)         | ![riginal-image-histogra](.\pre-processing\original-image-histogram.png) |
-| ![mage-histogram-equalize](.\pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](.\pre-processing\euqalized-histogram-cdf.png) |
+| **Original Image**![riginal-imag](.\pre-processing\original-image.png) | ![riginal-image-histogra](.\pre-processing\original-image-histogram.png) |
+| **Image - Histogram Equalized**![mage-histogram-equalize](.\pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](.\pre-processing\euqalized-histogram-cdf.png) |
+| **Original Image       **![riginal-image-morp](.\pre-processing\original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](.\pre-processing\image-morph-dilation.png) |
+
+The original premise is to prevent any bias towards a specific image region with lower or higher intensities, so one method used was to grayscale all images and equalize their histograms.   
 
 ### Algorithms and Techniques
+
 In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
 - _Are the algorithms you will use, including any default variables/parameters in the project clearly defined?_
 - _Are the techniques to be used thoroughly discussed and justified?_
