@@ -16,7 +16,8 @@ Detecting various distracted behaviors can help improve driver behavior and prev
 ##### Datasets and Inputs
 
 The input dataset will be taken from the Kaggle competition for distracted driving, as provided in reference [6].  The dataset contains 22424 training images and 79726 testing images, created by StateFarm with various distracted driver positions.  The training images are already stored in folders representing a specific class.  Each image size is 640x480 and is a color JPG file.  There are a total of 10 classes for which training images are provided and a large set of unlabeled test images is also provided.
-The 10 classes are as follows and number of training images provided for each class:
+
+The 10 classes are as follows with the number of training images provided for each class:
 
 ```
   c0: safe driving  (2489 images)
@@ -31,43 +32,47 @@ The 10 classes are as follows and number of training images provided for each cl
   c9: talking to passenger (2129 images)
 ```
 
-Overall the training dataset seems balanced, other than the `c7 & c8` classes that seem to have the least number of images.  This may lead to bit more bias towards class `c0` having the most number of samples, hence classification accuracy for `c0` may be higher, and similarly for some of the other classes such as `c2-c6`.  The diagram shows a visual of the distribution of the count by class.
-
-In order to alleviate in imbalances, the training dataset will be trimmed to ensure equal number of images exist for all classes.
-
-![Count by Class](./data-count-by-class.png)
-
-This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided for evaluation purposes.
-
-For this project, an equal number of images were selected for all classes in order to remove any bias during training.   A total of 1900 images were selected for each class, .e.g `c0` to `c9`.  
+***Figure 1- Image Classifications***
 
 ### Problem Statement
-In this section, you will want to clearly define the problem that you are trying to solve, including the strategy (outline of tasks) you will use to achieve the desired solution. You should also thoroughly discuss what the intended solution will be for this problem. Questions to ask yourself when writing this section:
-- _Is the problem statement clearly defined? Will the reader understand what you are expecting to solve?_
-- _Have you thoroughly discussed how you will attempt to solve the problem?_
-- _Is an anticipated solution clearly defined? Will the reader understand what results you are looking for?_
-
 The problem is to detect distracted driving behavior postures in camera images and classify driver behavior as being in one of a pre-defined set of behavior classes, such as normal driving, texting, and drinking, for a total of 10 different classes, as described in the previous section.
 
 The camera images will be loaded and processed using deep learning, in particular Convolutional Neural Networks (CNN), and classification accuracy will be measured to gauge effectiveness of the model.  Based on the effectiveness of the model, in reality, the model can be deployed in camera mounted devices within cars to warn users when distracted driving behavior is detected.
 
+The classification will be performed using CNNs, with regularization techniques such as Dropout or L1 regularization to prevent overfitting, using various hyperparameter values to determine which decay values work best.  The original set of images will be divided into a training set, validation set and testing set to prevent bias and effectively measure model performance.  
+
+A baseline model will be used to assess the performance of a basic model for distraction classification, and then several other model designs will be used to improve on classification accuracy and compare that with the baseline model.
+
+The final trained model will be used to classify any given input image from the test set or the unlabeled image set in order to determine whether a image contains a distracted driver, `c0`, or a specific class of distraction, `c1` to `c9`.
+
 ### Metrics
-In this section, you will need to clearly define the metrics or calculations you will use to measure performance of a model or result in your project. These calculations and metrics should be justified based on the characteristics of the problem and problem domain. Questions to ask yourself when writing this section:
-- _Are the metrics you’ve chosen to measure the performance of your models clearly discussed and defined?_
-- _Have you provided reasonable justification for the metrics chosen based on the problem and solution?_
-
-
-The `accuracy` metric was used to measure how well the model was trained by evaluating the model with a test image set.  
+The `accuracy` metric was used to measure how well the model was trained by evaluating the model with a test image set.  This `accuracy` metric is most appropriate since images are being classified into one of 10 classes, and a performance binary decision is made as to whether the classification is correct or not based on the predicted class vs. actual class.   For example, for a set of 100 images, if 90 of the images are classified with a predicted class equal to actual class, then the classification accuracy will be considered to be 90%.
 
 ## II. Analysis
 _(approx. 2-4 pages)_
 
 ### Data Exploration
-In this section, you will be expected to analyze the data you are using for the problem. This data can either be in the form of a dataset (or datasets), input data (or input files), or even an environment. The type of data should be thoroughly described and, if possible, have basic statistics and information presented (such as discussion of input features or defining characteristics about the input or environment). Any abnormalities or interesting qualities about the data that may need to be addressed have been identified (such as features that need to be transformed or the possibility of outliers). Questions to ask yourself when writing this section:
-- _If a dataset is present for this problem, have you thoroughly discussed certain features about the dataset? Has a data sample been provided to the reader?_
-- _If a dataset is present for this problem, are statistics about the dataset calculated and reported? Have any relevant results from this calculation been discussed?_
-- _If a dataset is **not** present for this problem, has discussion been made about the input space or input data for your problem?_
-- _Are there any abnormalities or characteristics about the input space or dataset that need to be addressed? (categorical variables, missing values, outliers, etc.)_
+There are 2 datasets provided - one is a set of labeled training images, and another set is a set of unlabeled images.  The labeled image set is split into a training, validation and testing set.  The unlabeled set is manually sampled to provide evaluations of the final trained model selected with the high evaluation accuracy.
+
+Overall the training dataset seems balanced, other than the `c7 & c8` classes that seem to have the least number of images.  This may lead to bit more bias towards class `c0` having the most number of samples, hence classification accuracy for `c0` may be higher, and similarly for some of the other classes such as `c2-c6`.  The diagram shows a visual of the distribution of the count by class.
+
+In order to alleviate in imbalances, the training dataset will be trimmed to ensure ***equal number of images*** exist for all classes.
+
+![Count by Class](C:\Users\pushkar\ML\machine-learning\projects\capstone\data-count-by-class.png)
+
+***Figure 2 - Distribution of Images by Class***
+
+This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided as samples.
+
+For this project, an equal number of images were selected for all classes in order to remove any bias during training.   A total of **1900** images were selected for each class, .e.g `c0` to `c9`.  
+
+The following tables shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
+
+|           c0![mg_3](.\sample_images\c0\img_34.jpg)           |            c1![mg_](.\sample_images\c1\img_6.jpg)            |          c2![mg_18](.\sample_images\c2\img_186.jpg)          |            c3![mg_](.\sample_images\c3\img_5.jpg)            | c4![mg_1](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c4\img_14.jpg) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| **c5**![mg_5](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c5\img_56.jpg) | **c6**![mg_](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c6\img_0.jpg) | **c7**![mg_8](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c7\img_81.jpg) | **c8**![mg_2](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c8\img_26.jpg) | **c9**![mg_1](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c9\img_19.jpg) |
+
+***Figure 3 - Sample images from each class***
 
 ### Exploratory Visualization
 In this section, you will need to provide some form of visualization that summarizes or extracts a relevant characteristic or feature about the data. The visualization should adequately support the data being used. Discuss why this visualization was chosen and how it is relevant. Questions to ask yourself when writing this section:
@@ -77,8 +82,8 @@ In this section, you will need to provide some form of visualization that summar
 
 | Image                                                        | Histogram                                                    |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![riginal-imag](C:\Users\pushkar\ML\machine-learning\projects\capstone\pre-processing\original-image.png) | ![riginal-image-histogra](C:\Users\pushkar\ML\machine-learning\projects\capstone\pre-processing\original-image-histogram.png) |
-| ![mage-histogram-equalize](C:\Users\pushkar\ML\machine-learning\projects\capstone\pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](C:\Users\pushkar\ML\machine-learning\projects\capstone\pre-processing\euqalized-histogram-cdf.png) |
+| ![riginal-imag](.\pre-processing\original-image.png)         | ![riginal-image-histogra](.\pre-processing\original-image-histogram.png) |
+| ![mage-histogram-equalize](.\pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](.\pre-processing\euqalized-histogram-cdf.png) |
 
 ### Algorithms and Techniques
 In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
@@ -131,6 +136,10 @@ In this section, the final model and any supporting qualities should be evaluate
 - _Has the final model been tested with various inputs to evaluate whether the model generalizes well to unseen data?_
 - _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
 - _Can results found from the model be trusted?_
+
+
+
+![odel_evaluation_results_](C:\Users\pushkar\ML\machine-learning\projects\capstone\results\model_evaluation_results_1.PNG)
 
 ### Justification
 In this section, your model’s final solution and its results should be compared to the benchmark you established earlier in the project using some type of statistical analysis. You should also justify whether these results and the solution are significant enough to have solved the problem posed in the project. Questions to ask yourself when writing this section:
