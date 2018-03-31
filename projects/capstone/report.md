@@ -85,6 +85,8 @@ The image set provided contains colored images of various driver postures that a
 
 The original premise is to prevent any bias towards a specific image region with lower or higher intensities, so one method used was to grayscale all images and equalize their histograms.   
 
+Additionally, OpenCV's morphological operations were used to determine whether there were additional features that could be detected.  The above table, in the 3rd row, that shows an grayscaled image on the left and a morphological dilated image on the right.  This particular dilation is able to show object edges with significant contrast, such as in the person's forearm, but it becomes difficult to detect edges in uniform colored areas such as the person's upper arm with a black shirt.  So this dilation technique to detect edge features was not used.
+
 ### Algorithms and Techniques
 
 In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
