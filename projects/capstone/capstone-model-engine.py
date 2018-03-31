@@ -698,7 +698,7 @@ print(sess.run(hello))
 # ## Load the Data
 
 print ("Loading Images...")
-path = "images/train"
+path = "sample_images"
 files, targets, target_names = loadImages(path)
 # predict_files = np.array(glob("images/test/*"))[1:10]
 print('Number of Categories: ', len(target_names))
