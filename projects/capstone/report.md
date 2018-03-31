@@ -89,10 +89,7 @@ Additionally, OpenCV's morphological operations were used to determine whether t
 
 ### Algorithms and Techniques
 
-In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
-- _Are the algorithms you will use, including any default variables/parameters in the project clearly defined?_
-- _Are the techniques to be used thoroughly discussed and justified?_
-- _Is it made clear how the input data or datasets will be handled by the algorithms and techniques chosen?_
+The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Convolutional Neural Networks (CNNs) since the input data is a set of images, i.e. 2-D tensors, and  CNNs have been proven to be very effective for image classification, and in particular for posture classification [5,9].  In the pre-processing stage, the images will be pre-processed to 224x224x3 , with the same aspect ratio, in order to reduce processing time.  The images will be rescaled, and both raw color images and gray scaled images will be used for model training and prediction.  Additionally, the CNN may use pooling to allow for position invariance, *softmax* activation function for classifying based on likelihood since the output will  based on a set of mutually exclusive classes, *ReLU* activation function for increasing the non-linear capacity of the network and possibly use regularization methods such as *Dropout*  or *L1 Regularization* to gain processing efficiency and reduce overfitting.   The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.  
 
 ### Benchmark
 In this section, you will need to provide a clearly defined benchmark result or threshold for comparing across performances obtained by your solution. The reasoning behind the benchmark (in the case where it is not an established result) should be discussed. Questions to ask yourself when writing this section:
@@ -206,4 +203,22 @@ The following table shows the results of several models trained over 100 epochs 
 
 ### References
 
-http://www.iaeng.org/publication/WCECS2017/WCECS2017_pp140-144.pdf
+**Reference**
+
+[1] https://www.kaggle.com/c/state-farm-distracted-driver-detection
+
+[2] https://www.cdc.gov/motorvehiclesafety/distracted_driving/index.html
+
+[3] https://www.nhtsa.gov/risky-driving/distracted-driving
+
+[4] https://www.nhtsa.gov/sites/nhtsa.dot.gov/files/documents/driver_electronic_device_use_in_2015_0.pdf
+
+[5] *Realtime Distracted Driver Posture Classification*, https://arxiv.org/pdf/1706.09498.pdf
+
+[6] https://www.kaggle.com/c/state-farm-distracted-driver-detection/download/imgs.zip
+
+[7] *Benchmark of Deep Learning Models on Large Healthcare MIMIC Datasets*, https://arxiv.org/pdf/1710.08531.pdf
+
+[8] *Metrics To Evaluate Machine Learning Algorithms in Python*, https://machinelearningmastery.com/metrics-evaluate-machine-learning-algorithms-python/
+
+[9] *Application of Convolutional Neural Network to Classify Sitting and Standing Postures*, http://www.iaeng.org/publication/WCECS2017/WCECS2017_pp140-144.pdf
