@@ -600,14 +600,15 @@ def loadImages(path):
 
 # Adopted from the Deep Learning Project
 
-def path_to_tensor(img_path):
+def path_to_tensor(img_path, equalized=False):
     # loads RGB image as PIL.Image.Image type
-    img = image.load_img(img_path, target_size=(224, 224), grayscale=True)
-    img_array = np.array(img)
-    #equalize histogram
-    equalized_img = equalize_histogram(img_array, 16)
+    img = image.load_img(img_path, target_size=(224, 224), grayscale=equalized)
+    if (equalized == True):
+        img = np.array(img)
+        #equalize histogram
+        img = equalize_histogram(img_array, 16)
     # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
-    x = image.img_to_array(equalized_img)
+    x = image.img_to_array(img)
     # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
     return np.expand_dims(x, axis=0)
 
@@ -698,7 +699,7 @@ print(sess.run(hello))
 # ## Load the Data
 
 print ("Loading Images...")
-path = "sample_images"
+path = "sample_images/train"
 files, targets, target_names = loadImages(path)
 # predict_files = np.array(glob("images/test/*"))[1:10]
 print('Number of Categories: ', len(target_names))

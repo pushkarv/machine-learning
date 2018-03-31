@@ -85,7 +85,7 @@ The image set provided contains colored images of various driver postures that a
 
 The original premise is to prevent any bias towards a specific image region with lower or higher intensities, so one method used was to grayscale all images and equalize their histograms.   
 
-Additionally, OpenCV's morphological operations were used to determine whether there were additional features that could be detected.  The above table, in the 3rd row, that shows an grayscaled image on the left and a morphological dilated image on the right.  This particular dilation is able to show object edges with significant contrast, such as in the person's forearm, but it becomes difficult to detect edges in uniform colored areas such as the person's upper arm with a black shirt.  So this dilation technique to detect edge features was not used.
+Additionally, OpenCV's morphological operations were used to determine whether there were additional features that could be detected.  The above table, in the 3rd row, shows a grayscaled image on the left and a morphological dilated image on the right.  This particular dilation is able to show object edges with significant contrast, such as in the person's forearm, but it becomes difficult to detect edges in uniform colored areas such as the person's upper arm with a black shirt.  So this dilation technique to detect edge features did not seem to be an effective technique and was not used.
 
 ### Algorithms and Techniques
 
@@ -139,6 +139,12 @@ In this section, the final model and any supporting qualities should be evaluate
 - _Has the final model been tested with various inputs to evaluate whether the model generalizes well to unseen data?_
 - _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
 - _Can results found from the model be trusted?_
+
+
+
+![aseline-model-accuracie](C:\Users\pushkar\ML\machine-learning\projects\capstone\results\baseline-model-accuracies.PNG)
+
+
 
 
 
