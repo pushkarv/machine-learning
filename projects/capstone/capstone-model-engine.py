@@ -31,7 +31,7 @@ from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
 
 prefix_str = str(datetime.date.today()) + str(random.randint(1, 100))
-NUM_EPOCHS = 100
+NUM_EPOCHS = 50
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 print("Number of Epochs: ", NUM_EPOCHS)
@@ -66,7 +66,6 @@ def create_base_model():
     model.summary()
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
-
 
 def create_model1():
     model = Sequential()
@@ -384,24 +383,6 @@ def create_model17():
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
 
-def create_model17():
-    model = Sequential()
-    model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
-    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
-    model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
-    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
-    model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
-    model.add(MaxPooling2D(pool_size=(4, 4), strides=None, padding='valid', data_format=None))
-    model.add(GlobalAveragePooling2D())
-    model.add(Dense(units=10, activation='softmax'))
-    model.add(Dense(units=10, activation='softmax'))
-    model.add(Dense(units=10, activation='softmax', activity_regularizer=regularizers.l1(0.01)))
-    print(sys._getframe().f_code.co_name + " - Multiple conv2d layers + 3 dense sofmax layers")
-    model.summary()
-    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
-    return {"model": model, "model_name": sys._getframe().f_code.co_name}
-
-
 def create_model18():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -668,6 +649,11 @@ def plot_learning_history(m):
 def train_model(_epochs, _model):
     history = _model.fit(train_tensors, train_targets_onehot, validation_split=.25,
                          epochs=_epochs, batch_size=32, callbacks=[], verbose=2)
+    # for layer in _model.layers:
+    #     g = layer.get_config()
+    #     h = layer.get_weights()
+    #     print (g)
+    #     print (h)
     return history
 
 
@@ -690,6 +676,8 @@ def equalize_histogram(img, grid_size):
     return equalized_img
 
 
+#################### MAIN PROGRAM #######################
+
 #Initialize Tensorflow to make sure Tensorflow is installed properly
 #If GPU libraries are available, GPU will be used by default in Tensorflow
 hello = tf.constant('Hello, TensorFlow works!')
@@ -699,7 +687,7 @@ print(sess.run(hello))
 # ## Load the Data
 
 print ("Loading Images...")
-path = "sample_images/train"
+path = "images/train"
 files, targets, target_names = loadImages(path)
 # predict_files = np.array(glob("images/test/*"))[1:10]
 print('Number of Categories: ', len(target_names))
@@ -746,8 +734,8 @@ models = []
 # for r in regularizer_values:
 #     models.extend([create_model25(r)])
 
-for d in dropout_values:
-    models.extend([create_model23_grayscale(d)])
+#for d in dropout_values:
+models.extend([create_base_model()])
 
 print ("Number of Epochs: ", NUM_EPOCHS)
 print ("Training " + str(len(models)) + " models")
@@ -765,6 +753,5 @@ for m in models:
     with open(config.file_root + prefix_str + '_trainHistoryDict', 'wb') as file_pi:
         pickle.dump(m['history'].history, file_pi)
     plot_learning_history(m)
-
 
 

@@ -4,8 +4,6 @@ Pushkar Varma
 March 30, 2018
 
 ## I. Definition
-_(approx. 1-2 pages)_
-
 ### Project Overview
 The general idea for this project was taken from a Kaggle competition initiated by State Farm.  Car accidents are caused by many reasons, but according to the CDC, about 20% of those accidents are due to distracted drivers.  This translates to 391,000 people injured and 3,477 people killed by distracted driving, based on 2015 data by the CDC, and 2015 has had the largest number of distracted driving deaths since 2010.  The number of deaths due to distracted driving can be reduced through both social and technical means.  This project discusses how technical means can be used to detect distracted driving.  If distracted driving can be detected effectively, drivers can be alerted quickly before accidents occur.  Additionally, opportunities may arise in helping detect other kinds of impaired driving scenarios such as drunk driving, which is also a major cause of deaths on the road.  
 
@@ -17,7 +15,7 @@ Detecting various distracted behaviors can help improve driver behavior and prev
 
 The input dataset will be taken from the Kaggle competition for distracted driving, as provided in reference [6].  The dataset contains 22424 training images and 79726 testing images, created by StateFarm with various distracted driver positions.  The training images are already stored in folders representing a specific class.  Each image size is 640x480 and is a color JPG file.  There are a total of 10 classes for which training images are provided and a large set of unlabeled test images is also provided.
 
-The 10 classes are as follows with the number of training images provided for each class:
+The 10 classes are as follows with the number of training images provided for each class.  A sample image of each class is provided in the *Data Exploration* below.
 
 ```
   c0: safe driving  (2489 images)
@@ -37,24 +35,22 @@ The 10 classes are as follows with the number of training images provided for ea
 ### Problem Statement
 The problem is to detect distracted driving behavior postures in camera images and classify driver behavior as being in one of a pre-defined set of behavior classes, such as normal driving, texting, and drinking, for a total of 10 different classes, as described in the previous section.
 
-The camera images will be loaded and processed using deep learning, in particular Convolutional Neural Networks (CNN), and classification accuracy will be measured to gauge effectiveness of the model.  Based on the effectiveness of the model, in reality, the model can be deployed in camera mounted devices within cars to warn users when distracted driving behavior is detected.
+The camera images will be loaded and processed using deep learning, in particular Convolutional Neural Networks (CNN), and classification accuracy will be measured to gauge effectiveness of the model.  Based on the effectiveness of the model, as a possible application, the model can be deployed in camera mounted devices within cars to warn users when distracted driving behavior is detected
 
 The classification will be performed using CNNs, with regularization techniques such as Dropout or L1 regularization to prevent overfitting, using various hyperparameter values to determine which decay values work best.  The original set of images will be divided into a training set, validation set and testing set to prevent bias and effectively measure model performance.  
 
 A baseline model will be used to assess the performance of a basic model for distraction classification, and then several other model designs will be used to improve on classification accuracy and compare that with the baseline model. Training is done on both raw images and grayscaled/histogram equalized images to determine which results in better model performance.
 
-The final trained model will be used to classify any given input image from the test set or the unlabeled image set in order to determine whether a image contains a distracted driver, `c0`, or a specific class of distraction, `c1` to `c9`.
+The final trained model will be used to classify any given input image from the test set or the unlabeled image set in order to determine whether an image contains any class of distraction, `c0` to `c9`.
 
 ### Metrics
-The `accuracy` metric was used to measure how well the model was trained by evaluating the model with a test image set.  This `accuracy` metric is most appropriate since images are being classified into one of 10 classes, and a performance binary decision is made as to whether the classification is correct or not based on the predicted class vs. actual class.   For example, for a set of 100 images, if 90 of the images are classified with a predicted class equal to actual class, then the classification accuracy will be considered to be 90%.
+The `accuracy` metric will be used to measure how well the model was trained by evaluating the model with a test image set.  This `accuracy` metric is most appropriate since images are being classified into one of 10 classes, and a performance binary decision is made as to whether the classification is correct or not based on the predicted class vs. actual class.   For example, for a set of 100 images, if 90 of the images are classified with a predicted class equal to actual class, then the classification accuracy will be considered to be 90%.  
 
 ## II. Analysis
-_(approx. 2-4 pages)_
-
 ### Data Exploration
-There are 2 datasets provided - one is a set of labeled training images, and another set is a set of unlabeled images.  The labeled image set is split into a training, validation and testing set.  The unlabeled set is manually sampled to provide evaluations of the final trained model selected with the high evaluation accuracy.
+There are 2 datasets provided - one is a set of labeled training images, and another set is a set of unlabeled images.  The datasets contains full color images with a size of 640x480 pixels.  
 
-Overall the training dataset seems balanced, other than the `c7 & c8` classes that seem to have the least number of images.  This may lead to bit more bias towards class `c0` having the most number of samples, hence classification accuracy for `c0` may be higher, and similarly for some of the other classes such as `c2-c6`.  The diagram shows a visual of the distribution of the count by class.
+Overall the labeled dataset seems balanced, other than the `c7 & c8` classes that seem to have the least number of images.  This may lead to bit more bias towards class `c0` having the most number of samples, hence classification accuracy for `c0` may be higher, and similarly for some of the other classes such as `c2-c6`.  The diagram shows a visual of the distribution of the count by class.
 
 In order to alleviate in imbalances, the training dataset will be trimmed to ensure ***equal number of images*** exist for all classes.
 
@@ -63,8 +59,6 @@ In order to alleviate in imbalances, the training dataset will be trimmed to ens
 ***Figure 2 - Distribution of Images by Class***
 
 This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided as samples.
-
-For this project, an equal number of images were selected for all classes in order to remove any bias during training.   A total of **1900** images were selected for each class, .e.g `c0` to `c9`.  
 
 The following tables shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
 
@@ -83,42 +77,150 @@ The image set provided contains colored images of various driver postures that a
 | **Image - Histogram Equalized**![mage-histogram-equalize](.\pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](.\pre-processing\euqalized-histogram-cdf.png) |
 | **Original Image       **![riginal-image-morp](.\pre-processing\original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](.\pre-processing\image-morph-dilation.png) |
 
-The original premise is to prevent any bias towards a specific image region with lower or higher intensities, so one method used was to grayscale all images and equalize their histograms.   
+***Figure 5 - Image Transformations***
 
-Additionally, OpenCV's morphological operations were used to determine whether there were additional features that could be detected.  The above table, in the 3rd row, shows a grayscaled image on the left and a morphological dilated image on the right.  This particular dilation is able to show object edges with significant contrast, such as in the person's forearm, but it becomes difficult to detect edges in uniform colored areas such as the person's upper arm with a black shirt.  So this dilation technique to detect edge features did not seem to be an effective technique and was not used.
+The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.
+
+The original premise is to prevent any bias towards a specific image region with lower or higher intensities, so one method used was to grayscale all images and equalize their histograms.   This technique was used to assess the performance of the best model design based on assessment of multiple models trained with the original colored images.
+
+Additionally, OpenCV's morphological operations were used to determine whether there were additional features that could be detected [9].  The above table, in the 3rd row, shows a grayscaled image on the left and a morphological dilated image on the right.  This particular dilation is able to show object edges with significant contrast, such as in the person's forearm, but it becomes difficult to detect edges in uniform colored areas such as the person's upper arm with a black shirt.  So this dilation technique to detect edge features did not seem to be an effective technique and was not used.  
 
 ### Algorithms and Techniques
 
-The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Convolutional Neural Networks (CNNs) since the input data is a set of images, i.e. 2-D tensors, and  CNNs have been proven to be very effective for image classification, and in particular for posture classification [5,9].  In the pre-processing stage, the images will be pre-processed to 224x224x3 , with the same aspect ratio, in order to reduce processing time.  The images will be rescaled, and both raw color images and gray scaled images will be used for model training and prediction.  Additionally, the CNN may use pooling to allow for position invariance, *softmax* activation function for classifying based on likelihood since the output will  based on a set of mutually exclusive classes, *ReLU* activation function for increasing the non-linear capacity of the network and possibly use regularization methods such as *Dropout*  or *L1 Regularization* to gain processing efficiency and reduce overfitting.   The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.  
+The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Convolutional Neural Networks (CNNs) since the input data is a set of images, i.e. 2-D tensors, and  CNNs have been proven to be very effective for image classification, and in particular for posture classification [5,9].  
+
+In the pre-processing stage, the images will be pre-processed to 224x224x3 , with the same aspect ratio, in order to reduce processing time.  The images will be rescaled, and both raw color images and gray scaled images will be used for model training and prediction.  
+
+Additionally, the CNN will use some of the following techniques:
+
+- Local and/or Global Pooling to allow for position invariance, 
+- *softmax* activation function for classifying based on likelihood since the output will  be based on a set of mutually exclusive classes, 
+- *ReLU* activation function for increasing the non-linear capacity of the network,
+- Regularization methods such as *Dropout*  or *L1 Regularization* to gain processing efficiency and reduce overfitting.
+
+The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.
+
+In general, multiple model designs will be explored, and models will be trained until overfitting is observed and then various regularization methods will be used to compensate for reduce the bias/variance tradeoff and minimize overfitting.
 
 ### Benchmark
-In this section, you will need to provide a clearly defined benchmark result or threshold for comparing across performances obtained by your solution. The reasoning behind the benchmark (in the case where it is not an established result) should be discussed. Questions to ask yourself when writing this section:
-- _Has some result or value been provided that acts as a benchmark for measuring performance?_
-- _Is it clear how this result or value was obtained (whether by data or by hypothesis)?_
 
+There are a couple of benchmarks that are used to compare the performance of the learning model.  The first benchmark that is used is a CNN with a single 2D Convolution layer, a single 2D max local pooling layer, flattening layer and a single dense layer.   This will set a baseline for how a simple model performs.  
 
-There are a couple of benchmarks that can be used to evaluate the performance of learning model.  The first benchmark that can be used is a basic CNN with a single layer without any additional components such as pooling, dropouts or softmax activation functions.   This will set a baseline for how a simple model will perform.  A secondary benchmark model that can be used are the results obtained in the whitepaper, [5], on the same Statefarm dataset.
+A secondary benchmark model that is referenced are the results obtained in the whitepaper, [5], on the same Statefarm dataset used in this project.  The whitepaper uses the same Statefarm dataset and performs training with genetically weighted ensemble of CNNs to obtain a classification accuracy of 95.98%. 
 
-The whitepaper entitled, "Realtime Distracted Driver Posture Classification", uses the same Statefarm dataset trained with genetically weighted ensemble of CNNs to obtain a classification accuracy of 95.98%.
+The design of the baseline CNN model is shown in *Figure 6*.    This model consists of the following layer configurations:
 
-CNNs will also be used here with a different design to obtain a classification accuracy and compared to the one in the whitepaper to determine whether the CNN design is good or needs to be improved.  Further research will be done to determine whether a more complex CNN is desirable or an ensemble is more appropriate.
+- 2D convolution layer with a default *stride*=(1,1), *kernel size* = (4,4), and *input shape* = (224,224,3).
+- Local Max 2D Pooling layer with a *pool size* = (4,4) and a *stride* = (4,4)
+- Flatten layer
+- Dense layer with an input of 302510x1 and output of 10x1 with a *softmax* activation function.
+
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+conv2d_1 (Conv2D)            (None, 221, 221, 10)      490
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 55, 55, 10)        0
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 30250)             0
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                302510
+=================================================================
+Total params: 303,000
+Trainable params: 303,000
+Non-trainable params: 0
+_________________________________________________________________
+```
+
+***Figure 6 - Baseline CNN***
 
 Classification accuracy will be used as a primary metric to evaluate the performance of the trained model.   The accuracy will be simply based on the ratio of the number of images classified accurately to the total number of images.  Each image will be classified accurately if the class identified by the model is the same as the label for the image.  This percentage will be used to compare to the benchmark described above.  Since the training dataset will be defined to be balanced, there is no expected skewness, hence no additional adjustments necessary for evaluating performance.
 
-## III. Methodology
-_(approx. 3-5 pages)_
+#### Analysis of the Baseline Model
 
+The baseline CNN model used the `softmax` activation function in the last dense layer and was trained over 250, 1000, 2000 epochs to determine how accuracy would change and whether it would converge towards to certain value.  
+
+After 250 epochs, the training accuracy was 20.23%, the validation accuracy was 16.82%, and testing accuracy was 16.16%.
+
+After 1000 epochs, the training accuracy was 28.33%, the validation accuracy 29.38%, and testing accuracy was 26.7%.
+
+After 2000 epochs, the training accuracy was 32.03%, the validation accuracy 34.62%, and testing accuracy was 28% (not shown below).
+
+| Training vs. Testing Accuracy                                | Training vs. Testing Loss                                    | Evaluation Accuracy |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
+| ![reate_base_model2018-04-0128_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_loss.png) | 16.16%              |
+| ![reate_base_model2018-04-0182_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_loss.png) | 24.08%              |
+| ![reate_base_model2018-03-1627_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-03-1627_model_accuracy.png) | ![reate_base_model2018-03-1627_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-03-1627_model_loss.png) | 26.7%               |
+
+***Figure 7 - Baseline Model Training results***
+
+The base model training accuracy seems to increase very slowly even though the number of epochs used is doubled, and the validation accuracy has high variance, but the validation loss and accuracy curves seem to follow the training curves.  The validation accuracy and loss curves both have high variance hence showing sensitivity to unseen data, possibly due to the simplicity of the model design and underfitting.  
+
+## III. Methodology
 ### Data Preprocessing
-In this section, all of your preprocessing steps will need to be clearly documented, if any were necessary. From the previous section, any of the abnormalities or characteristics that you identified about the dataset will be addressed and corrected here. Questions to ask yourself when writing this section:
-- _If the algorithms chosen require preprocessing steps like feature selection or feature transformations, have they been properly documented?_
-- _Based on the **Data Exploration** section, if there were abnormalities or characteristics that needed to be addressed, have they been properly corrected?_
-- _If no preprocessing is needed, has it been made clear why?_
+The original dataset is composed of the labeled dataset with images for each class and an unlabeled dataset.   The labeled dataset is split into a training, validation and testing sets.   The unlabeled set is manually sampled to provide evaluations of the final trained model that resulted in the highest evaluation accuracy with the testing dataset.
+
+As shown earlier, the number of images for each class was not equal, so for this project, an equal number of images were selected for all classes in order to remove any bias during training towards a specific set of classes.   A total of 1900 images were selected for each class, .e.g `c0` to `c9`.   A total of 19,000 images were used, with 15,200 images for the training/validation sets and 3800 images for the testing set.  The validation split of 25% was used in the *keras* models, so 11,400 images were used for training and 3800 images were used for validation. 
+
+The images used were resized into 224x224 pixels, and converted into 4D tensors of size 224x224x3 for use with tensorflow.  The `paths_to_tensor()` in `capstone-model-engine.py` implements this conversion.
+
+Furthermore, grayscale transformation and histogram equalization was performed as discussed above in the *Exploratory Visualization* section.  After assessing many model designs, the best model design was selected and trained on the grayscale images as well to assess the performance of the model and this is discussed further below.
 
 ### Implementation
 In this section, the process for which metrics, algorithms, and techniques that you implemented for the given data will need to be clearly documented. It should be abundantly clear how the implementation was carried out, and discussion should be made regarding any complications that occurred during this process. Questions to ask yourself when writing this section:
+
 - _Is it made clear how the algorithms and techniques were implemented with the given datasets or input data?_
 - _Were there any complications with the original metrics or techniques that required changing prior to acquiring a solution?_
 - _Was there any part of the coding process (e.g., writing complicated functions) that should be documented?_
+
+#### Environment
+
+The model design, training and evaluation were done using the *Keras* API with a *Tensorflow* backend, with a NVIDIA GPU GeForce 940MX on a personal laptop as well as a NVIDIA Telsa K80 on a AWS Deep Learning EC2 instance (p2.xlarge).  The initial setup on the laptop involved installing the NVIDIA CUDA and cuDNN drivers with appropriate versions, which was initially time consuming and challenging, but once setup, many models were trained on the laptop and the AWS EC2 instance.  The key difference between the 2 hardware configurations were the GPU memory used, which impacted the model training time.  The laptop GeForce GPU only had 2GB, and the AWS Tesla GPU had 12GB, this resulted in faster model training time on the Tesla GPU, as observed on a per epoch basis.    However, due to cost, the Tesla GPU was used over a limited time period, and the exact difference in model training time between the 2 environments was not measured since it was out of scope for this project.
+
+The initial implementation was written in a *Jupyter* notebook and then exported into  a separate python file so the model training could be run in the background.
+
+#### Loading / Pre-processing Data
+
+The initial image data was loaded using the *Keras* `preprocessing.image` class, with the images resized to 224x224, and converted into 4D tensors for use in model training.  This was generally not difficult and was adopted from the course *dog identification project*, since both projects involved image classification.
+
+The function used in the `capstone-model-engine.py` program to load and pre-process the images is show below:
+
+```python
+def path_to_tensor(img_path, equalized=False):
+    # loads RGB image as PIL.Image.Image type
+    img = image.load_img(img_path, target_size=(224, 224), grayscale=equalized)
+    if (equalized == True):
+        img = np.array(img)
+        #equalize histogram
+        img = equalize_histogram(img_array, 16)
+    # convert PIL.Image.Image type to 3D tensor with shape (224, 224, 3)
+    x = image.img_to_array(img)
+    # convert 3D tensor to 4D tensor with shape (1, 224, 224, 3) and return 4D tensor
+    return np.expand_dims(x, axis=0)
+```
+
+***Figure 8 - Image pre-processing***
+
+Most of the model training was done using the color images, but some model training involved the histogram equalized images.  Histogram equalization is either done on a single channel, i.e. grayscale, or statistic of multiple channels, i.e. color, using the YCbCr color scheme.   I had decided to use grayscale since that was the easiest way to perform histogram equalization, and also determine how model training would perform on grayscale images.  A key issue with equalizing color images are that many implementations normally equalize by each channel and then combine the channels into a single image, which results in inappropriate transformations to colors of an image.
+
+#### Model Design
+
+Beyond the baseline model, a key challenge is in designing a more complex model architecture with the appropriate hyperparameters, identifying the appropriate hyperparameter values, and determining the number and type of layers in a CNN.  
+
+![Model Design Overview](.\model-design-view.png)
+
+***Figure 9 - Model Design Considerations***
+
+Many model designs were explored and tested.  The saved models are available in the `saved_models` folder, the model design images are available in the `model_pics` folder, and log files are available in the `logs` folder.   A total of 26 model architectures were explored, with some models with varying hyperparameter values, so in essence, over 39 model iterations were explored.
+
+#### Model Training
+
+
+
+#### Evaluating Model Designs 
+
+
 
 ### Refinement
 In this section, you will need to discuss the process of improvement you made upon the algorithms and techniques you used in your implementation. For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
@@ -222,3 +324,14 @@ The following table shows the results of several models trained over 100 epochs 
 [8] *Metrics To Evaluate Machine Learning Algorithms in Python*, https://machinelearningmastery.com/metrics-evaluate-machine-learning-algorithms-python/
 
 [9] *Application of Convolutional Neural Network to Classify Sitting and Standing Postures*, http://www.iaeng.org/publication/WCECS2017/WCECS2017_pp140-144.pdf
+
+[10] *Flexible, High Performance Convolutional Neural Networks for Image Classification*, http://people.idsia.ch/~juergen/ijcai2011.pdf
+
+[11] *Rohan #4: The vanishing gradient problem,* https://ayearofai.com/rohan-4-the-vanishing-gradient-problem-ec68f76ffb9b
+
+[12] *A systematic analysis of performance measures for classification tasks*, http://rali.iro.umontreal.ca/rali/sites/default/files/publis/SokolovaLapalme-JIPM09.pdf
+
+[13] http://text-analytics101.rxnlp.com/2014/10/computing-precision-and-recall-for.html
+
+[14] *The Effect of Batch Normalization on Deep Convolutional Neural Networks*, https://kth.diva-portal.org/smash/get/diva2:955562/FULLTEXT01.pdf
+
