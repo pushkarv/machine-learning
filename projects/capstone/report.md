@@ -75,7 +75,7 @@ The image set provided contains colored images of various driver postures that a
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | **Original Image**![riginal-imag](pre-processing/original-image.png) | ![riginal-image-histogra](pre-processing/original-image-histogram.png) |
 | **Image - Histogram Equalized**![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) |
-| **Original Image                 **![riginal-image-morp](pre-processing/original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
+| **Original Image**![riginal-image-morp](pre-processing/original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
 
 ***Figure 5 - Image Transformations***
 
