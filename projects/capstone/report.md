@@ -62,9 +62,9 @@ This dataset is being used since it is a public dataset provided by StateFarm an
 
 The following tables shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
 
-|           c0![mg_3](.\sample_images\c0\img_34.jpg)           |            c1![mg_](.\sample_images\c1\img_6.jpg)            |          c2![mg_18](.\sample_images\c2\img_186.jpg)          |            c3![mg_](.\sample_images\c3\img_5.jpg)            | c4![mg_1](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c4\img_14.jpg) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| **c5**![mg_5](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c5\img_56.jpg) | **c6**![mg_](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c6\img_0.jpg) | **c7**![mg_8](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c7\img_81.jpg) | **c8**![mg_2](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c8\img_26.jpg) |         **c9**![mg_1](.\sample_images\c9\img_19.jpg)         |
+|   c0![mg_3](sample_images\c0\img_34.jpg)   |   c1![mg_](sample_images\c1\img_6.jpg)   |  c2![mg_18](sample_images\c2\img_186.jpg)  |             c3![mg_](sample_images\c3\img_5.jpg)             |   c4![mg_1](sample_images\c4\img_14.jpg)   |
+| :----------------------------------------: | :--------------------------------------: | :----------------------------------------: | :----------------------------------------------------------: | :----------------------------------------: |
+| **c5**![mg_5](sample_images\c5\img_56.jpg) | **c6**![mg_](sample_images\c6\img_0.jpg) | **c7**![mg_8](sample_images\c7\img_81.jpg) | **c8**![mg_2](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c8\img_26.jpg) | **c9**![mg_1](sample_images\c9\img_19.jpg) |
 
 ***Figure 3 - Sample images from each class***
 
