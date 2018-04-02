@@ -54,7 +54,7 @@ Overall the labeled dataset seems balanced, other than the `c7 & c8` classes tha
 
 In order to alleviate in imbalances, the training dataset will be trimmed to ensure ***equal number of images*** exist for all classes.
 
-![Count by Class](data-count-by-class.png)
+![Count by Class](results/data-count-by-class.png)
 
 ***Figure 2 - Distribution of Images by Class***
 
@@ -197,7 +197,7 @@ Most of the model training was done using the color images, but some model train
 
 Beyond the baseline model, a key challenge is in designing a more complex model architecture with the appropriate hyperparameters, identifying the appropriate hyperparameter values, and determining the number and type of layers in a CNN.  
 
-![Model Design Overview](model-design-view.png)
+![Model Design Overview](results/model-design-view.png)
 
 ***Figure 9 - Model Design Considerations***
 
