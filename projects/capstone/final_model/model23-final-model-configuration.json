@@ -1,0 +1,44 @@
+{
+  'class_name': 'Conv2D',
+  'config': {
+    'name': 'conv2d_4',
+    'trainable': True,
+    'batch_input_shape': (None,
+    224,
+    224,
+    3),
+    'dtype': 'float32',
+    'filters': 10,
+    'kernel_size': (4,
+    4),
+    'strides': (1,
+    1),
+    'padding': 'valid',
+    'data_format': 'channels_last',
+    'dilation_rate': (1,
+    1),
+    'activation': 'linear',
+    'use_bias': True,
+    'kernel_initializer': {
+      'class_name': 'VarianceScaling',
+      'config': {
+        'scale': 1.0,
+        'mode': 'fan_avg',
+        'distribution': 'uniform',
+        'seed': None
+      }
+    },
+    'bias_initializer': {
+      'class_name': 'Zeros',
+      'config': {}
+    },
+    'kernel_regularizer': None,
+    'bias_regularizer': None,
+    'activity_regularizer': None,
+    'kernel_constraint': None,
+    'bias_constraint': None
+  }
+}, {'class_name': 'MaxPooling2D', 'config': {'name': 'max_pooling2d_4', 'trainable': True, 'pool_size': (4, 4), 'padding': 'valid', 'strides': (4, 4), 'data_format': 'channels_last'}},
+{'class_name': 'Conv2D', 'config': {'name': 'conv2d_5', 'trainable': True, 'batch_input_shape': (None, 224, 224, 3), 'dtype': 'float32', 'filters': 10, 'kernel_size': (4, 4), 'strides': (1, 1), 'padding': 'valid', 'data_format': 'channels_last', 'dilation_rate': (1, 1), 'activation': 'linear', 'use_bias': True, 'kernel_initializer': {'class_name': 'VarianceScaling', 'config': {'scale': 1.0, 'mode': 'fan_avg', 'distribution': 'uniform', 'seed': None}}, 'bias_initializer': {'class_name': 'Zeros', 'config': {}}, 'kernel_regularizer': None, 'bias_regularizer': None, 'activity_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None}}, {'class_name': 'MaxPooling2D', 'config': {'name': 'max_pooling2d_5', 'trainable': True, 'pool_size': (4, 4), 'padding': 'valid', 'strides': (4, 4), 'data_format': 'channels_last'}}, {'class_name': 'Conv2D', 'config': {'name': 'conv2d_6', 'trainable': True, 'batch_input_shape': (None, 224, 224, 3), 'dtype': 'float32', 'filters': 10, 'kernel_size': (4, 4), 'strides': (1, 1), 'padding': 'valid', 'data_format': 'channels_last', 'dilation_rate': (1, 1), 'activation': 'linear', 'use_bias': True, 'kernel_initializer': {'class_name': 'VarianceScaling', 'config': {'scale': 1.0, 'mode': 'fan_avg', 'distribution': 'uniform', 'seed': None}}, 'bias_initializer': {'class_name': 'Zeros', 'config': {}}, 'kernel_regularizer': None, 'bias_regularizer': None, 'activity_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None}}, {'class_name': 'MaxPooling2D', 'config': {'name': 'max_pooling2d_6', 'trainable': True, 'pool_size': (4, 4), 'padding': 'valid', 'strides': (4, 4), 'data_format': 'channels_last'}}, {'class_name': 'Flatten', 'config': {'name': 'flatten_2', 'trainable': True}}, {'class_name': 'Dense', 'config': {'name': 'dense_3', 'trainable': True, 'units': 10, 'activation': 'relu', 'use_bias': True, 'kernel_initializer': {'class_name': 'VarianceScaling', 'config': {'scale': 1.0, 'mode': 'fan_avg', 'distribution': 'uniform', 'seed': None}}, 'bias_initializer': {'class_name': 'Zeros', 'config': {}}, 'kernel_regularizer': None, 'bias_regularizer': None, 'activity_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None}}, {'class_name': 'Dropout', 'config': {'name': 'dropout_2', 'trainable': True, 'rate': 0.1, 'noise_shape': None, 'seed': None}}, {'class_name': 'Dense', 'config': {'name': 'dense_4', 'trainable': True, 'units': 10, 'activation': 'softmax', 'use_bias': True, 'kernel_initializer': {'class_name': 'VarianceScaling', 'config': {'scale': 1.0, 'mode': 'fan_avg', 'distribution': 'uniform', 'seed': None}}, 'bias_initializer': {'class_name': 'Zeros', 'config': {}}, 'kernel_regularizer': None, 'bias_regularizer': None, 'activity_regularizer': None, 'kernel_constraint': None, 'bias_constraint': None
+}
+}

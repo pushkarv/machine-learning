@@ -253,7 +253,13 @@ Some of the saved models were re-evaluated with the new evaluation algorithm, an
 ### Refinement
 Based on the large number of model design iterations done, as discussed above, some of the best performing models were selected and multiple hyperparameter values were used to further refine model performance.
 
-#### ***Initial Solution***
+The figure below shows several models were trained with different hyperparameter values, and which models had the best testing accuracies.  It shows that Model 23 using a Dropout layer with a Dropout value of 0.10 had the highest test accuracy, using the *Keras* model evaluation algorithm.
+
+![odel_evaluation_results_](results/model_evaluation_results_1.PNG)
+
+***Figure 13 - Model Accuracy vs. Regularization Hyperparameter Values***
+
+#### **Initial Solution**
 
 An initial solution considered here is one of the original models that was trained - ***model 16***.   This model consists of 3 pairs of 2D Convolution / Max Pooling layers, one 2D Global Averaging layer, and 3 Dense layers with the *<u>last</u>* layer using the L1 Regularizer with a penalty of .01.  This model design is show below with the training/validation accuracy and loss curves.
 
@@ -265,13 +271,13 @@ The training accuracy for this model reached 97.52%, a very high accuracy rate, 
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              97.52%              |                            86.32                             |                            92.39%                            |
 
-***Figure 13 - Initial Solution***
+***Figure 14 - Initial Solution***
 
-Similar to mode 16, another high accuracy rate was achieved by model 15, structurally similar, but its L1 regularization is at the <u>*first*</u> Dense layer with a penalty of 0.50.  Model 15 reached a validation loss slight lower than mode 16, but loss increased more rapidly thereafter, but reached a relatively same loss value after 1000 epochs.  The testing accuracy for model 15 was 92.18%.
+Similar to *model 16*, another high accuracy rate was achieved by model 15, structurally similar, but its L1 regularization is at the <u>*first*</u> Dense layer with a penalty of 0.50.  Model 15 reached a validation loss slight lower than *model 16*, but loss increased more rapidly thereafter, but reached a relatively same loss value after 1000 epochs.  The testing accuracy for model 15 was 92.18%.
 
 #### ***Final Solution***
 
-In the initial solution, in both models discussed above, the model overfits.  After trial and experiment with .various model configurations, ***model 23*** was able to maintain high accuracy rates with reduced overfitting.
+In the initial solution, in both models discussed above, the model overfits.  After trial and experiment with .various model configurations, *model 23* was able to maintain high accuracy rates with reduced overfitting.
 
 This final model solution consists of the same 3 pairs of 2D Conv./Max pooling layers, but with a Flatten layer, and 2 Dense layers separated with a single Dropout layer, and no L1 regularization.  The first Dense layer has a `relu` activation function, and the second Dense layer has a `softmax` activation function.
 
@@ -283,7 +289,10 @@ This model was trained with dropout values of  *[.05, .10, .15, .20, .25, .30, .
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              95.82%              |                            93.55%                            |                            93.29%                            |
 
-## IV. Results
+***Figure 15 - Final Solution***
+
+## **IV. Results**
+
 ### Model Evaluation and Validation
 In this section, the final model and any supporting qualities should be evaluated in detail. It should be clear how the final model was derived and why this model was chosen. In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis). Questions to ask yourself when writing this section:
 - _Is the final model reasonable and aligning with solution expectations? Are the final parameters of the model appropriate?_
@@ -292,16 +301,29 @@ In this section, the final model and any supporting qualities should be evaluate
 - _Can results found from the model be trusted?_
 
 
+#### ***Model Expectations***
 
 
 
-***Figure X - Baseline model accuracy over by Epochs***
+#### *Model Testing*
+
+In order to determine the robustness of the final model, unseen images can be processed by the model and manual validation can be done to assess whether classification is being done as expected and any variations from the nominal training data has an impact on classification.
+
+| Predicted Classification | Image 1                                                      | Image 2                                                      | Image 3                                                      |
+| ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Hair / Makeup            | ![air-makeup-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\hair-makeup-1.png) | ![air-makeup-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\hair-makeup-2.png) |                                                              |
+| Operating Radio          | ![perating-radio-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\operating-radio-1.png) | ![perating-radio-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\operating-radio-2.png) | ![perating-radio-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\operating-radio-3.png) |
+| Phone - Left             | ![hone-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-left-1.png) | ![hone-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-left-2.png) | ![hone-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-left-3.png) |
+| Phone - Right            | ![hone-right-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-right-1.png) | ![hone-right-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-right-2.png) | ![hone-right-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-right-3.png) |
+| Reaching Behind          | ![eaching-behind-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\reaching-behind-1.png) | ![eaching-behind-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\reaching-behind-2.png) | ![eaching-behind-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\reaching-behind-3.png) |
+| Safe Driving             | ![afe-driving-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\safe-driving-1.png) | ![afe-driving-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\safe-driving-2.png) | ![afe-driving-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\safe-driving-5.png) |
+| Talking to Passenger     | ![alking-to-passenger-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\talking-to-passenger-1.png) | ![alking-to-passenger-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\talking-to-passenger-2.png) | ![alking-to-passenger-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\talking-to-passenger-3.png) |
+| Texting - Left           | ![exting-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\texting-left-1.png) | ![exting-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\texting-left-2.png) | ![exting-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\texting-left-3.png) |
+| Drinking                 | ![rinking-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\drinking-1.png) | ![rinking-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\drinking-2.png) | ![rinking-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\drinking-3.png) |
+
+#### *Model Robustness*
 
 
-
-![odel_evaluation_results_](results/model_evaluation_results_1.PNG)
-
-***Figure Y - Model Accuracy vs. Regularization Hyperparameter Values***
 
 ### Justification
 
