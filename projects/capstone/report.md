@@ -71,11 +71,10 @@ The following tables shows samples of an image in each class, `c0` to `c9` , and
 ### Exploratory Visualization
 The image set provided contains colored images of various driver postures that are in 10 different classes.  An initial look at the grayscale image and its histogram shows there are many pixels with low intensity below 120, and a smaller number of pixels with high intensity above 230.  A sample and its histogram is shown below.   The sample image's histogram is equalized and both the processed image and its new histogram is shown as well.  
 
-|                            Image                             |                      Processing Results                      |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| **Original Image**![riginal-imag](pre-processing/original-image.png) | ![riginal-image-histogra](pre-processing/original-image-histogram.png) |
-| **Image - Histogram Equalized**![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) |
-| **Original Image**![riginal-image-morp](pre-processing/original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
+|                        Original Image                        |                  Histogram Equalized Image                   |                        Original Image                        |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|      ![riginal-imag](pre-processing/original-image.png)      | ![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![riginal-image-morp](pre-processing/original-image-morph.png) |
+| ![riginal-image-histogra](pre-processing/original-image-histogram.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
 
 ***Figure 5 - Image Transformations***
 
@@ -248,7 +247,7 @@ def predict_distraction(model):
 
 ***Figure 12 - Newer algorithm used for evaluation***
 
-Some of the saved models were re-evaluated with the new evaluation algorithm, and as a result, the best models to go forward with were selected as final models - in particular Model 23 seemed to generated the highest training and validation accuracy.
+Some of the saved models were re-evaluated with the new evaluation algorithm, and as a result, the best models to go forward with were selected as final models - in particular Model 23 seemed to generated the highest training and validation accuracy.  
 
 ### Refinement
 Based on the large number of model design iterations done, as discussed above, some of the best performing models were selected and multiple hyperparameter values were used to further refine model performance.
@@ -307,9 +306,9 @@ The final model seems reasonable since it was expected there would be several Co
 
 The use of grayscaled images with histogram equalization vs. color images had slight differences in model training.  When looking at the final model, the validation loss when trained with color images was smaller than the validation loss when trained with grayscale/histogram equalized images, and respectively, the training/validation accuracy was higher as well.   This leads to the question as to whether colored images may provide information about the features in each image, or whether the colors may lead to further confusion across classifications.
 
-#### *Model Testing / Robustness* 
+#### *Model Testing* 
 
-In order to determine the robustness of the final model, unseen images were predicted by the model and manual validation was performed to verify whether classification is being done as expected and any variations from the nominal training data has an impact on classification.
+In order to determine the robustness of the final model, ***unseen/unlabeled images*** were predicted by the model and manual validation was performed to verify whether classification is being done as expected and any variations from the nominal training data has an impact on classification.
 
 |                                                              |                                                              |                                                              |                                                              |                                                              |                                                              |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -328,8 +327,39 @@ Both models seemed to have the following confusion in classification; similar is
 - Any hand near the face was confused as hair/makeup. 
 
 
+As shown below, further analysis using the confusion matrix, generated from the ***training &***  ***testing datasets***, provides a deeper insight into which classifications are more strongly predicted by the model, and which classes are confused as other classes.
 
-![inal_model_confusion_matri](results/final_model_confusion_matrix.png)
+Based on the confusion matrix from the testing data:
+
+- *Hair/Makeup* seem difficult to predict and gets confused with most other classes with some small probability.
+- *Hair/Makeup* will most be confused with *Drinking* and *Talking to passenger*
+- *Safe Drinking* is the next most difficult to predict and mostly get confused with texting - right and most other classes, other than *Reaching Behind* or *Hair/Makeup*
+
+|                        Training Data                         |                         Testing Data                         |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![inal_model_confusion_matri](results/final_model_confusion_matrix_training_data.png) | ![inal_model_confusion_matri](results/final_model_confusion_matrix_testing_data.png) |
+
+***Figure 15 - Confusion Matrices***
+
+The confusion matrix based on the training data shows high correlation of each class to itself, as expected, on a model with high training accuracy.  The most difficult classes to predict still remain *Safe Driving* and *Hair/Makeup*.  *Safe Driving* is most likely to be confused with *Texting- Left*.
+
+#### ***Model Robustness***
+
+In order to gauge the robustness of the final model, it is necessary to simulate possible sources of noise that may be encountered in reality during the image acquisition process.  The type of noise that may occur during image acquisition could be as follows:
+
+- Camera movement - this may cause the image to shift to the left or right or rotate.  The final model should be able to tolerate slight shifts in images since using the pooling layers should have resulted in position invariance.
+- Dirty camera lens - this may cause noise to be added to the image frame such as speckles or some sort of white noise based on the physical configuration.
+- Direct sunlight on the camera - this may cause bright spots on the image or in extreme cases to block out any object reflection.
+- Night time - the images acquired may be in night-mode, hence, may result in a very hazy grayscale image.
+
+For the scope of this project, the first source of noise will be explored, specifically, a shift in the image in different directions.  For a ***shift to the right***, so as to block part of the steering wheel or extended arm(s) in the image, the testing accuracy significantly decreased to 14.34%.  For a ***shift to the left***, the testing accuracy was 27.05%.  The confusion matrix for each is shown below.  
+
+|           Shift to the Right/Down on Training Data           |            Shift to the Left/Up on Training Data             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![inal_model_confusion_matrix_shift_righ](results/final_model_confusion_matrix_shift_right.png) | ![inal_model_confusion_matrix_shift_lef](results/final_model_confusion_matrix_shift_left.png) |
+| ![hift-safe-driving-](final_model/shift-images\shift-safe-driving-2.png) | ![hifted-left-](final_model/shift-images\shifted-left-1.png) |
+
+The robustness of the model is low since it does not seem to be shift invariant on the training data, and minor changes cause the predictive capability of the model to be negatively impacted. 
 
 ### Justification
 
@@ -339,9 +369,13 @@ In this section, your model’s final solution and its results should be compare
 - _Is the final solution significant enough to have solved the problem?_
 
 
-## V. Conclusion
-_(approx. 1-2 pages)_
+The baseline model achieved a maximum testing accuracy of 24.08%, where as the final model achieved a testing accuracy of 93.29%.  The final model had a higher accuracy at a faster rate, and significantly lower variance.  The baseline model had relatively linear loss curves over 250 epochs, whereas the final model had non-linear loss curve that achieved lower loss at a faster rate.
 
+The baseline model analysis is provided in a previous subsection above in the *Benchmark* section.  The following shows the confusion matrix of the baseline model on the training data.  This shows a significant difference from the confusion matrix of the final model.  There is significant amount of confusion for any given class into other classes for the baseline model.  The most predictive confidence is in classes for *operating radio*, *safe driving*, and *talking on phone - left*.   This is contradictory to the final model since the *safe driving* class is relatively lesser of the predictive classes.
+
+![aseline-model-confusion-matri](results/baseline-model-confusion-matrix.png)
+
+## V. Conclusion
 ### Free-Form Visualization
 In this section, you will need to provide some form of visualization that emphasizes an important quality about the project. It is much more free-form, but should reasonably support a significant result or characteristic about the problem that you want to discuss. Questions to ask yourself when writing this section:
 - _Have you visualized a relevant or important quality about the problem, dataset, input data, or results?_
@@ -407,4 +441,8 @@ In this section, you will need to provide discussion as to how one aspect of the
 [13] http://text-analytics101.rxnlp.com/2014/10/computing-precision-and-recall-for.html
 
 [14] *The Effect of Batch Normalization on Deep Convolutional Neural Networks*, https://kth.diva-portal.org/smash/get/diva2:955562/FULLTEXT01.pdf
+
+[15] https://stackoverflow.com/questions/22937589/how-to-add-noise-gaussian-salt-and-pepper-etc-to-image-in-python-with-opencv/27342545
+
+
 
