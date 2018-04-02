@@ -62,9 +62,9 @@ This dataset is being used since it is a public dataset provided by StateFarm an
 
 The following tables shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
 
-|   c0![mg_3](sample_images\c0\img_34.jpg)   |   c1![mg_](sample_images\c1\img_6.jpg)   |  c2![mg_18](sample_images\c2\img_186.jpg)  |             c3![mg_](sample_images\c3\img_5.jpg)             |   c4![mg_1](sample_images\c4\img_14.jpg)   |
+|   c0![mg_3](sample_images/c0/img_34.jpg)   |   c1![mg_](sample_images/c1/img_6.jpg)   |  c2![mg_18](sample_images/c2/img_186.jpg)  |             c3![mg_](sample_images/c3/img_5.jpg)             |   c4![mg_1](sample_images/c4/img_14.jpg)   |
 | :----------------------------------------: | :--------------------------------------: | :----------------------------------------: | :----------------------------------------------------------: | :----------------------------------------: |
-| **c5**![mg_5](sample_images\c5\img_56.jpg) | **c6**![mg_](sample_images\c6\img_0.jpg) | **c7**![mg_8](sample_images\c7\img_81.jpg) | **c8**![mg_2](C:\Users\pushkar\ML\machine-learning\projects\capstone\sample_images\c8\img_26.jpg) | **c9**![mg_1](sample_images\c9\img_19.jpg) |
+| **c5**![mg_5](sample_images/c5/img_56.jpg) | **c6**![mg_](sample_images/c6/img_0.jpg) | **c7**![mg_8](sample_images/c7/img_81.jpg) | **c8**![mg_2](C:/Users/pushkar/ML/machine-learning/projects/capstone/sample_images/c8/img_26.jpg) | **c9**![mg_1](sample_images/c9/img_19.jpg) |
 
 ***Figure 3 - Sample images from each class***
 
@@ -73,9 +73,9 @@ The image set provided contains colored images of various driver postures that a
 
 | Image                                                        | Processing Results                                           |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Original Image**![riginal-imag](pre-processing\original-image.png) | ![riginal-image-histogra](pre-processing\original-image-histogram.png) |
-| **Image - Histogram Equalized**![mage-histogram-equalize](pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](pre-processing\euqalized-histogram-cdf.png) |
-| **Original Image       **![riginal-image-morp](pre-processing\original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing\image-morph-dilation.png) |
+| **Original Image**![riginal-imag](pre-processing/original-image.png) | ![riginal-image-histogra](pre-processing/original-image-histogram.png) |
+| **Image - Histogram Equalized**![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) |
+| **Original Image       **![riginal-image-morp](pre-processing/original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
 
 ***Figure 5 - Image Transformations***
 
@@ -143,8 +143,8 @@ The baseline CNN model used the `softmax` activation function in the last dense 
 
 | Training vs. Testing Accuracy                                | Training vs. Testing Loss                                    | Training Accuracy | Validation Accuracy | Evaluation Accuracy |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------- | ------------------- | ------------------- |
-| ![reate_base_model2018-04-0128_model_accurac](saved_models\create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](saved_models\create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
-| ![reate_base_model2018-04-0182_model_accurac](saved_models\create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](saved_models\create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
+| ![reate_base_model2018-04-0128_model_accurac](saved_models/create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](saved_models/create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
+| ![reate_base_model2018-04-0182_model_accurac](saved_models/create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](saved_models/create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
 
 ***Figure 7 - Baseline Model Training results***
 
@@ -214,8 +214,8 @@ After running many model iterations, several patterns were identified in model d
 
 | Baseline Model                                               | Model 1                                                      | Model 2                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![ase-mode](model_pics\base-model.png)                       | ![odel](model_pics\model1.png)                               | ![odel](model_pics\model2.png)                               |
-| ![reate_base_model2018-04-0128_model_accurac](saved_models\create_base_model2018-04-0128_model_accuracy.png)![reate_base_model2018-04-0128_model_los](saved_models\create_base_model2018-04-0128_model_loss.png) | ![reate_model12018-03-1536_model_accurac](saved_models\create_model12018-03-1536_model_accuracy.png)![reate_model12018-03-1536_model_los](saved_models\create_model12018-03-1536_model_loss.png) | ![reate_model22018-03-151_model_accurac](saved_models\create_model22018-03-151_model_accuracy.png)![reate_model22018-03-151_model_los](saved_models\create_model22018-03-151_model_loss.png) |
+| ![ase-mode](model_pics/base-model.png)                       | ![odel](model_pics/model1.png)                               | ![odel](model_pics/model2.png)                               |
+| ![reate_base_model2018-04-0128_model_accurac](saved_models/create_base_model2018-04-0128_model_accuracy.png)![reate_base_model2018-04-0128_model_los](saved_models/create_base_model2018-04-0128_model_loss.png) | ![reate_model12018-03-1536_model_accurac](saved_models/create_model12018-03-1536_model_accuracy.png)![reate_model12018-03-1536_model_los](saved_models/create_model12018-03-1536_model_loss.png) | ![reate_model22018-03-151_model_accurac](saved_models/create_model22018-03-151_model_accuracy.png)![reate_model22018-03-151_model_los](saved_models/create_model22018-03-151_model_loss.png) |
 
 ***Figure 10 - Experimental models***
 
@@ -264,7 +264,7 @@ Besides the baseline model, the initial solution considered here is one of the o
 
 |             Model 16             |                        Accuracy Graph                        |                          Loss Graph                          |
 | :------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![odel2](model_pics\model16.png) | ![reate_model162018-03-2179_model_accurac](saved_models\create_model162018-03-2179_model_accuracy.png) | ![reate_model162018-03-2179_model_los](saved_models\create_model162018-03-2179_model_loss.png) |
+| ![odel2](model_pics/model16.png) | ![reate_model162018-03-2179_model_accurac](saved_models/create_model162018-03-2179_model_accuracy.png) | ![reate_model162018-03-2179_model_los](saved_models/create_model162018-03-2179_model_loss.png) |
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              97.52%              |                            86.32                             |                            92.39%                            |
 
@@ -280,7 +280,7 @@ Besides the baseline model, the initial solution considered here is one of the o
 
 |             Model 23             |                        Accuracy Graph                        |                          Loss Graph                          |
 | :------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![odel2](model_pics\model23.png) | ![reate_model23dropout_0.12018-03-2713_model_accurac](saved_models\create_model23dropout_0.12018-03-2713_model_accuracy.png) | ![reate_model23dropout_0.12018-03-2713_model_los](saved_models\create_model23dropout_0.12018-03-2713_model_loss.png) |
+| ![odel2](model_pics/model23.png) | ![reate_model23dropout_0.12018-03-2713_model_accurac](saved_models/create_model23dropout_0.12018-03-2713_model_accuracy.png) | ![reate_model23dropout_0.12018-03-2713_model_los](saved_models/create_model23dropout_0.12018-03-2713_model_loss.png) |
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              95.82%              |                            93.55%                            |                            93.29%                            |
 
@@ -298,13 +298,13 @@ In this section, the final model and any supporting qualities should be evaluate
 
 
 
-![aseline-model-accuracie](results\baseline-model-accuracies.PNG)
+![aseline-model-accuracie](results/baseline-model-accuracies.PNG)
 
 ***Figure X - Baseline model accuracy over by Epochs***
 
 
 
-![odel_evaluation_results_](results\model_evaluation_results_1.PNG)
+![odel_evaluation_results_](results/model_evaluation_results_1.PNG)
 
 ***Figure Y - Model Accuracy vs. Regularization Hyperparameter Values***
 
