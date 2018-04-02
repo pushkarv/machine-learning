@@ -303,27 +303,33 @@ In this section, the final model and any supporting qualities should be evaluate
 
 #### ***Model Expectations***
 
+The final model seems reasonable since it was expected there would be several Conv-2D layers needed with pooling layers to provide position invariance.  The number of Dense layers was also researched to determine what would be the right number that would not be too simple, e.g. the baseline model, and  or too complex.  Too many Dense layers with Dropout tended to cause overfitting in some cases, and in fact, 5 dense layers without Dropouts caused linear accuracy / loss curves, which was not expected.  The use of Dropouts or L1 Regularization, but not both at the same time based on models researched, reduced overfitting. 
+
+The use of grayscaled images with histogram equalization vs. color images had slight differences in model training.  When looking at the final model, the validation loss when trained with color images was smaller than the validation loss when trained with grayscale/histogram equalized images, and respectively, the training/validation accuracy was higher as well.   This leads to the question as to whether colored images may provide information about the features in each image, or whether the colors may lead to further confusion across classifications.
+
+#### *Model Testing / Robustness* 
+
+In order to determine the robustness of the final model, unseen images were predicted by the model and manual validation was performed to verify whether classification is being done as expected and any variations from the nominal training data has an impact on classification.
+
+|                                                              |                                                              |                                                              |                                                              |                                                              |                                                              |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Hair / Makeup![air-makeup-](final_model/predicted-test-images/hair-makeup-1.png) | Hair / Makeup![air-makeup-](final_model/predicted-test-images/hair-makeup-2.png) | Operating Radio![perating-radio-](final_model/predicted-test-images/operating-radio-1.png) | Operating Radio![perating-radio-](final_model/predicted-test-images/operating-radio-2.png) | Operating Radio![perating-radio-](final_model/predicted-test-images/operating-radio-3.png) | Phone - Right![hone-right-](final_model/predicted-test-images/phone-right-1.png) |
+| Phone - Left![hone-left-](final_model/predicted-test-images/phone-left-1.png) | Phone - Left![hone-left-](final_model/predicted-test-images/phone-left-2.png) | Phone - Left![hone-left-](final_model/predicted-test-images/phone-left-3.png) | Phone - Right![hone-right-](final_model/predicted-test-images/phone-right-2.png) | Phone - Right ![hone-right-](final_model/predicted-test-images/phone-right-3.png) | Reaching Behind![eaching-behind-](final_model/predicted-test-images/reaching-behind-3.png) |
+| Reaching Behind![eaching-behind-](final_model/predicted-test-images/reaching-behind-1.png) | Reaching Behind![eaching-behind-](final_model/predicted-test-images/reaching-behind-2.png) | Reaching Behind ![eaching-behind-](final_model/predicted-test-images/reaching-behind-3.png) | Safe Driving![afe-driving-](final_model/predicted-test-images/safe-driving-1.png) | Safe Driving![afe-driving-](final_model/predicted-test-images/safe-driving-2.png) | Safe Driving![afe-driving-](final_model/predicted-test-images/safe-driving-5.png) |
+| Drinking![rinking-](final_model/predicted-test-images/drinking-1.png) | Drinking![rinking-](final_model/predicted-test-images/drinking-2.png) | Talking to Passenger![alking-to-passenger-](final_model/predicted-test-images/talking-to-passenger-1.png) | Talking to Passenger![alking-to-passenger-](final_model/predicted-test-images/talking-to-passenger-2.png) | Texting - Left![exting-left-](final_model/predicted-test-images/texting-left-2.png) | Texting - Left![exting-left-](final_model/predicted-test-images/texting-left-1.png) |
+
+The above images were also tested with final model version trained with grayscale images with the same Dropout value, and the classifications were similar.  
+
+Both models seemed to have the following confusion in classification; similar issues were reported in [5]:
+
+- Whenever a right hand was up, whether with or without a cell phone or a cup, it was confused as drinking.
+- Talking on the phone - left or right- were confused with each other
+- Texting on the phone - left or right - were confused with each other or with talking on the phone
+- Any hand near the face was confused as hair/makeup. 
 
 
-#### *Model Testing*
 
-In order to determine the robustness of the final model, unseen images can be processed by the model and manual validation can be done to assess whether classification is being done as expected and any variations from the nominal training data has an impact on classification.
-
-| Predicted Classification | Image 1                                                      | Image 2                                                      | Image 3                                                      |
-| ------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Hair / Makeup            | ![air-makeup-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\hair-makeup-1.png) | ![air-makeup-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\hair-makeup-2.png) |                                                              |
-| Operating Radio          | ![perating-radio-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\operating-radio-1.png) | ![perating-radio-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\operating-radio-2.png) | ![perating-radio-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\operating-radio-3.png) |
-| Phone - Left             | ![hone-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-left-1.png) | ![hone-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-left-2.png) | ![hone-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-left-3.png) |
-| Phone - Right            | ![hone-right-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-right-1.png) | ![hone-right-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-right-2.png) | ![hone-right-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\phone-right-3.png) |
-| Reaching Behind          | ![eaching-behind-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\reaching-behind-1.png) | ![eaching-behind-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\reaching-behind-2.png) | ![eaching-behind-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\reaching-behind-3.png) |
-| Safe Driving             | ![afe-driving-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\safe-driving-1.png) | ![afe-driving-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\safe-driving-2.png) | ![afe-driving-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\safe-driving-5.png) |
-| Talking to Passenger     | ![alking-to-passenger-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\talking-to-passenger-1.png) | ![alking-to-passenger-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\talking-to-passenger-2.png) | ![alking-to-passenger-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\talking-to-passenger-3.png) |
-| Texting - Left           | ![exting-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\texting-left-1.png) | ![exting-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\texting-left-2.png) | ![exting-left-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\texting-left-3.png) |
-| Drinking                 | ![rinking-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\drinking-1.png) | ![rinking-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\drinking-2.png) | ![rinking-](C:\Users\pushkar\ML\machine-learning\projects\capstone\final_model\predicted-test-images\drinking-3.png) |
-
-#### *Model Robustness*
-
-
+![inal_model_confusion_matri](results/final_model_confusion_matrix.png)
 
 ### Justification
 
