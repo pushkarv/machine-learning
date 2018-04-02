@@ -54,7 +54,7 @@ Overall the labeled dataset seems balanced, other than the `c7 & c8` classes tha
 
 In order to alleviate in imbalances, the training dataset will be trimmed to ensure ***equal number of images*** exist for all classes.
 
-![Count by Class](C:\Users\pushkar\ML\machine-learning\projects\capstone\data-count-by-class.png)
+![Count by Class](data-count-by-class.png)
 
 ***Figure 2 - Distribution of Images by Class***
 
@@ -73,9 +73,9 @@ The image set provided contains colored images of various driver postures that a
 
 | Image                                                        | Processing Results                                           |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Original Image**![riginal-imag](.\pre-processing\original-image.png) | ![riginal-image-histogra](.\pre-processing\original-image-histogram.png) |
-| **Image - Histogram Equalized**![mage-histogram-equalize](.\pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](.\pre-processing\euqalized-histogram-cdf.png) |
-| **Original Image       **![riginal-image-morp](.\pre-processing\original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](.\pre-processing\image-morph-dilation.png) |
+| **Original Image**![riginal-imag](pre-processing\original-image.png) | ![riginal-image-histogra](pre-processing\original-image-histogram.png) |
+| **Image - Histogram Equalized**![mage-histogram-equalize](pre-processing\image-histogram-equalized.png) | ![uqalized-histogram-cd](pre-processing\euqalized-histogram-cdf.png) |
+| **Original Image       **![riginal-image-morp](pre-processing\original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing\image-morph-dilation.png) |
 
 ***Figure 5 - Image Transformations***
 
@@ -143,8 +143,8 @@ The baseline CNN model used the `softmax` activation function in the last dense 
 
 | Training vs. Testing Accuracy                                | Training vs. Testing Loss                                    | Training Accuracy | Validation Accuracy | Evaluation Accuracy |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------- | ------------------- | ------------------- |
-| ![reate_base_model2018-04-0128_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
-| ![reate_base_model2018-04-0182_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
+| ![reate_base_model2018-04-0128_model_accurac](saved_models\create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](saved_models\create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
+| ![reate_base_model2018-04-0182_model_accurac](saved_models\create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](saved_models\create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
 
 ***Figure 7 - Baseline Model Training results***
 
@@ -197,7 +197,7 @@ Most of the model training was done using the color images, but some model train
 
 Beyond the baseline model, a key challenge is in designing a more complex model architecture with the appropriate hyperparameters, identifying the appropriate hyperparameter values, and determining the number and type of layers in a CNN.  
 
-![Model Design Overview](.\model-design-view.png)
+![Model Design Overview](model-design-view.png)
 
 ***Figure 9 - Model Design Considerations***
 
@@ -214,8 +214,8 @@ After running many model iterations, several patterns were identified in model d
 
 | Baseline Model                                               | Model 1                                                      | Model 2                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![ase-mode](C:\Users\pushkar\ML\machine-learning\projects\capstone\model_pics\base-model.png) | ![odel](C:\Users\pushkar\ML\machine-learning\projects\capstone\model_pics\model1.png) | ![odel](C:\Users\pushkar\ML\machine-learning\projects\capstone\model_pics\model2.png) |
-| ![reate_base_model2018-04-0128_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_accuracy.png)![reate_base_model2018-04-0128_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_loss.png) | ![reate_model12018-03-1536_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model12018-03-1536_model_accuracy.png)![reate_model12018-03-1536_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model12018-03-1536_model_loss.png) | ![reate_model22018-03-151_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model22018-03-151_model_accuracy.png)![reate_model22018-03-151_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model22018-03-151_model_loss.png) |
+| ![ase-mode](model_pics\base-model.png)                       | ![odel](model_pics\model1.png)                               | ![odel](model_pics\model2.png)                               |
+| ![reate_base_model2018-04-0128_model_accurac](saved_models\create_base_model2018-04-0128_model_accuracy.png)![reate_base_model2018-04-0128_model_los](saved_models\create_base_model2018-04-0128_model_loss.png) | ![reate_model12018-03-1536_model_accurac](saved_models\create_model12018-03-1536_model_accuracy.png)![reate_model12018-03-1536_model_los](saved_models\create_model12018-03-1536_model_loss.png) | ![reate_model22018-03-151_model_accurac](saved_models\create_model22018-03-151_model_accuracy.png)![reate_model22018-03-151_model_los](saved_models\create_model22018-03-151_model_loss.png) |
 
 ***Figure 10 - Experimental models***
 
@@ -262,11 +262,11 @@ Based on the large number of model design iterations done, as discussed above, s
 
 Besides the baseline model, the initial solution considered here is one of the original models that was trained - model 16. 
 
-|              Model 16              |                        Accuracy Graph                        |                          Loss Graph                          |
-| :--------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![odel2](.\model_pics\model16.png) | ![reate_model162018-03-2179_model_accurac](.\saved_models\create_model162018-03-2179_model_accuracy.png) | ![reate_model162018-03-2179_model_los](.\saved_models\create_model162018-03-2179_model_loss.png) |
-|       **Training Accuracy**        |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
-|               97.52%               |                            86.32                             |                            92.39%                            |
+|             Model 16             |                        Accuracy Graph                        |                          Loss Graph                          |
+| :------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![odel2](model_pics\model16.png) | ![reate_model162018-03-2179_model_accurac](saved_models\create_model162018-03-2179_model_accuracy.png) | ![reate_model162018-03-2179_model_los](saved_models\create_model162018-03-2179_model_loss.png) |
+|      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
+|              97.52%              |                            86.32                             |                            92.39%                            |
 
 ***Figure 13 - Initial Solution***
 
@@ -278,11 +278,11 @@ Besides the baseline model, the initial solution considered here is one of the o
 
 
 
-|              Model 23              |                        Accuracy Graph                        |                          Loss Graph                          |
-| :--------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![odel2](.\model_pics\model23.png) | ![reate_model23dropout_0.12018-03-2713_model_accurac](.\saved_models\create_model23dropout_0.12018-03-2713_model_accuracy.png) | ![reate_model23dropout_0.12018-03-2713_model_los](.\saved_models\create_model23dropout_0.12018-03-2713_model_loss.png) |
-|       **Training Accuracy**        |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
-|               95.82%               |                            93.55%                            |                            93.29%                            |
+|             Model 23             |                        Accuracy Graph                        |                          Loss Graph                          |
+| :------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![odel2](model_pics\model23.png) | ![reate_model23dropout_0.12018-03-2713_model_accurac](saved_models\create_model23dropout_0.12018-03-2713_model_accuracy.png) | ![reate_model23dropout_0.12018-03-2713_model_los](saved_models\create_model23dropout_0.12018-03-2713_model_loss.png) |
+|      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
+|              95.82%              |                            93.55%                            |                            93.29%                            |
 
 
 
@@ -298,13 +298,13 @@ In this section, the final model and any supporting qualities should be evaluate
 
 
 
-![aseline-model-accuracie](C:\Users\pushkar\ML\machine-learning\projects\capstone\results\baseline-model-accuracies.PNG)
+![aseline-model-accuracie](results\baseline-model-accuracies.PNG)
 
 ***Figure X - Baseline model accuracy over by Epochs***
 
 
 
-![odel_evaluation_results_](C:\Users\pushkar\ML\machine-learning\projects\capstone\results\model_evaluation_results_1.PNG)
+![odel_evaluation_results_](results\model_evaluation_results_1.PNG)
 
 ***Figure Y - Model Accuracy vs. Regularization Hyperparameter Values***
 
