@@ -365,6 +365,7 @@ def create_model16():
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
 
+## DUPLICATE OF MODEL 16 - IGNORING RESULTS ###
 def create_model17():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))

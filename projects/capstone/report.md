@@ -1,7 +1,7 @@
 # Machine Learning Engineer Nanodegree
 ## Capstone Project
 Pushkar Varma
-March 30, 2018
+April 1, 2018
 
 ## I. Definition
 ### Project Overview
@@ -139,19 +139,12 @@ Classification accuracy will be used as a primary metric to evaluate the perform
 
 #### Analysis of the Baseline Model
 
-The baseline CNN model used the `softmax` activation function in the last dense layer and was trained over 250, 1000, 2000 epochs to determine how accuracy would change and whether it would converge towards to certain value.  
+The baseline CNN model used the `softmax` activation function in the last dense layer and was trained over 250 and 500 epochs to determine how accuracy would change and whether it would converge towards to certain value.  
 
-After 250 epochs, the training accuracy was 20.23%, the validation accuracy was 16.82%, and testing accuracy was 16.16%.
-
-After 1000 epochs, the training accuracy was 28.33%, the validation accuracy 29.38%, and testing accuracy was 26.7%.
-
-After 2000 epochs, the training accuracy was 32.03%, the validation accuracy 34.62%, and testing accuracy was 28% (not shown below).
-
-| Training vs. Testing Accuracy                                | Training vs. Testing Loss                                    | Evaluation Accuracy |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------- |
-| ![reate_base_model2018-04-0128_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_loss.png) | 16.16%              |
-| ![reate_base_model2018-04-0182_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_loss.png) | 24.08%              |
-| ![reate_base_model2018-03-1627_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-03-1627_model_accuracy.png) | ![reate_base_model2018-03-1627_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-03-1627_model_loss.png) | 26.7%               |
+| Training vs. Testing Accuracy                                | Training vs. Testing Loss                                    | Training Accuracy | Validation Accuracy | Evaluation Accuracy |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ----------------- | ------------------- | ------------------- |
+| ![reate_base_model2018-04-0128_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
+| ![reate_base_model2018-04-0182_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
 
 ***Figure 7 - Baseline Model Training results***
 
@@ -167,20 +160,16 @@ The images used were resized into 224x224 pixels, and converted into 4D tensors 
 
 Furthermore, grayscale transformation and histogram equalization was performed as discussed above in the *Exploratory Visualization* section.  After assessing many model designs, the best model design was selected and trained on the grayscale images as well to assess the performance of the model and this is discussed further below.
 
+For the target labels, *onehot* encoding was done for both training, validation and testing label targets since the target labels are categorical values from 0 to 9.
+
 ### Implementation
-In this section, the process for which metrics, algorithms, and techniques that you implemented for the given data will need to be clearly documented. It should be abundantly clear how the implementation was carried out, and discussion should be made regarding any complications that occurred during this process. Questions to ask yourself when writing this section:
-
-- _Is it made clear how the algorithms and techniques were implemented with the given datasets or input data?_
-- _Were there any complications with the original metrics or techniques that required changing prior to acquiring a solution?_
-- _Was there any part of the coding process (e.g., writing complicated functions) that should be documented?_
-
-#### Environment
+#### *Environment*
 
 The model design, training and evaluation were done using the *Keras* API with a *Tensorflow* backend, with a NVIDIA GPU GeForce 940MX on a personal laptop as well as a NVIDIA Telsa K80 on a AWS Deep Learning EC2 instance (p2.xlarge).  The initial setup on the laptop involved installing the NVIDIA CUDA and cuDNN drivers with appropriate versions, which was initially time consuming and challenging, but once setup, many models were trained on the laptop and the AWS EC2 instance.  The key difference between the 2 hardware configurations were the GPU memory used, which impacted the model training time.  The laptop GeForce GPU only had 2GB, and the AWS Tesla GPU had 12GB, this resulted in faster model training time on the Tesla GPU, as observed on a per epoch basis.    However, due to cost, the Tesla GPU was used over a limited time period, and the exact difference in model training time between the 2 environments was not measured since it was out of scope for this project.
 
 The initial implementation was written in a *Jupyter* notebook and then exported into  a separate python file so the model training could be run in the background.
 
-#### Loading / Pre-processing Data
+#### *Loading / Pre-processing Data*
 
 The initial image data was loaded using the *Keras* `preprocessing.image` class, with the images resized to 224x224, and converted into 4D tensors for use in model training.  This was generally not difficult and was adopted from the course *dog identification project*, since both projects involved image classification.
 
@@ -204,7 +193,7 @@ def path_to_tensor(img_path, equalized=False):
 
 Most of the model training was done using the color images, but some model training involved the histogram equalized images.  Histogram equalization is either done on a single channel, i.e. grayscale, or statistic of multiple channels, i.e. color, using the YCbCr color scheme.   I had decided to use grayscale since that was the easiest way to perform histogram equalization, and also determine how model training would perform on grayscale images.  A key issue with equalizing color images are that many implementations normally equalize by each channel and then combine the channels into a single image, which results in inappropriate transformations to colors of an image.
 
-#### Model Design
+#### *Model Design*
 
 Beyond the baseline model, a key challenge is in designing a more complex model architecture with the appropriate hyperparameters, identifying the appropriate hyperparameter values, and determining the number and type of layers in a CNN.  
 
@@ -212,21 +201,89 @@ Beyond the baseline model, a key challenge is in designing a more complex model 
 
 ***Figure 9 - Model Design Considerations***
 
-Many model designs were explored and tested.  The saved models are available in the `saved_models` folder, the model design images are available in the `model_pics` folder, and log files are available in the `logs` folder.   A total of 26 model architectures were explored, with some models with varying hyperparameter values, so in essence, over 39 model iterations were explored.
+Many model designs were explored and tested.  The saved models are available in the `saved_models` folder, the model design images are available in the `model_pics` folder, and log files are available in the `logs` folder.   A total of 26 model architectures were explored, with some models with varying hyperparameter values, so in essence, over 39 model iterations were explored.  
 
-#### Model Training
+Some of the initial model designs were that trained and tested were not very good.  The initial focus was to simply extend the baseline model with various changes in order to observe the impact on model training.  
 
+After running many model iterations, several patterns were identified in model design:
 
+- *Batch Normalization* between 2D convolution and 2D max pooling introduces significant noise to cause high variation in accuracy and loss, i.e. see Model 1 below.
+- *DropOut* layer after each *Dense* layer (more than once) seems to cause enough information loss that accuracy and loss have high variation and neither converges even after large number of epochs, e.g. see Model 8 below.  However, putting *DropOut* layers also after each Conv-2D/Max-Pooling layers causes increase and convergence towards a high accuracy, around 55%, but high variance in the validation accuracy.
+- Based on the image size, and kernel size in the Conv-2D layers, there was a  maximum of **3** Conv-2D layers that could be supported. 
+- Larger number of *Dense* layers seems to cause high variation in the validation accuracy/loss curves and slower convergence.  
 
-#### Evaluating Model Designs 
+| Baseline Model                                               | Model 1                                                      | Model 2                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![ase-mode](C:\Users\pushkar\ML\machine-learning\projects\capstone\model_pics\base-model.png) | ![odel](C:\Users\pushkar\ML\machine-learning\projects\capstone\model_pics\model1.png) | ![odel](C:\Users\pushkar\ML\machine-learning\projects\capstone\model_pics\model2.png) |
+| ![reate_base_model2018-04-0128_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_accuracy.png)![reate_base_model2018-04-0128_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_base_model2018-04-0128_model_loss.png) | ![reate_model12018-03-1536_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model12018-03-1536_model_accuracy.png)![reate_model12018-03-1536_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model12018-03-1536_model_loss.png) | ![reate_model22018-03-151_model_accurac](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model22018-03-151_model_accuracy.png)![reate_model22018-03-151_model_los](C:\Users\pushkar\ML\machine-learning\projects\capstone\saved_models\create_model22018-03-151_model_loss.png) |
 
+***Figure 10 - Experimental models***
 
+#### *Model Evaluation*
+
+The models were first evaluated using the algorithm below, adopted from an earlier course project.  However, this accuracy consistently tended to be significantly below the validation accuracy.
+
+```python
+def predict_distraction(model):
+    # get index of predicted distraction for each image in test set
+    distraction_predictions = [np.argmax(model.predict(np.expand_dims(tensor, axis=0))) for tensor in test_tensors]
+
+    # report test accuracy
+    test_accuracy = 100*np.sum(np.array(distraction_predictions)==np.argmax(test_targets, axis=0))/len(distraction_predictions)
+    return test_accuracy
+```
+
+***Figure 11 - Older algorithm used for evaluation***
+
+The following evaluation algorithm started being used later and resulted in an accuracy closed to the validation accuracies that were being generated.
+
+```python
+def predict_distraction(model):
+    print("Evaluating...")
+    scores = model.evaluate(test_tensors, test_targets_onehot, verbose=0)
+    print("Evaluation %s: %.2f%%" % (model.metrics_names[1], scores[1] * 100))
+    return
+```
+
+***Figure 12 - Newer algorithm used for evaluation***
+
+Some of the saved models were re-evaluated with the new evaluation algorithm, and as a result, the best models to go forward with were selected as final models - in particular Model 23 seemed to generated the highest training and validation accuracy.
 
 ### Refinement
 In this section, you will need to discuss the process of improvement you made upon the algorithms and techniques you used in your implementation. For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
 - _Has an initial solution been found and clearly reported?_
 - _Is the process of improvement clearly documented, such as what techniques were used?_
 - _Are intermediate and final solutions clearly reported as the process is improved?_
+
+
+Based on the large number of model design iterations done, as discussed above, some of the best performing models were selected and multiple hyperparameter values were used to further refine model performance.
+
+#### ***Initial Solution***
+
+Besides the baseline model, the initial solution considered here is one of the original models that was trained - model 16. 
+
+|              Model 16              |                        Accuracy Graph                        |                          Loss Graph                          |
+| :--------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![odel2](.\model_pics\model16.png) | ![reate_model162018-03-2179_model_accurac](.\saved_models\create_model162018-03-2179_model_accuracy.png) | ![reate_model162018-03-2179_model_los](.\saved_models\create_model162018-03-2179_model_loss.png) |
+|       **Training Accuracy**        |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
+|               97.52%               |                            86.32                             |                            92.39%                            |
+
+***Figure 13 - Initial Solution***
+
+
+
+#### ***Final Solution***
+
+
+
+
+
+|              Model 23              |                        Accuracy Graph                        |                          Loss Graph                          |
+| :--------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![odel2](.\model_pics\model23.png) | ![reate_model23dropout_0.12018-03-2713_model_accurac](.\saved_models\create_model23dropout_0.12018-03-2713_model_accuracy.png) | ![reate_model23dropout_0.12018-03-2713_model_los](.\saved_models\create_model23dropout_0.12018-03-2713_model_loss.png) |
+|       **Training Accuracy**        |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
+|               95.82%               |                            93.55%                            |                            93.29%                            |
+
 
 
 ## IV. Results
@@ -243,13 +300,16 @@ In this section, the final model and any supporting qualities should be evaluate
 
 ![aseline-model-accuracie](C:\Users\pushkar\ML\machine-learning\projects\capstone\results\baseline-model-accuracies.PNG)
 
-
+***Figure X - Baseline model accuracy over by Epochs***
 
 
 
 ![odel_evaluation_results_](C:\Users\pushkar\ML\machine-learning\projects\capstone\results\model_evaluation_results_1.PNG)
 
+***Figure Y - Model Accuracy vs. Regularization Hyperparameter Values***
+
 ### Justification
+
 In this section, your model’s final solution and its results should be compared to the benchmark you established earlier in the project using some type of statistical analysis. You should also justify whether these results and the solution are significant enough to have solved the problem posed in the project. Questions to ask yourself when writing this section:
 - _Are the final results found stronger than the benchmark result reported earlier?_
 - _Have you thoroughly analyzed and discussed the final solution?_
@@ -292,16 +352,6 @@ In this section, you will need to provide discussion as to how one aspect of the
 
 
 
-### Appendix
-
-The following table shows the results of several models trained over 100 epochs with 15,200 training samples, 3800 validation samples and 3800 testing samples.   The results are shown based on the maximum testing accuracy for a particular set of hyperparameter values for a specific model design.
-
-| Model | Model Description                                            | Regularization                  | Training Accuracy | Validation Accuracy | Testing Accuracy | Training vs. Testing accuracy |
-| ----- | ------------------------------------------------------------ | ------------------------------- | ----------------- | ------------------- | ---------------- | ----------------------------- |
-| 1     | {Conv2D->MaxPooling2D}(3) -> Flatten -> Dense(**relu**) -> **Dropout** -> Dense (**softmax**) | Dropout = .05                   | 94.79%            | 91.84%              | 92.08%           |                               |
-| 2     | {Conv2D->MaxPooling2D}(3) -> Flatten -> Dense(relu, **L1**) -> **Dropout** -> Dense (**softmax**) | Dropout=.20, L1 Regularizer=.05 | 10.28%            | 9.39%               | 9.76%            |                               |
-| 3     | {Conv2D->MaxPooling2D}(3) -> Flatten -> Dense(**relu**, **L1**) -> Dense (**softmax**) | L1 Regularizer = .05            | 97%               | 91.05%              | 90.37%           |                               |
-| 4     | {Conv2D->MaxPooling2D}(3) -> Flatten -> Dense(**softmax**) -> Dropout -> Dense (**softmax**) | Dropout = .30                   | 77.45%            | 92.32%              | 91.95%           |                               |
 
 ### References
 
