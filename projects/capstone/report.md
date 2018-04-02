@@ -76,7 +76,7 @@ The image set provided contains colored images of various driver postures that a
 |      ![riginal-imag](pre-processing/original-image.png)      | ![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![riginal-image-morp](pre-processing/original-image-morph.png) |
 | ![riginal-image-histogra](pre-processing/original-image-histogram.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
 
-***Figure 5 - Image Transformations***
+***Figure 4 - Image Transformations***
 
 The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.
 
@@ -132,7 +132,7 @@ Non-trainable params: 0
 _________________________________________________________________
 ```
 
-***Figure 6 - Baseline CNN***
+***Figure 5 - Baseline CNN***
 
 Classification accuracy will be used as a primary metric to evaluate the performance of the trained model.   The accuracy will be simply based on the ratio of the number of images classified accurately to the total number of images.  Each image will be classified accurately if the class identified by the model is the same as the label for the image.  This percentage will be used to compare to the benchmark described above.  Since the training dataset will be defined to be balanced, there is no expected skewness, hence no additional adjustments necessary for evaluating performance.
 
@@ -145,7 +145,7 @@ The baseline CNN model used the `softmax` activation function in the last dense 
 | ![reate_base_model2018-04-0128_model_accurac](saved_models/create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](saved_models/create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
 | ![reate_base_model2018-04-0182_model_accurac](saved_models/create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](saved_models/create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
 
-***Figure 7.1 - Baseline Model Training results***
+***Figure 6 - Baseline Model Training results***
 
 The base model training accuracy seems to increase very slowly even though the number of epochs used is doubled, and the validation accuracy has high variance, but the validation loss and accuracy curves seem to follow the training curves.  The validation accuracy and loss curves both have high variance hence showing sensitivity to unseen data, possibly due to the simplicity of the model design and underfitting.  
 
@@ -189,7 +189,7 @@ def path_to_tensor(img_path, equalized=False):
     return np.expand_dims(x, axis=0)
 ```
 
-***Figure 8 - Image pre-processing***
+***Figure 7 - Image pre-processing***
 
 Most of the model training was done using the color images, but some model training involved the histogram equalized images.  Histogram equalization is either done on a single channel, i.e. grayscale, or statistic of multiple channels, i.e. color, using the YCbCr color scheme.   I had decided to use grayscale since that was the easiest way to perform histogram equalization, and also determine how model training would perform on grayscale images.  A key issue with equalizing color images are that many implementations normally equalize by each channel and then combine the channels into a single image, which results in inappropriate transformations to colors of an image.
 
@@ -199,7 +199,7 @@ Beyond the baseline model, a key challenge is in designing a more complex model 
 
 ![Model Design Overview](results/model-design-view.png)
 
-***Figure 9 - Model Design Considerations***
+***Figure 8 - Model Design Considerations***
 
 Many model designs were explored and tested.  The saved models are available in the `saved_models` folder, the model design images are available in the `model_pics` folder, and log files are available in the `logs` folder.   A total of 26 model architectures were explored, with some models with varying hyperparameter values, so in essence, over 39 model iterations were explored.  
 
@@ -217,7 +217,7 @@ After running many model iterations, several patterns were identified in model d
 | ![ase-mode](model_pics/base-model.png)                       | ![odel](model_pics/model1.png)                               | ![odel](model_pics/model2.png)                               |
 | ![reate_base_model2018-04-0128_model_accurac](saved_models/create_base_model2018-04-0128_model_accuracy.png)![reate_base_model2018-04-0128_model_los](saved_models/create_base_model2018-04-0128_model_loss.png) | ![reate_model12018-03-1536_model_accurac](saved_models/create_model12018-03-1536_model_accuracy.png)![reate_model12018-03-1536_model_los](saved_models/create_model12018-03-1536_model_loss.png) | ![reate_model22018-03-151_model_accurac](saved_models/create_model22018-03-151_model_accuracy.png)![reate_model22018-03-151_model_los](saved_models/create_model22018-03-151_model_loss.png) |
 
-***Figure 10 - Experimental models***
+***Figure 9 - Experimental models***
 
 #### *Model Evaluation*
 
@@ -233,7 +233,7 @@ def predict_distraction(model):
     return test_accuracy
 ```
 
-***Figure 11 - Older algorithm used for evaluation***
+***Figure 10 - Older algorithm used for evaluation***
 
 The following evaluation algorithm started being used later and resulted in an accuracy closed to the validation accuracies that were being generated.
 
@@ -245,18 +245,12 @@ def predict_distraction(model):
     return
 ```
 
-***Figure 12 - Newer algorithm used for evaluation***
+***Figure 11 - Newer algorithm used for evaluation***
 
 Some of the saved models were re-evaluated with the new evaluation algorithm, and as a result, the best models to go forward with were selected as final models - in particular Model 23 seemed to generated the highest training and validation accuracy.  
 
 ### Refinement
 Based on the large number of model design iterations done, as discussed above, some of the best performing models were selected and multiple hyperparameter values were used to further refine model performance.
-
-The figure below shows several models were trained with different hyperparameter values, and which models had the best testing accuracies.  It shows that Model 23 using a Dropout layer with a Dropout value of 0.10 had the highest test accuracy, using the *Keras* model evaluation algorithm.
-
-![odel_evaluation_results_](results/model_evaluation_results_1.PNG)
-
-***Figure 13 - Model Accuracy vs. Regularization Hyperparameter Values***
 
 #### **Initial Solution**
 
@@ -270,7 +264,7 @@ The training accuracy for this model reached 97.52%, a very high accuracy rate, 
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              97.52%              |                            86.32                             |                            92.39%                            |
 
-***Figure 14 - Initial Solution***
+***Figure 12 - Initial Solution***
 
 Similar to *model 16*, another high accuracy rate was achieved by model 15, structurally similar, but its L1 regularization is at the <u>*first*</u> Dense layer with a penalty of 0.50.  Model 15 reached a validation loss slight lower than *model 16*, but loss increased more rapidly thereafter, but reached a relatively same loss value after 1000 epochs.  The testing accuracy for model 15 was 92.18%.
 
@@ -288,18 +282,11 @@ This model was trained with dropout values of  *[.05, .10, .15, .20, .25, .30, .
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              95.82%              |                            93.55%                            |                            93.29%                            |
 
-***Figure 15 - Final Solution***
+***Figure 13 - Final Solution***
 
 ## **IV. Results**
 
 ### Model Evaluation and Validation
-In this section, the final model and any supporting qualities should be evaluated in detail. It should be clear how the final model was derived and why this model was chosen. In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis). Questions to ask yourself when writing this section:
-- _Is the final model reasonable and aligning with solution expectations? Are the final parameters of the model appropriate?_
-- _Has the final model been tested with various inputs to evaluate whether the model generalizes well to unseen data?_
-- _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
-- _Can results found from the model be trusted?_
-
-
 #### ***Model Expectations***
 
 The final model seems reasonable since it was expected there would be several Conv-2D layers needed with pooling layers to provide position invariance.  The number of Dense layers was also researched to determine what would be the right number that would not be too simple, e.g. the baseline model, and  or too complex.  Too many Dense layers with Dropout tended to cause overfitting in some cases, and in fact, 5 dense layers without Dropouts caused linear accuracy / loss curves, which was not expected.  The use of Dropouts or L1 Regularization, but not both at the same time based on models researched, reduced overfitting. 
@@ -316,6 +303,8 @@ In order to determine the robustness of the final model, ***unseen/unlabeled ima
 | Phone - Left![hone-left-](final_model/predicted-test-images/phone-left-1.png) | Phone - Left![hone-left-](final_model/predicted-test-images/phone-left-2.png) | Phone - Left![hone-left-](final_model/predicted-test-images/phone-left-3.png) | Phone - Right![hone-right-](final_model/predicted-test-images/phone-right-2.png) | Phone - Right ![hone-right-](final_model/predicted-test-images/phone-right-3.png) | Reaching Behind![eaching-behind-](final_model/predicted-test-images/reaching-behind-3.png) |
 | Reaching Behind![eaching-behind-](final_model/predicted-test-images/reaching-behind-1.png) | Reaching Behind![eaching-behind-](final_model/predicted-test-images/reaching-behind-2.png) | Reaching Behind ![eaching-behind-](final_model/predicted-test-images/reaching-behind-3.png) | Safe Driving![afe-driving-](final_model/predicted-test-images/safe-driving-1.png) | Safe Driving![afe-driving-](final_model/predicted-test-images/safe-driving-2.png) | Safe Driving![afe-driving-](final_model/predicted-test-images/safe-driving-5.png) |
 | Drinking![rinking-](final_model/predicted-test-images/drinking-1.png) | Drinking![rinking-](final_model/predicted-test-images/drinking-2.png) | Talking to Passenger![alking-to-passenger-](final_model/predicted-test-images/talking-to-passenger-1.png) | Talking to Passenger![alking-to-passenger-](final_model/predicted-test-images/talking-to-passenger-2.png) | Texting - Left![exting-left-](final_model/predicted-test-images/texting-left-2.png) | Texting - Left![exting-left-](final_model/predicted-test-images/texting-left-1.png) |
+
+***Figure 14 - Testing results on Unlabeled Data***
 
 The above images were also tested with final model version trained with grayscale images with the same Dropout value, and the classifications were similar.  
 
@@ -359,15 +348,11 @@ For the scope of this project, the first source of noise will be explored, speci
 | ![inal_model_confusion_matrix_shift_righ](results/final_model_confusion_matrix_shift_right.png) | ![inal_model_confusion_matrix_shift_lef](results/final_model_confusion_matrix_shift_left.png) |
 | ![hift-safe-driving-](final_model/shift-images\shift-safe-driving-2.png) | ![hifted-left-](final_model/shift-images\shifted-left-1.png) |
 
+***Figure 16 - Confusion Matrices for final model on Noisy Training Data***
+
 The robustness of the model is low since it does not seem to be shift invariant on the training data, and minor changes cause the predictive capability of the model to be negatively impacted. 
 
 ### Justification
-
-In this section, your model’s final solution and its results should be compared to the benchmark you established earlier in the project using some type of statistical analysis. You should also justify whether these results and the solution are significant enough to have solved the problem posed in the project. Questions to ask yourself when writing this section:
-- _Are the final results found stronger than the benchmark result reported earlier?_
-- _Have you thoroughly analyzed and discussed the final solution?_
-- _Is the final solution significant enough to have solved the problem?_
-
 
 The baseline model achieved a maximum testing accuracy of 24.08%, where as the final model achieved a testing accuracy of 93.29%.  The final model had a higher accuracy at a faster rate, and significantly lower variance.  The baseline model had relatively linear loss curves over 250 epochs, whereas the final model had non-linear loss curve that achieved lower loss at a faster rate.
 
@@ -375,19 +360,27 @@ The baseline model analysis is provided in a previous subsection above in the *B
 
 ![aseline-model-confusion-matri](results/baseline-model-confusion-matrix.png)
 
+***Figure 17 - Confusion Matrix of baseline model on Training Data***
+
 ## V. Conclusion
+
 ### Free-Form Visualization
-In this section, you will need to provide some form of visualization that emphasizes an important quality about the project. It is much more free-form, but should reasonably support a significant result or characteristic about the problem that you want to discuss. Questions to ask yourself when writing this section:
-- _Have you visualized a relevant or important quality about the problem, dataset, input data, or results?_
-- _Is the visualization thoroughly analyzed and discussed?_
-- _If a plot is provided, are the axes, title, and datum clearly defined?_
+The figure below shows several models that were trained with different hyperparameter values, and which models had the best testing accuracies.  It shows that Model 23 using a Dropout layer with a Dropout value of 0.10 had the highest test accuracy, using the *Keras* model evaluation algorithm.
+
+![odel_evaluation_results_](C:/Users/pushkar/ML/machine-learning/projects/capstone/results/model_evaluation_results_1.PNG)
+
+***Figure 18 - Model Accuracy vs. Regularization Hyperparameter Values***
+
+After many model training iterations, the general trend towards more effective models were related to having multiple Convolution-2D / Max Pooling layers, and a small number of Dense layers with regularization either via Dropout or L1 Regularization.  It was interesting to explore a large range of regularization parameters and identify regularization parameters.  A general trend cannot be implied in the above diagram as to whether small or large regularization values will provide better accuracy.
 
 ### Reflection
-In this section, you will summarize the entire end-to-end problem solution and discuss one or two particular aspects of the project you found interesting or difficult. You are expected to reflect on the project as a whole to show that you have a firm understanding of the entire process employed in your work. Questions to ask yourself when writing this section:
-- _Have you thoroughly summarized the entire process you used for this project?_
-- _Were there any interesting aspects of the project?_
-- _Were there any difficult aspects of the project?_
-- _Does the final model and solution fit your expectations for the problem, and should it be used in a general setting to solve these types of problems?_
+The project initially started out with defining the end-to-end process necessary in machine learning.  This essentially involved identifying the problem to solve, exploring the data, selecting the metrics and algorithms to be used, identifying a benchmark to help with focus and scope, identifying the data pre-processing required, designing the model architecture, identifying the hyperparameters that would be relevant to the designed models, deciding on how to split data into training, validation and testing, performing the model training on given data, evaluating the model training results and concluding on strengths and weaknesses of the model, and whether it solves the problem original identified.
+
+Some of the interesting aspects of the project involved learning the intricacies of model design and determining what types of layers and how many of a given type of layer would be effective, as well as where to place pooling layers and regularization to ensure subsampling occurs at the right location and significant information loss does not occur.  Additionally, it was interesting to learn how to print out the model design of the *Keras* models, save/load models, and generate a confusion matrix to represent data in a format that could be quickly understood.   
+
+A difficult and unexpected challenge was to install the NVIDIA drivers, CUDA and cuDNN drivers, with the right versions, in order to enable the use of the NVIDIA GPU by *Tensorflow*.  This was eventually resolved and most of the model training was done with the assistance of the GPU, otherwise, the training time would have taken much longer.  Another challenge from which I learned rather quickly was to not use large number of epochs when exploring different design options in order to be able to iterate quickly and then converge to viable options to use on a larger dataset or for larger number of epochs.  Overall, it was also necessary to create a pipeline in a manner that could be executed in the background, that could persist the intermediate states such as the models, history, and graphs since model training can take hours to days based on the input data, model design and number of epochs.  Saving a model was a critical aspect of the machine learning pipeline so a model can be analyzed later for further insight.
+
+The final solution may be appropriate for use if the source of the image data does not change, otherwise, both variations due to noise and image acquisition sources will need to be explored and taken into consideration for model training in order to come up with a more practical solution.   Furthermore, neglecting image acquisition /noise, more advanced techniques that provide for more precise object/feature selection in images would provide incremental improvements in model performance.
 
 ### Improvement
 In this section, you will need to provide discussion as to how one aspect of the implementation you designed could be improved. As an example, consider ways your implementation can be made more general, and what would need to be modified. You do not need to make this improvement, but the potential solutions resulting from these changes are considered and compared/contrasted to your current solution. Questions to ask yourself when writing this section:
