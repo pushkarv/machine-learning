@@ -146,11 +146,12 @@ The baseline CNN model used the `softmax` activation function in the last dense 
 | ![reate_base_model2018-04-0128_model_accurac](saved_models/create_base_model2018-04-0128_model_accuracy.png) | ![reate_base_model2018-04-0128_model_los](saved_models/create_base_model2018-04-0128_model_loss.png) | 20.23%            | 16.82%              | 16.16%              |
 | ![reate_base_model2018-04-0182_model_accurac](saved_models/create_base_model2018-04-0182_model_accuracy.png) | ![reate_base_model2018-04-0182_model_los](saved_models/create_base_model2018-04-0182_model_loss.png) | 23.85%            | 24.84%              | 24.08%              |
 
-***Figure 7 - Baseline Model Training results***
+***Figure 7.1 - Baseline Model Training results***
 
 The base model training accuracy seems to increase very slowly even though the number of epochs used is doubled, and the validation accuracy has high variance, but the validation loss and accuracy curves seem to follow the training curves.  The validation accuracy and loss curves both have high variance hence showing sensitivity to unseen data, possibly due to the simplicity of the model design and underfitting.  
 
 ## III. Methodology
+
 ### Data Preprocessing
 The original dataset is composed of the labeled dataset with images for each class and an unlabeled dataset.   The labeled dataset is split into a training, validation and testing sets.   The unlabeled set is manually sampled to provide evaluations of the final trained model that resulted in the highest evaluation accuracy with the testing dataset.
 
@@ -272,7 +273,7 @@ Similar to mode 16, another high accuracy rate was achieved by model 15, structu
 
 In the initial solution, in both models discussed above, the model overfits.  After trial and experiment with .various model configurations, ***model 23*** was able to maintain high accuracy rates with reduced overfitting.
 
-This final model solution consists of the same 3 pairs of 2D Conv./Max pooling layers, but with a Flatten layer, and 2 Dense layers separated with a  single Dropout layer, and no L1 regularization.
+This final model solution consists of the same 3 pairs of 2D Conv./Max pooling layers, but with a Flatten layer, and 2 Dense layers separated with a single Dropout layer, and no L1 regularization.  The first Dense layer has a `relu` activation function, and the second Dense layer has a `softmax` activation function.
 
 This model was trained with dropout values of  *[.05, .10, .15, .20, .25, .30, .35, .40]*, and the maximum testing accuracy was achieved with a dropout value of ***0.10***.  The model structure, accuracy curves and values are shown in the table below.
 
@@ -292,7 +293,7 @@ In this section, the final model and any supporting qualities should be evaluate
 
 
 
-![aseline-model-accuracie](results/baseline-model-accuracies.PNG)
+
 
 ***Figure X - Baseline model accuracy over by Epochs***
 

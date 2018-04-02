@@ -30,11 +30,16 @@ import sys
 from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
 
+# prefix used for saving the model and history files
 prefix_str = str(datetime.date.today()) + str(random.randint(1, 100))
+
+# Number of epochs to perform training for
 NUM_EPOCHS = 50
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-print("Number of Epochs: ", NUM_EPOCHS)
+#Location of the image files
+images_path = "sample_images"
+
 
 # dictionary for distraction category to numerical value
 catLabels = {
@@ -50,11 +55,13 @@ catLabels = {
     'c9': 'talking to passenger'
 }
 
-
+#Maps category value to categorical label in the catLabels object
 def getClass(value):
     index = 'c' + str(value)
     return catLabels[index]
 
+
+###  Creates multiple models ####
 
 def create_base_model():
     model = Sequential()
@@ -568,6 +575,7 @@ def create_model26(dropout):
     return {"model": model, "model_name": sys._getframe().f_code.co_name + 'dropout_' + str(dropout)}
 
 
+# Load all the image data from the path provided
 def loadImages(path):
     data = load_files(path)
     files = data['filenames']
@@ -579,9 +587,7 @@ def loadImages(path):
 # Resize image to 224x224
 # Convert image to an array -> resized to a 4D tensor used by Keras CNN
 # Tensor will be (1,224,224,3)
-
 # Adopted from the Deep Learning Project
-
 def path_to_tensor(img_path, equalized=False):
     # loads RGB image as PIL.Image.Image type
     img = image.load_img(img_path, target_size=(224, 224), grayscale=equalized)
@@ -595,26 +601,21 @@ def path_to_tensor(img_path, equalized=False):
     return np.expand_dims(x, axis=0)
 
 
+# Iterates over all images and convert to tensor
 def paths_to_tensor(img_paths):
     print (img_paths)
     list_of_tensors = [path_to_tensor(img_path) for img_path in tqdm(img_paths)]
     return np.vstack(list_of_tensors)
 
 
-#
-# Pre-Process the Data
-#
-# Rescale the images
-
-# ## Baseline Model Architecture
-
+# Evaluates the model accuracy using the Test dataset
 def predict_distraction(model):
     print("Evaluating...")
     scores = model.evaluate(test_tensors, test_targets_onehot, verbose=0)
     print("Evaluation %s: %.2f%%" % (model.metrics_names[1], scores[1] * 100))
     return
 
-
+# Saves the accuracy / loss curves from the trained model history data
 def plot_learning_history(m):
     history = m['history']
     # history for accuracy
@@ -647,6 +648,7 @@ def plot_learning_history(m):
     predict_distraction(m['model'])
     return
 
+# Performs the model training with a validation dataset split based on validation_split parameter
 def train_model(_epochs, _model):
     history = _model.fit(train_tensors, train_targets_onehot, validation_split=.25,
                          epochs=_epochs, batch_size=32, callbacks=[], verbose=2)
@@ -657,7 +659,7 @@ def train_model(_epochs, _model):
     #     print (h)
     return history
 
-
+# Plots a histogram of an image - this requires the image to be grayscale
 def plot_histogram(image):
     hist,bins = np.histogram(image.flatten(),256,[0,256])
 
@@ -671,6 +673,7 @@ def plot_histogram(image):
     plt.show()
     return
 
+# Equalizes the histogram of an image based on a kernel size - requires grayscale image
 def equalize_histogram(img, grid_size):
     clahe = cv2.createCLAHE(tileGridSize=(grid_size,grid_size))
     equalized_img = clahe.apply(img)
@@ -688,14 +691,14 @@ print(sess.run(hello))
 # ## Load the Data
 
 print ("Loading Images...")
-path = "images/train"
-files, targets, target_names = loadImages(path)
+
+files, targets, target_names = loadImages(images_path)
 # predict_files = np.array(glob("images/test/*"))[1:10]
 print('Number of Categories: ', len(target_names))
 print('Categories: ', target_names)
 print('Number of images by category: ')
 for c in target_names:
-    print(c + ':' + str(len(os.listdir(path + '/' + c))))
+    print(c + ':' + str(len(os.listdir(images_path + '/' + c))))
 
 # Split the original training sets into training & testing sets
 train_files, test_files, train_targets, test_targets = train_test_split(files, targets, test_size=0.20, random_state=40)
@@ -741,9 +744,11 @@ models.extend([create_base_model()])
 print ("Number of Epochs: ", NUM_EPOCHS)
 print ("Training " + str(len(models)) + " models")
 
+# Prints all the models that are about to be trained
 for m in models:
     print (m)
 
+# Iterate through all models and perform training and plot the model accuracy curves
 for m in models:
     print ("Training Model: ", m['model_name'])
     prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1, 100))
