@@ -71,11 +71,11 @@ The following tables shows samples of an image in each class, `c0` to `c9` , and
 ### Exploratory Visualization
 The image set provided contains colored images of various driver postures that are in 10 different classes.  An initial look at the grayscale image and its histogram shows there are many pixels with low intensity below 120, and a smaller number of pixels with high intensity above 230.  A sample and its histogram is shown below.   The sample image's histogram is equalized and both the processed image and its new histogram is shown as well.  
 
-| Image                                                        | Processing Results                                           |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
+|                            Image                             |                      Processing Results                      |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
 | **Original Image**![riginal-imag](pre-processing/original-image.png) | ![riginal-image-histogra](pre-processing/original-image-histogram.png) |
 | **Image - Histogram Equalized**![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) |
-| **Original Image       **![riginal-image-morp](pre-processing/original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
+| **Original Image                 **![riginal-image-morp](pre-processing/original-image-morph.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
 
 ***Figure 5 - Image Transformations***
 
