@@ -250,17 +250,13 @@ def predict_distraction(model):
 Some of the saved models were re-evaluated with the new evaluation algorithm, and as a result, the best models to go forward with were selected as final models - in particular Model 23 seemed to generated the highest training and validation accuracy.
 
 ### Refinement
-In this section, you will need to discuss the process of improvement you made upon the algorithms and techniques you used in your implementation. For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
-- _Has an initial solution been found and clearly reported?_
-- _Is the process of improvement clearly documented, such as what techniques were used?_
-- _Are intermediate and final solutions clearly reported as the process is improved?_
-
-
 Based on the large number of model design iterations done, as discussed above, some of the best performing models were selected and multiple hyperparameter values were used to further refine model performance.
 
 #### ***Initial Solution***
 
-Besides the baseline model, the initial solution considered here is one of the original models that was trained - model 16. 
+An initial solution considered here is one of the original models that was trained - ***model 16***.   This model consists of 3 pairs of 2D Convolution / Max Pooling layers, one 2D Global Averaging layer, and 3 Dense layers with the *<u>last</u>* layer using the L1 Regularizer with a penalty of .01.  This model design is show below with the training/validation accuracy and loss curves.
+
+The training accuracy for this model reached 97.52%, a very high accuracy rate, with an initial accuracy rate above 90% reaching within 140 epochs.  The validation accuracy reached above 80% at relatively the same time, but converging at around 87% after 1000 epochs.   The training loss reduced significantly to 0.4025 after 1000 epochs, but the validation loss starting increasing after about 200 epochs, with a minimal loss around 0.90.  The loss curves show that this model is overfitting, and additional tuning of its regularization parameters to further reduce loss, and increase testing accuracy.
 
 |             Model 16             |                        Accuracy Graph                        |                          Loss Graph                          |
 | :------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -270,13 +266,15 @@ Besides the baseline model, the initial solution considered here is one of the o
 
 ***Figure 13 - Initial Solution***
 
-
+Similar to mode 16, another high accuracy rate was achieved by model 15, structurally similar, but its L1 regularization is at the <u>*first*</u> Dense layer with a penalty of 0.50.  Model 15 reached a validation loss slight lower than mode 16, but loss increased more rapidly thereafter, but reached a relatively same loss value after 1000 epochs.  The testing accuracy for model 15 was 92.18%.
 
 #### ***Final Solution***
 
+In the initial solution, in both models discussed above, the model overfits.  After trial and experiment with .various model configurations, ***model 23*** was able to maintain high accuracy rates with reduced overfitting.
 
+This final model solution consists of the same 3 pairs of 2D Conv./Max pooling layers, but with a Flatten layer, and 2 Dense layers separated with a  single Dropout layer, and no L1 regularization.
 
-
+This model was trained with dropout values of  *[.05, .10, .15, .20, .25, .30, .35, .40]*, and the maximum testing accuracy was achieved with a dropout value of ***0.10***.  The model structure, accuracy curves and values are shown in the table below.
 
 |             Model 23             |                        Accuracy Graph                        |                          Loss Graph                          |
 | :------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -284,11 +282,7 @@ Besides the baseline model, the initial solution considered here is one of the o
 |      **Training Accuracy**       |                   **Validation Accuracy**                    |                     **Testing Accuracy**                     |
 |              95.82%              |                            93.55%                            |                            93.29%                            |
 
-
-
 ## IV. Results
-_(approx. 2-3 pages)_
-
 ### Model Evaluation and Validation
 In this section, the final model and any supporting qualities should be evaluated in detail. It should be clear how the final model was derived and why this model was chosen. In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis). Questions to ask yourself when writing this section:
 - _Is the final model reasonable and aligning with solution expectations? Are the final parameters of the model appropriate?_
