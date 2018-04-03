@@ -43,6 +43,59 @@ The following is **only required** if NVIDIA GPU needs to be used for faster com
 
   ​
 
+## Running the Program
+
+#### Pre-requisites
+
+1. The image data is provided in `sample_images/train` folder with `c0` to `c9` folders contains images for each class.
+
+2. `capstone-model-engine.py` is the main class that will need to be executed.  
+
+3. The following parameters are configurable in the `capstone-model-engine.py` file:
+
+   - ```python
+     #location to save models
+     file_root='saved_models/'
+     # prefix used for saving the model and history files
+     prefix_str = str(datetime.date.today()) + str(random.randint(1, 100))
+
+     # Number of epochs to perform training for
+     NUM_EPOCHS = 1
+     ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+     #Location of the image files
+     images_path = "sample_images/train"
+     ```
+
+4. *Optional:* Appropriate GPU drivers are installed such as NVIDIA CUDA / cuDNN system libraries.
+
+#### Executing the Model training 
+
+1. Activate Tensorflow
+
+```shell
+> activate tensorflow
+```
+
+2. At the *tensorflow* prompt, run the model training program - *redirecting to a log file is optional*
+
+```
+(tensorflow) >python capstone-model-engine.py > logs/my.log
+```
+
+
+
+#### Model Training Output
+
+The following files are generated in the `saved_models` folder:
+
+- `create_base_model<date><random#>_complete_model.hdf5` - model architecture and weights.  This can be loaded using *Keras* `load_model()` function.
+- `create_base_model<date><random#>_trainHistoryDict`  - The model history is stored in a pickle file
+- `create_base_model<date><random#>_model_accuracy.png`  - The graph of the model training / validation curves.
+- `create_base_model<date><random#>_model_loss.png` - The graph of the model training/ validation loss curves.
+
+
+
 ## References to supporting materials
 
 The images used were from the distracted driver Kaggle competition sponsored by State Farm.  The project page is available at https://www.kaggle.com/c/state-farm-distracted-driver-detection.

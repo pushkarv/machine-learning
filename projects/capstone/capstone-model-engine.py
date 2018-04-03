@@ -2,7 +2,6 @@
 
 # # Distracted Driving Detection
 
-import config
 import tensorflow as tf
 
 from keras.callbacks import ModelCheckpoint
@@ -30,15 +29,20 @@ import sys
 from IPython.display import SVG
 from keras.utils.vis_utils import model_to_dot
 
+############ CONFIGURABLE PARAMETERS ########################
+#location to save models
+file_root='saved_models/'
 # prefix used for saving the model and history files
 prefix_str = str(datetime.date.today()) + str(random.randint(1, 100))
 
 # Number of epochs to perform training for
-NUM_EPOCHS = 50
+NUM_EPOCHS = 5
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 #Location of the image files
 images_path = "sample_images/train"
+
+#############################################################
 
 
 # dictionary for distraction category to numerical value
@@ -629,7 +633,7 @@ def plot_learning_history(m):
     plt.legend(['train', 'test'], loc='upper left')
     # plt.show()
     prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1, 100))
-    fig.savefig(config.file_root + prefix_str + '_model_accuracy.png')
+    fig.savefig(file_root + prefix_str + '_model_accuracy.png')
     plt.close(fig)
 
     #  history for loss
@@ -641,7 +645,7 @@ def plot_learning_history(m):
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
     # plt.show()
-    fig.savefig(config.file_root + prefix_str + '_model_loss.png', format="png")
+    fig.savefig(file_root + prefix_str + '_model_loss.png', format="png")
     plt.close(fig)
 
     print("Model: " + m['model_name'])
@@ -752,11 +756,11 @@ for m in models:
 for m in models:
     print ("Training Model: ", m['model_name'])
     prefix_str = m['model_name'] + str(datetime.date.today()) + str(random.randint(1, 100))
-    # checkpointer = ModelCheckpoint(filepath=config.file_root + prefix_str + '_model.best.from_scratch.hdf5',
+    # checkpointer = ModelCheckpoint(filepath=file_root + prefix_str + '_model.best.from_scratch.hdf5',
     #                          verbose=1, save_best_only=True)
     m['history'] = train_model(NUM_EPOCHS, m['model'])
-    m['model'].save(config.file_root + prefix_str + '_complete_model.hdf5')
-    with open(config.file_root + prefix_str + '_trainHistoryDict', 'wb') as file_pi:
+    m['model'].save(file_root + prefix_str + '_complete_model.hdf5')
+    with open(file_root + prefix_str + '_trainHistoryDict', 'wb') as file_pi:
         pickle.dump(m['history'].history, file_pi)
     plot_learning_history(m)
 
