@@ -1,7 +1,7 @@
 # Machine Learning Engineer Nanodegree
 ## Capstone Project
 Pushkar Varma
-April 1, 2018
+April 2, 2018
 
 ## I. Definition
 ### Project Overview
@@ -62,9 +62,9 @@ This dataset is being used since it is a public dataset provided by StateFarm an
 
 The following tables shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
 
-|   c0![mg_3](sample_images/c0/img_34.jpg)   |   c1![mg_](sample_images/c1/img_6.jpg)   |  c2![mg_18](sample_images/c2/img_186.jpg)  |    c3![mg_](sample_images/c3/img_5.jpg)    |   c4![mg_1](sample_images/c4/img_14.jpg)   |
-| :----------------------------------------: | :--------------------------------------: | :----------------------------------------: | :----------------------------------------: | :----------------------------------------: |
-| **c5**![mg_5](sample_images/c5/img_56.jpg) | **c6**![mg_](sample_images/c6/img_0.jpg) | **c7**![mg_8](sample_images/c7/img_81.jpg) | **c8**![mg_2](sample_images/c8/img_26.jpg) | **c9**![mg_1](sample_images/c9/img_19.jpg) |
+|   c0![mg_3](sample_images/train/c0/img_34.jpg)   |   c1![mg_](sample_images/train/c1/img_6.jpg)   |  c2![mg_18](sample_images/train/c2/img_186.jpg)  |    c3![mg_](sample_images/train/c3/img_5.jpg)    |   c4![mg_1](sample_images/train/c4/img_14.jpg)   |
+| :----------------------------------------------: | :--------------------------------------------: | :----------------------------------------------: | :----------------------------------------------: | :----------------------------------------------: |
+| **c5**![mg_5](sample_images/train/c5/img_56.jpg) | **c6**![mg_](sample_images/train/c6/img_0.jpg) | **c7**![mg_8](sample_images/train/c7/img_81.jpg) | **c8**![mg_2](sample_images/train/c8/img_26.jpg) | **c9**![mg_1](sample_images/train/c9/img_19.jpg) |
 
 ***Figure 3 - Sample images from each class***
 
@@ -383,25 +383,9 @@ A difficult and unexpected challenge was to install the NVIDIA drivers, CUDA and
 The final solution may be appropriate for use if the source of the image data does not change, otherwise, both variations due to noise and image acquisition sources will need to be explored and taken into consideration for model training in order to come up with a more practical solution.   Furthermore, neglecting image acquisition /noise, more advanced techniques that provide for more precise object/feature selection in images would provide incremental improvements in model performance.
 
 ### Improvement
-In this section, you will need to provide discussion as to how one aspect of the implementation you designed could be improved. As an example, consider ways your implementation can be made more general, and what would need to be modified. You do not need to make this improvement, but the potential solutions resulting from these changes are considered and compared/contrasted to your current solution. Questions to ask yourself when writing this section:
-- _Are there further improvements that could be made on the algorithms or techniques you used in this project?_
-- _Were there algorithms or techniques you researched that you did not know how to implement, but would consider using if you knew how?_
-- _If you used your final solution as the new benchmark, do you think an even better solution exists?_
+Some improvements that can be made are the overall ML pipeline design that can provide flexibility through parameterized functions to controls various stages such as data pre-processing, model design, hyperparameter values, persistence of relevant data such as models, graphs and confusion matrices.   Additionally, key improvement that can be made to help with reduce the speed in viable model discovery is automated hyperparameter value selection as well as hyperparameter select based on a more well understood cause-effect chain on each hyperparameter in order to improve model training results and reduce / eliminate underfitting or overfitting.
 
------------
-
-**Before submitting, ask yourself. . .**
-
-- Does the project report you’ve written follow a well-organized structure similar to that of the project template?
-- Is each section (particularly **Analysis** and **Methodology**) written in a clear, concise and specific fashion? Are there any ambiguous terms or phrases that need clarification?
-- Would the intended audience of your project be able to understand your analysis, methods, and results?
-- Have you properly proof-read your project report to assure there are minimal grammatical and spelling mistakes?
-- Are all the resources used for this project correctly cited and referenced?
-- Is the code that implements your solution easily readable and properly commented?
-- Does the code execute without error and produce results similar to those reported?
-
-
-
+A key technique that I did research and found difficult, but would like to be able to implement, it to be able to visualize the output of each layer of the CNN, and possibly display a change flow for each output based on adjustments of hyperparameters.  This would allow very deep insight into which parts of a model have affinity to which data features, hence, be able to adjust the appropriate layers of the model to improve training.
 
 ### References
 

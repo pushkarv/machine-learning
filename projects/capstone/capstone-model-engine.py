@@ -38,7 +38,7 @@ NUM_EPOCHS = 50
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 #Location of the image files
-images_path = "sample_images"
+images_path = "sample_images/train"
 
 
 # dictionary for distraction category to numerical value
