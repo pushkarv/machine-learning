@@ -104,5 +104,3 @@ The images are available at https://www.kaggle.com/c/5048/download/imgs.zip
 
 The images are provided in the `train` folder that contains images for each class in the appropriate subfolder, and the `test` folder that contains a large set of unlabeled images that can be used for testing out the models.  Only a sample of images were used from the `test` folder to manual identify the image class and compare with the model predictions.
 
-
-

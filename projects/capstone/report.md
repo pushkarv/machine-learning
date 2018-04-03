@@ -44,7 +44,9 @@ A baseline model will be used to assess the performance of a basic model for dis
 The final trained model will be used to classify any given input image from the test set or the unlabeled image set in order to determine whether an image contains any class of distraction, `c0` to `c9`.
 
 ### Metrics
-The `accuracy` metric will be used to measure how well the model was trained by evaluating the model with a test image set.  This `accuracy` metric is most appropriate since images are being classified into one of 10 classes, and a performance binary decision is made as to whether the classification is correct or not based on the predicted class vs. actual class.   For example, for a set of 100 images, if 90 of the images are classified with a predicted class equal to actual class, then the classification accuracy will be considered to be 90%.  
+The `accuracy` metric will be used to measure how well the model was trained by evaluating the model with a test image set.  This `accuracy` metric is most appropriate since images are being classified into one of 10 classes, and a performance binary decision is made as to whether the classification is correct or not based on the predicted class vs. actual class.   For example, for a set of 100 images, if 90 of the images are classified with a predicted class equal to actual class, then the classification accuracy will be considered to be 90%.  The `accuracy` measure can be used reliably here since the dataset is balanced with an equal number of images for each class, `c0` to `c9`.  For an imbalanced dataset, the `accuracy` would not normally be a reliable measure [16].
+
+Furthermore, another metric that is used for comparing the baseline and final models is the `confusion matrix`.   This provides the ability to view false positives, false negatives, true positives, true negatives for a given model and determine the robustness of a model given the dataset. 
 
 ## II. Analysis
 ### Data Exploration
@@ -421,5 +423,7 @@ A key technique that I did research and found difficult, but would like to be ab
 
 [15] https://stackoverflow.com/questions/22937589/how-to-add-noise-gaussian-salt-and-pepper-etc-to-image-in-python-with-opencv/27342545
 
+[16] https://en.wikipedia.org/wiki/Confusion_matrix#Table_of_confusion
 
+[17] https://en.wikipedia.org/wiki/Accuracy_paradox
 

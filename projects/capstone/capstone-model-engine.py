@@ -66,7 +66,10 @@ def getClass(value):
 
 
 ###  Creates multiple models ####
+# All models here use the Keras API to create a Sequential model - essentially a stack of layers
 
+#Base model consists of a Convolution 2D layer, 2D Max Pooling layer, a Global averaging layer and a Dense layer
+#with a softmax activation function
 def create_base_model():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -78,6 +81,8 @@ def create_base_model():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
+#Model 1 consists of a Convolution 2D layer, Batch Normalization layer, 2D Max Pooling layer,
+# a Global averaging layer and a Dense layer #with a softmax activation function
 def create_model1():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
