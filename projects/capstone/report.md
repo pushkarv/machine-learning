@@ -135,13 +135,19 @@ where $S$ is the feature map or output, $I$ is the input image, and $K$ is the k
 
 The kernel is much smaller than the input matrix, and the output is essentially a smaller dimensional image with pixels that are a weighted sum of the original image pixels in a spatially localized area, which allow detection of useful features in an image such as edges.  Different kernel designs can lead to detection of different features.
 
+Convolution operations have an advantage in using with multi-dimensional input data, but their weakness is high computation cost.  Using convolution will require a large amount of input data, GPU based computers and plenty of model training time.
+
 #### ***Pooling***
 
 Pooling enables shift invariance in an image by generating an output image whose pixels are summary statistics of a localized area of the input image.   The figure below shows a small sample of an input image and a max pooling function with a given kernel size, the output image is has a pixel that is the maximum value of all pixels within the kernel boundary from the input image.
 
 ![max-pooling-visual](results/max-pooling-visual.PNG)
 
-***Figure 4.3 - Max Pooling example***
+***Figure 4.2 - Max Pooling example***
+
+#### ***Regularization***
+
+When training a model on input data, the design of a model dictates its capacity to estimate a function based on the complexity and size of the feature set.  As the model is trained, the training error is calculated by applying the estimated function to the training data itself, and weights are adjusted based on model design and hyperparameters (settings to control model behavior).   For a good model, the training error reduces relatively quickly; however, the testing error, where the testing data set is applied, may reduce for some iterations, and then start to increase.  The ability of a model to predict well based on unseen data is essentially known as generalization, and when using the test data, the generalization error needs to be reduced along with the training error.   However, as these 2 errors start to go apart, regularization techniques are needed to reduce this gap.  One regularization technique used in this project is *Dropout*.  Dropout essentially trains an ensemble of subnetworks but randomly dropping non-output units from hidden layers.
 
 ### Benchmark
 
