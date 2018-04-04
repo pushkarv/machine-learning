@@ -90,7 +90,7 @@ The image set provided contains colored images of various driver postures that a
 |      ![riginal-imag](pre-processing/original-image.png)      | ![mage-histogram-equalize](pre-processing/image-histogram-equalized.png) | ![riginal-image-morp](pre-processing/original-image-morph.png) |
 | ![riginal-image-histogra](pre-processing/original-image-histogram.png) | ![uqalized-histogram-cd](pre-processing/euqalized-histogram-cdf.png) | **Morphological Dilation**![mage-morph-dilatio](pre-processing/image-morph-dilation.png) |
 
-***Figure 4 - Image Transformations***
+***Figure 4.1 - Image Transformations***
 
 The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.
 
@@ -100,7 +100,7 @@ Additionally, OpenCV's morphological operations were used to determine whether t
 
 ### Algorithms and Techniques
 
-The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Convolutional Neural Networks (CNNs) since the input data is a set of images, i.e. 2-D tensors, and  CNNs have been proven to be very effective for image classification, and in particular for posture classification [5,9].  
+The solution will consist of a machine learning pipeline with pre-processing, training, testing, and accuracy measurement stages.  The solution will use Convolutional Neural Networks (CNNs) since the input data is a set of images, i.e. 2-D tensors, and CNNs have been proven to be very effective for image classification, and in particular for posture classification [5,9].  
 
 In the pre-processing stage, the images will be pre-processed to 224x224x3 , with the same aspect ratio, in order to reduce processing time.  The images will be rescaled, and both raw color images and gray scaled images will be used for model training and prediction.  
 
@@ -114,6 +114,34 @@ Additionally, the CNN will use some of the following techniques:
 The output will be chosen based on maximum likelihood of a class and compared with target label, and the classification accuracy percentage will be calculated.
 
 In general, multiple model designs will be explored, and models will be trained until overfitting is observed and then various regularization methods will be used to compensate for reduce the bias/variance tradeoff and minimize overfitting.
+
+Several machine learning techniques use in this project are discussed in further detail below.
+
+#### ***Convolution***
+
+Convolution is one of the most successful applications from insights about the brain and was biologically inspired from the mammalian vision system.  It was based on a discovery by Hubel & Wiesel (1959) about how neurons function in a cat's brain, in particular how they respond to specific patterns of light and not at all to other patterns.  The behavior of a convolution neural network is based on the primary visual cortex that has the following properties [18]: 
+
+- The cortex is arranged in a spatial map, which mirrors the structure of the image in the retina,
+- The cortex has simple cells whose activity can be estimated by a linear function of an image in a small, spatially localized receptive field - this inspires the convolution(detector) units of a CNN, 
+- The cortex contains complex cells that are invariant to shifts in position of a feature in an image - this inspires the max or average pooling units of a CNN.
+
+The basic pattern of convolution and pooling is repeatedly applied as we go deeper into the brain, hence, multiple layers of this pattern are usually seen in CNN models.
+
+Mathematically, the convolution operation for an image looks as follows:
+
+$S(i,j)  = (I * K)(i,j) = \sum_{m}\sum_{n} I(i-m,j-n) K(m, n)$, 
+
+where $S$ is the feature map or output, $I$ is the input image, and $K$ is the kernel or weight matrix.
+
+The kernel is much smaller than the input matrix, and the output is essentially a smaller dimensional image with pixels that are a weighted sum of the original image pixels in a spatially localized area, which allow detection of useful features in an image such as edges.  Different kernel designs can lead to detection of different features.
+
+#### ***Pooling***
+
+Pooling enables shift invariance in an image by generating an output image whose pixels are summary statistics of a localized area of the input image.   The figure below shows a small sample of an input image and a max pooling function with a given kernel size, the output image is has a pixel that is the maximum value of all pixels within the kernel boundary from the input image.
+
+![max-pooling-visual](results/max-pooling-visual.PNG)
+
+***Figure 4.3 - Max Pooling example***
 
 ### Benchmark
 
@@ -438,4 +466,6 @@ A key technique that I did research and found difficult, but would like to be ab
 [16] https://en.wikipedia.org/wiki/Confusion_matrix#Table_of_confusion
 
 [17] https://en.wikipedia.org/wiki/Accuracy_paradox
+
+[18] Goodfellow, Ian, et. al., *Deep Learning*, 2016
 
