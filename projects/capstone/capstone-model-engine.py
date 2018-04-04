@@ -67,7 +67,8 @@ def getClass(value):
 
 ###  Creates multiple models ####
 # All models here use the Keras API to create a Sequential model - essentially a stack of layers
-## The default kernel size of 4x4 is used, with 
+## The default kernel size of 4x4 is used, and all filters of size 10 are used for Conv2D transformations
+
 #This model consists of a Convolution 2D layer, 2D Max Pooling layer, a Global averaging layer and a Dense layer
 #with a softmax activation function
 def create_base_model():
@@ -129,7 +130,7 @@ def create_model3():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model adds a BatchNormalization layers between the Conv2D and MaxPooling 2D layers.
 def create_model4():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -146,7 +147,8 @@ def create_model4():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model has Batch Normalization between Conv2D and MaxPooling 2D layers, but it also has
+# Dropout layers between the Dense (fully connected) layers and an additional Dense layer than the model above.
 def create_model5():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -170,7 +172,7 @@ def create_model5():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model further adds Dropouts along with the BatchNormalization layers between the Conv2D and MaxPooling 2D layers
 def create_model6():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -198,7 +200,7 @@ def create_model6():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model use 2 sets of repeating Conv2D/MaxPooling2D layers, and a Dropout layers for each Dense layer.
 def create_model7():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -216,7 +218,8 @@ def create_model7():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model adds an additional Conv2D/MaxPooling2D layer and an additional set of Dropout/Dense layers.
+#This also combines the L1 Regularization and Dropout techniques
 def create_model8():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -238,7 +241,7 @@ def create_model8():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model is similar to model8, but use different values for the Dropout - essentially adjusts the hyperparameter.
 def create_model9():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -263,7 +266,7 @@ def create_model9():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model is has only 3 sets of Conv2D /MaxPooling2D layers and 3 Dense layers with no regularization.
 def create_model10():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -281,7 +284,7 @@ def create_model10():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model is similar to model10, but less Dense layers
 def create_model11():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -296,7 +299,7 @@ def create_model11():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model is similar to model10, but more Dense layers.
 def create_model12():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -314,7 +317,7 @@ def create_model12():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model is similar to model12, but only 1 set of Conv2D/MaxPooling2D layers.
 def create_model13():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -330,7 +333,7 @@ def create_model13():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This model is similar to model10, but it adds the L1 regularizers
 def create_model14():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -348,7 +351,7 @@ def create_model14():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This is similar to model14, but adjusts the value of the L1 Regularizer that only exists on a single layer
 def create_model15():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -366,7 +369,7 @@ def create_model15():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This is similar to model15, but moves the position of the L1 Regularizer
 def create_model16():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -403,7 +406,7 @@ def create_model17():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This is similar to model 14 with different L1 Regularizer value
 def create_model18():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -422,6 +425,7 @@ def create_model18():
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
 
+#This is similar to model 14 with different L1 Regularizer value
 def create_model19():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -439,7 +443,7 @@ def create_model19():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This is similar to model19, but less Dense layers
 def create_model20():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -458,7 +462,7 @@ def create_model20():
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This is similar to model 14 with different L1 Regularizer values
 def create_model21():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -477,7 +481,7 @@ def create_model21():
     model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name}
 
-
+#This is similar to model 14 with different L1 Regularizer values
 def create_model22():
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -496,6 +500,8 @@ def create_model22():
 
 
 ## Better models
+#This model has the same 3 set of Conv2D/MaxPooling2D layers, but it uses an additional Flatten layer that creates an
+# (MxNxP)x1 tensor from a MxNxP tensor.
 def create_model23(dropout):
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -514,6 +520,8 @@ def create_model23(dropout):
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name + 'dropout_' + str(dropout)}
 
+#This is similar to the model23, but uses grayscale  - structurally same as model23, but use separately for tracking
+#experiment results
 def create_model23_grayscale(dropout):
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 1)))
@@ -532,6 +540,7 @@ def create_model23_grayscale(dropout):
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name + 'dropout_' + str(dropout)}
 
+#This is similar to model23 but add a L1 regularizer on the Dense layer with the relu function
 def create_model24(regularizer_value):
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -551,6 +560,7 @@ def create_model24(regularizer_value):
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name + 'regularizer_' + str(regularizer_value)}
 
+#This model removes the Dropout layer from model24
 def create_model25(regularizer_value):
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
@@ -569,6 +579,7 @@ def create_model25(regularizer_value):
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return {"model": model, "model_name": sys._getframe().f_code.co_name + 'regularizer_' + str(regularizer_value)}
 
+#This model has both Dense layers with a softmax function, and has Dropout in between with a Flatten layer before.
 def create_model26(dropout):
     model = Sequential()
     model.add(Conv2D(filters=10, kernel_size=(4, 4), input_shape=(224, 224, 3)))
