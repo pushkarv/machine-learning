@@ -62,13 +62,25 @@ In order to alleviate in imbalances, the training dataset will be trimmed to ens
 
 This dataset is being used since it is a public dataset provided by StateFarm and is a large set specifically created for covering a large class of distractions that most commonly occur.  As part of the submission of this Capstone project, a small subset will be provided as samples.
 
-The following tables shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
+The following table shows samples of an image in each class, `c0` to `c9` , and the larger sample of images has been provided in the `sample_images` folder.
 
 |   c0![mg_3](sample_images/train/c0/img_34.jpg)   |   c1![mg_](sample_images/train/c1/img_6.jpg)   |  c2![mg_18](sample_images/train/c2/img_186.jpg)  |    c3![mg_](sample_images/train/c3/img_5.jpg)    |   c4![mg_1](sample_images/train/c4/img_14.jpg)   |
 | :----------------------------------------------: | :--------------------------------------------: | :----------------------------------------------: | :----------------------------------------------: | :----------------------------------------------: |
 | **c5**![mg_5](sample_images/train/c5/img_56.jpg) | **c6**![mg_](sample_images/train/c6/img_0.jpg) | **c7**![mg_8](sample_images/train/c7/img_81.jpg) | **c8**![mg_2](sample_images/train/c8/img_26.jpg) | **c9**![mg_1](sample_images/train/c9/img_19.jpg) |
 
-***Figure 3 - Sample images from each class***
+***Figure 3.1 - Sample images from each class***
+
+#### ***Image Statistics by Category***
+
+Several statistics about the image intensities were calculated in the balanced dataset, i.e. 1900 images for each category.   The mean, the expected variance, maximum and minimum of the image intensities was determined and are shown below.
+
+| ![category_image_intensity_means](results/category_image_intensity_means.png) | ![category_image_intensity_maximum](results/category_image_intensity_maximum.png) | ![category_image_intensity_expected_stddev](results/category_image_intensity_expected_stddev.png) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![category_image_intensity_expected_variance](results/category_image_intensity_expected_variance.png) | ![category_image_intensity_minimum](results/category_image_intensity_minimum.png) |                                                              |
+
+***Figure 3.2 - Image Statistics by Category***
+
+There are some differences across categories in image intensity mean and variance, but the image maximum and minimum values are the same.  So images from all categories had the same intensity range, but the distribution of the intensities across categories was different.  This may seem that it may cause bias during training, but the mean range is only about 3.5, which is negligible.  The standard deviation graph is similar to the variance graph, but it shows that the standard deviation range is only 1.2, so even though the variance range is 200, the variance within each category is very small.
 
 ### Exploratory Visualization
 The image set provided contains colored images of various driver postures that are in 10 different classes.  An initial look at the grayscale image and its histogram shows there are many pixels with low intensity below 120, and a smaller number of pixels with high intensity above 230.  A sample and its histogram is shown below.   The sample image's histogram is equalized and both the processed image and its new histogram is shown as well.  
